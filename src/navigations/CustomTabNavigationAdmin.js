@@ -28,8 +28,8 @@ const CustomTabNavigationAdmin=(props)=>{
                 <Text style={[styles.tabLabel, {color: props.activeTab==='productScreen'?Constants.colors.primaryColor:'#BBBBBB', }]}>Products</Text>
             </Pressable>
             <Pressable onPress={()=>gotToPage('NotificationScreen')} style={styles.tabItem}>
-                <Feather name='bell' style={[styles.tabIcon, {color: props.activeTab==='NotificationScreen'?Constants.colors.primaryColor:'#BBBBBB', }]} />
-                <Text style={[styles.tabLabel, , {color: props.activeTab==='NotificationScreen'?Constants.colors.primaryColor:'#BBBBBB', }]}>Notification</Text>
+                <Feather name='bell' style={[styles.tabIcon, {color: props.activeTab==='notification'?Constants.colors.primaryColor:'#BBBBBB', }]} />
+                <Text style={[styles.tabLabel, , {color: props.activeTab==='notification'?Constants.colors.primaryColor:'#BBBBBB', }]}>Notification</Text>
             </Pressable>
             <Pressable onPress={()=>gotToPage('profileScreen')} style={styles.tabItem}>
                 <Feather name='user' style={[styles.tabIcon, {color: props.activeTab==='profile'?Constants.colors.primaryColor:'#BBBBBB', }]} />
