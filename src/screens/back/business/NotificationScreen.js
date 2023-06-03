@@ -188,7 +188,7 @@ const NotificationScreen = (props) => {
             <View>
                 {console.log('sasa', NotiData)}
                 <CustomAppBar
-                    title='Hesllo!'
+                    title='Hello!'
                     navigation={navigation} isMainscreen={false} isReel={false} />
                 {pageLoader ? <Loading /> :
                     <View style={styles.warapper} onScroll={(event) => {
