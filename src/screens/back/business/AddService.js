@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Pressable, Button, DatePickerIOSBase, ScrollView, Alert, Image } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Pressable, Button, DatePickerIOSBase, ScrollView, Alert, Image, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import globatStyles from '../../../shared/globatStyles'
 import CustomAppBar from '../../../components/business/CustomAppBar'
@@ -17,6 +17,8 @@ import showToastmsg from '../../../shared/showToastmsg'
 
 const AddService = (props) => {
     const navigation = useNavigation()
+    // loader
+    const [buttonLoader, setbuttonLoader] = useState(false)
     // checking props
 
     const CheckingProps = props?.route?.params?.userDetails?.id
@@ -195,8 +197,14 @@ const AddService = (props) => {
                 .then(result => {
                     console.log(result)
                     navigation.navigate('/productScreen', { userDetails: props?.route?.params?.userDetails })
+                    setbuttonLoader(false)
+
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => {
+                    console.log('error adding service', error)
+                    setbuttonLoader(false)
+                    Alert.alert("error adding service")
+                });
         }
     }
     const handleRemoveField = (indexToRemove) => {
@@ -545,8 +553,8 @@ const AddService = (props) => {
                             })}
                             {formFields.length > [] ?
 
-                                <TouchableOpacity style={styles.buttonSubmit} onPress={() => HandleSumbitMain()}>
-                                    <Text style={globatStyles.btnText}>Submit</Text>
+                                <TouchableOpacity style={styles.buttonSubmit} onPress={!buttonLoader && HandleSumbitMain}>
+                                    {buttonLoader ? <ActivityIndicator size={20} color={Constants.colors.whiteColor} /> : <Text style={globatStyles.btnText}>Sumbit </Text>}
                                 </TouchableOpacity>
 
                                 :
