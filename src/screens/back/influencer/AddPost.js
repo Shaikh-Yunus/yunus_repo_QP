@@ -339,7 +339,7 @@ const AddPost = props => {
       } else if (!businessTags || businessTags == '') {
         showToastmsg('Please enter tags');
       } else if (!postImg || postImg.length <= 0) {
-        showToastmsg('Please enter atleast one image of product');
+        showToastmsg('Please upload atleast one image');
       } else if (!location || location == '') {
         showToastmsg('Please enter location');
       } else if (!description || description == '') {

@@ -402,7 +402,7 @@ const BusinessRegistration = (props) => {
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false} onPress={() => setModalVisible(!modalVisible)}>
             <View style={styles.wrapper}>
                 <Text style={styles.heading}>Business Registration</Text>
-                <Text style={styles.subHeading}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                <Text style={[styles.subHeading,{textAlign:'center'}]}>Fill in the required details below and register your business with Quarterpillars.</Text>
                 {/* <Text style={styles.heading}>Avatar image</Text> */}
                 <Dialog
                     visible={visible}
@@ -602,7 +602,7 @@ const BusinessRegistration = (props) => {
                 <View style={{ flex: 1, width: '100%', justifyContent: 'center', position: "relative" }}>
                     <TextInput style={globatStyles.inputText} placeholder='Confirm Password' onChangeText={text => {
                         setConfirmPassowrd(text)
-                        setIsconfirmPassValid(true)
+                        setIsconfirmPassowrdValid(true)
                     }} secureTextEntry={!showCPass} />
                     <FontAwesome name={showCPass ? 'eye-slash' : 'eye'} style={styles.eyeIcon} onPress={() => setShowCPass(!showCPass)} />
                 </View>

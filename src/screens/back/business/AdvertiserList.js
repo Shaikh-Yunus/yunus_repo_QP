@@ -49,12 +49,11 @@ const AdvertiserList = (props) => {
     ]
     const getAdverticerList = () => {
         setLoading(true)
-        axios.get(`${Constants.BASE_URL}Get/Adverticer`).then((response) => {
+        axios.get(`${Constants.BASE_URL}Get/Adverticer/${props?.route?.params?.userDetails?.business?.business_id}`).then((response) => {
             setLoading(false)
             if (response.status == 200) {
                 console.log('response_advertiserList', response.data.Data)
                 setadvertiserData(response.data.Data)
-
             }
         }).catch((error) => {
             setLoading(false)
@@ -69,9 +68,9 @@ const AdvertiserList = (props) => {
     // }
     return (
         <View style={globatStyles.wrapper}>
-            {console.log("advertiserData", advertiserData)}
+            {console.log("advertiserData", props?.route?.params?.userDetails?.business?.business_id)}
             <StatusBar translucent={true} backgroundColor='transparent' />
-            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title={`Advertiser List (${advertiserData.length})`} isCamera={true} />
+            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title={`Advertiser List  (${advertiserData?.length})`} isCamera={true} />
             <ScrollView style={styles.container}>
                 <Text style={styles.desc}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .

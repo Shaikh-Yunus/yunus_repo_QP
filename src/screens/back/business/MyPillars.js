@@ -77,14 +77,23 @@ const MyPillars = (props) => {
     };
     return (
         <View style={StyleSheet.wrapper}>
-            {console.log('props_to_check_influcer-Pillers', props?.route?.name)}
-            <CustomAppBar navigation={props.navigation} isMainscreen={false} isReel={false} title='My Pillars' />
+            {/* {console.log('props_to_check_influcer-Pillers', props?.route?.name)} */}
+            <CustomAppBar navigation={props.navigation} isMainscreen={false} isReel={false} title='Inflencer Pillars' />
 
             <ScrollView>
                 <View style={styles.container}>
-                    <Text style={styles.myPillarText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
-                    </Text>
+                    {tabs === 'ongoing' ? <Text style={styles.myPillarText}>
+                        Manage and view your live articles here.
+                    </Text> : null}
+                    {tabs === 'pending' ? <Text style={styles.myPillarText}>
+                        Articles below are under review and will be updated once the business approves.
+                    </Text> : null}
+                    {tabs === 'rejected' ? <Text style={styles.myPillarText}>
+                        Review and manage rejected articles.
+                    </Text> : null}
+                    {tabs === 'ended' ? <Text style={styles.myPillarText}>
+                        View your completed articles here.
+                    </Text> : null}
                     <View style={styles.tabs}>
                         <Pressable onPress={() => getData('ongoing')}>
                             <Text style={{ ...styles.tabText, color: tabs === 'ongoing' ? Constants.colors.primaryColor : null, fontWeight: tabs === 'ongoing' ? '800' : '400', textDecorationColor: tabs === 'ongoing' ? Constants.colors.primaryColor : 'transparent' }}>Ongoing</Text>
@@ -139,9 +148,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     tabs: {
+        marginTop:15,
         flexDirection: 'row',
         alignItems: 'center',
-        padding: Constants.padding,
+        padding: Constants.padding-15,
     },
     tabText: {
         fontFamily: Constants.fontFamily,

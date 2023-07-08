@@ -166,12 +166,12 @@ const Product = (props) => {
             })
             .catch((error) => {
                 // setLoader(false)
-                showToastmsg("Something went wrong.")
+                // showToastmsg("Something went wrong for comments.")
                 console.log("errro=>", error);
             })
     }
     const getReelsApi = async () => {
-        setpostLoader(true)
+        // setpostLoader(true)
         if (props?.route?.params?.userType == 'explore' || props?.route?.params?.userType == 'influencer') {
             await axios.post(`${Constants.BASE_URL}auth/get-cart-item`, {
                 user_id: props?.userDetails?.id
@@ -186,7 +186,7 @@ const Product = (props) => {
             await axios.get(`${Constants.BASE_URL}influencer/get-all-influencer-post`, { userid: props?.userDetails?.id, }).then((response) => {
                 getLikeData()
                 getAllComments()
-                setpostLoader(false)
+                // setpostLoader(false)
                 if (response.data.data.influencerPosts) {
                     response.data.data.influencerPosts.filter((i) => i.status == 'complete').map((item, i) => {
                         swiperData.push(
@@ -211,7 +211,7 @@ const Product = (props) => {
                 }
             })
                 .catch((error) => {
-                    setpostLoader(false)
+                    // setpostLoader(false)
                     console.log("error val abc", error);
                     showToastmsg('Failed to reload')
                 })
@@ -355,7 +355,7 @@ const Product = (props) => {
                             {/* {
                         setMenuItem(setActiveMenu, activeMenu, 'fa', 'money', 'Earnings', navigation, '/earnings',props)
                     } */}
-
+ 
                             {props?.route?.params?.userType == 'influencer' &&
                                 setMenuItem(setActiveMenu, activeMenu, 'ant', 'dashboard', 'Dashboard', navigation, '/dashboard', props)
                             }
@@ -363,7 +363,7 @@ const Product = (props) => {
                                 setMenuItem(setActiveMenu, activeMenu, 'en', 'box', 'My Orders', navigation, '/my-orders', props)
                             }
                             {(props?.route?.params?.userType == 'influencer' || props?.route?.params?.userType == 'advertiser') &&
-                                setMenuItem(setActiveMenu, activeMenu, 'feather', 'gift', 'My Requsts', navigation, '/my-requests', props)
+                                setMenuItem(setActiveMenu, activeMenu, 'feather', 'gift', 'My Requests', navigation, '/my-requests', props)
                             }
                             {
                                 setMenuItem(setActiveMenu, activeMenu, 'image', 'arrow-switch', 'Switch View As', navigation, '/about', props, setModalVisible, modalVisible, setShowDrawer)
@@ -405,56 +405,7 @@ const Product = (props) => {
                     { translateX: offsetValue }
                 ]
             }}>
-                {/* <ImageBackground source={Images.productExploer} style={[styles.productDetailsBg, ]}>
-                    <CustomAppBar navigation={navigation} isMainscreen={true} isReel={false} headerRight={true} title='' openPopup={openPopup} newPost={newPost} openDrawer={openDrawer} showDrawer={showDrawer} />
-                    <View style={styles.overlay}></View>
-                    <View style={styles.iconGroup}>
-                        <AntDesign name='hearto' style={styles.icon} />
-                        <Text style={styles.iconText}>nnk</Text>
-                        <AntDesign name='message1' style={styles.icon} />
-                        <Text style={styles.iconText}>00n</Text>
-                        <Feather name='send' style={styles.icon} />
-                        <Text style={styles.iconText}>00n</Text>
-                    </View>
-                    <View style={styles.productDetailsContainer}>
-                        <View style={styles.imgContainer}>
-                            <Image source={Images.avatar} style={{marginRight: 20,}} />
-                            <Text style={styles.titlename}>Robert Phan</Text>
-                            <Pressable style={globatStyles.followBtn}><Text style={globatStyles.btnText}>Follow</Text></Pressable>
-                        </View>
-                        <Text style={styles.desc}>
-                            Lolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt Lolor sit amet... <Text onPress={()=>gotoMore()} style={styles.moreBtn}>more</Text>
-                        </Text>
-                        <Text style={styles.ago}>10 minutes ago</Text>
-                        <Pressable style={[globatStyles.button,{marginTop: 8, flexDirection: 'row', justifyContent: 'space-between',}]}><Text style={globatStyles.btnText}>Buy</Text><FontAwesome name='angle-right' size={20} color={Constants.colors.whiteColor} /></Pressable>
-                    </View>
-                    {
-                        newPost || showRateus?<View style={[globatStyles.overlay, {zIndex: 999,}]}></View>:null
-                    }
-                    {
-                        showRateus?(
-                            <View style={styles.rateusContainer}>
-                                <Text style={{alignSelf: 'flex-end', fontSize: 20,}} onPress={()=>setShowRateus(false)}>X</Text>
-                                <View style={{alignItems: 'center',}}>
-                                    <Image source={Images.collageOne} />
-                                    <Text style={{fontWeight: '900', fontSize: 20, marginTop: 12,}}>Your opinion matters to us!</Text>
-                                    <Text style={{fontFamily: Constants.fontFamily, color: '#717171', marginTop: 12, marginBottom: 12, textAlign: 'center'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text><AntDesign name='star' size={26} color='#E7CC3E' /> &nbsp; </Text>
-                                        <Text><AntDesign name='star' size={26} color='#E7CC3E' /> &nbsp; </Text>
-                                        <Text><AntDesign name='star' size={26} color='#E7CC3E' /> &nbsp; </Text>
-                                        <Text><AntDesign name='star' size={26} color='#E7CC3E' /> &nbsp; </Text>
-                                        <AntDesign name='staro' size={26} color='#22215B75' />
-                                    </View>
-                                    <View style={{flexDirection: 'row',}}>
-                                        <Pressable style={[globatStyles.btnOutline, {width: '45%'}]}><Text style={globatStyles.btnOutlineText}>Later</Text></Pressable>
-                                        <Pressable style={[globatStyles.button, {width: '45%', marginStart: '10%'}]}><Text style={globatStyles.btnText}>Submit</Text></Pressable>
-                                    </View>
-                                </View>
-                            </View>
-                        ):null
-                    }
-                </ImageBackground> */}
+
                 {/* {console.log("post_data", postData[0].video)} */}
                 {postLoader ?
                     <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%', backgroundColor: '#e5e5e5' }}>
@@ -474,7 +425,9 @@ const Product = (props) => {
                                 style={{ backgroundColor: 'black', borderRadius: showDrawer ? Constants.borderRadius + 50 : 0 }} horizontal={false} showsButtons={false} loop={false} dot={<View></View>} activeDot={<View></View>}>
                                 {titleTypes.map((rec) =>
                                     postData.filter((i) => i.post_type === rec).length > 0 ? <>
-                                        <CustomAppBar navigation={navigation} isMainscreen={true} isReel={true} title={rec} headerRight={true}
+                                        <CustomAppBar navigation={navigation} isMainscreen={true} isReel={true}
+                                            title={rec}
+                                            headerRight={true}
                                             openPopup={openPopup} newPost={newPost} openDrawer={openDrawer} showDrawer={showDrawer}
                                             badgeCount={badgeCount}
                                             setbadgeCount={setbadgeCount}
@@ -546,9 +499,17 @@ const Product = (props) => {
                         <View style={styles.switchViewText}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', paddingRight: 80 }}>Switch View As</Text>
                         </View>
+                        {props?.route?.params?.userType == 'influencer' ? 
                         <Text style={styles.switchText}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
-                        </Text>
+                           Your account has been switched to an Explorer Account giving you access to advance exploring features.
+
+                        </Text> 
+                        :
+                        <Text style={styles.switchText}>
+                            Your Explore account will be switched to an Influencer account giving you more access to advanced features.
+
+                        </Text> }
+                        
                         <View style={styles.modalconatiner}>
                             <View style={{ display: "flex", justifyContent: 'flex-end', flexDirection: 'row', width: '100%', paddingTop: 20 }}>
                                 <AntDesign name='close' size={23} color='#000000' onPress={() => { setModalVisible(!modalVisible); setShowDrawer(true) }} />

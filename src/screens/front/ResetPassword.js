@@ -13,21 +13,21 @@ import Constants from '../../shared/Constants'
 import globatStyles from '../../shared/globatStyles'
 import Entypo from 'react-native-vector-icons/Entypo'
 
-const ResetPassword = (props)=>{
+const ResetPassword = (props) => {
     const [passwordOldEye, setPasswordOldEye] = useState(false)
     const [passwordNewEye, setPasswordNewEye] = useState(false)
     const [passwordConfirmEye, setPasswordConfirmEye] = useState(false)
-    const navation  = useNavigation()
-    const sendEmail = ()=>{
+    const navation = useNavigation()
+    const sendEmail = () => {
         navation.navigate('/reset-password')
     }
-    const togglePasswordNew = ()=>{
+    const togglePasswordNew = () => {
         setPasswordNewEye(!passwordNewEye)
     }
-    const togglePasswordConfirm = ()=>{
+    const togglePasswordConfirm = () => {
         setPasswordConfirmEye(!passwordConfirmEye)
     }
-    const togglePasswordOld = ()=>{
+    const togglePasswordOld = () => {
         setPasswordOldEye(!passwordOldEye)
     }
     return (
@@ -36,19 +36,19 @@ const ResetPassword = (props)=>{
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.forgotPasswordText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                        Reset your password securely and continue.
                     </Text>
                     <View style={styles.fieldContainer}>
                         <TextInput style={globatStyles.inputText} placeholder='New Password' secureTextEntry={!passwordOldEye} />
-                        <Entypo name={passwordOldEye?'eye-with-line':'eye'} style={styles.passwordToggle} onPress={togglePasswordOld} />
+                        <Entypo name={passwordOldEye ? 'eye-with-line' : 'eye'} style={styles.passwordToggle} onPress={togglePasswordOld} />
                     </View>
                     <View style={styles.fieldContainer}>
                         <TextInput style={globatStyles.inputText} placeholder='New Password' secureTextEntry={!passwordNewEye} />
-                        <Entypo name={passwordNewEye?'eye-with-line':'eye'} style={styles.passwordToggle} onPress={togglePasswordNew} />
+                        <Entypo name={passwordNewEye ? 'eye-with-line' : 'eye'} style={styles.passwordToggle} onPress={togglePasswordNew} />
                     </View>
                     <View style={styles.fieldContainer}>
                         <TextInput style={globatStyles.inputText} placeholder='Confirm Password' secureTextEntry={!passwordConfirmEye} />
-                        <Entypo name={passwordConfirmEye?'eye-with-line':'eye'} style={styles.passwordToggle} onPress={togglePasswordConfirm} />
+                        <Entypo name={passwordConfirmEye ? 'eye-with-line' : 'eye'} style={styles.passwordToggle} onPress={togglePasswordConfirm} />
                     </View>
                     <Pressable onPress={sendEmail} style={globatStyles.button}><Text style={globatStyles.btnText}>Change Password</Text></Pressable>
                 </View>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         marginBottom: Constants.margin,
     },
     fieldContainer: {
-        
+
     },
     passwordToggle: {
         position: 'absolute',

@@ -9,7 +9,7 @@ const GuideScreen = () => {
 
   const navigation = useNavigation();
   const clickfn=async()=>{
-    await AsyncStorage.setItem("gesture","true")
+    // await AsyncStorage.setItem("gesture","true")
     navigation.goBack()
   }
   return (

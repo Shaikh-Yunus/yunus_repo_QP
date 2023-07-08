@@ -1,0 +1,98 @@
+[
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\drawable_launch_screen.xml.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\drawable\\launch_screen.xml"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\drawable_splash_logo.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\drawable\\splash_logo.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\font_archivo_black.xml.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\font\\archivo_black.xml"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\font_black_han_sans.xml.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\font\\black_han_sans.xml"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\drawable_rn_edit_text_material.xml.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\drawable\\rn_edit_text_material.xml"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\layout_launch_screen.xml.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\layout\\launch_screen.xml"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\drawable_splashscreen_image.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\drawable\\splashscreen_image.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\font_alfa_slab_one.xml.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\font\\alfa_slab_one.xml"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_splash.xml.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+    }
+]

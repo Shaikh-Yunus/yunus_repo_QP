@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Pressable, Button, DatePickerIOSBase, ScrollView, Alert, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import globatStyles from '../../../shared/globatStyles'
 import CustomAppBar from '../../../components/business/CustomAppBar'
 import { useNavigation } from '@react-navigation/native'
@@ -14,27 +14,45 @@ import Feather from 'react-native-vector-icons/Feather'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import Dialog, { SlideAnimation, DialogContent, DialogTitle } from 'react-native-popup-dialog';
 import showToastmsg from '../../../shared/showToastmsg'
+import FastImage from 'react-native-fast-image'
 
 const EditService = (props) => {
     const navigation = useNavigation()
     // checking props
     const propstest = props?.route?.params?.Services
     console.log("this is propstest", propstest);
+    const convertForm = props?.route?.params?.Services?.form_json
+    console.log("this is convertForm", convertForm);
     const CheckingProps = props?.route?.params?.userDetails?.id
 
     console.log("this is UserDetails in EditService", CheckingProps);
     // images
     const [visible, setvisible] = useState(false)
+    const [StoredImage, SetStoredImage] = useState([])
+    console.log("this is StoredImage", StoredImage);
     const [cameraImg, setCameraImg] = useState([])
     console.log("this is camera image", cameraImg);
-    const [serviceDescription, setServiceDescription] = useState()
-    const [Title, setTitle] = useState()
-    const [price, setPrice] = useState('')
-
+    const [Title, setTitle] = useState(props?.route?.params?.Services?.title)
+    const [serviceDescription, setServiceDescription] = useState(props?.route?.params?.Services?.description)
+    const [price, setPrice] = useState(props?.route?.params?.Services?.price)
+    useEffect(() => {
+        getFormProps()
+        if (props?.route?.params?.Services && props?.route?.params?.Services?.images) {
+            const images = JSON.parse(props?.route?.params?.Services?.images);
+            SetStoredImage(images);
+            console.log("this is images", images);
+        }
+    }, [])
+    const getFormProps = () => {
+        if (convertForm.length > 0) {
+            const parsedData = JSON.parse(convertForm); // Parse the string representation into an object
+            setFormFields([...formFields, ...parsedData]);
+        }
+    };
     // formfields
     const [formFields, setFormFields] = useState([]);
-    // const formFieldsString = JSON.stringify(formFields);
     console.log("this is form fields =>", formFields);
+    // const formFieldsString = JSON.stringify(formFields);
     // console.log("this is formFieldsString =>", formFieldsString);
     const [text, setText] = useState('');
     const [type, setType] = useState("");
@@ -98,6 +116,10 @@ const EditService = (props) => {
         cameraImg.splice(ind, 1)
         setCameraImg([...cameraImg])
     }
+    const removeStoreImg = (ind) => {
+        StoredImage.splice(ind, 1)
+        SetStoredImage([...StoredImage])
+    }
     // form functionality
     const HandleAddMore = () => {
         const newOptions = {
@@ -117,7 +139,7 @@ const EditService = (props) => {
     };
 
     const handleButtonPress = () => {
-        setFormFields([...formFields, { title: Title, label: text, type: type, options: AddOptions, timeData: timeData }]);
+        setFormFields([...formFields, { label: text, type: type, options: AddOptions, timeData: timeData }]);
         console.log(formFields);
     }
 
@@ -182,6 +204,7 @@ const EditService = (props) => {
             .catch(error => console.log('error', error));
     }
     const handleRemoveField = (indexToRemove) => {
+        console.log("delete field pressed");
         const newFields = formFields.filter((field, index) => index !== indexToRemove);
         setFormFields(newFields);
     };
@@ -193,6 +216,38 @@ const EditService = (props) => {
 
             <View style={styles.mainContainer}>
                 <ScrollView style={{ height: '90%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: Constants.padding, }}>
+                        {StoredImage.map((item, index) =>
+                            <View style={styles.cameraContainer}>
+                                <FastImage
+                                    source={{ uri: `${Constants.BASE_IMAGE_URL}${item}` }}
+                                    alt='Img'
+                                    style={{
+                                        width: '100%',
+                                        height: 100,
+                                        resizeMode: 'contain',
+                                        margin: 5,
+                                        marginBottom: 20
+                                    }}
+                                />
+                                <Pressable onPress={() => removeStoreImg(index)} style={styles.removeImg}>
+                                    <Text style={styles.removeIcon}>X</Text>
+                                </Pressable>
+                            </View>
+                        )}
+
+                        {cameraImg.map((item, index) =>
+                            <View style={styles.cameraContainer}>
+                                <FastImage source={{ uri: item.uri }} alt='Img' style={{
+                                    width: '80%',
+                                    height: 100,
+                                    resizeMode: 'contain',
+                                    margin: 5, marginBottom: 20
+                                }} />
+                                <Pressable onPress={() => removeImg(index)} style={styles.removeImg}><Text style={styles.removeIcon}>X</Text></Pressable>
+                            </View>
+                        )}
+                    </View>
                     <Dialog
                         visible={visible}
                         onTouchOutside={() => setvisible(!visible)}
@@ -202,24 +257,12 @@ const EditService = (props) => {
                             slideFrom: 'bottom',
                         })}
                     >
+
                         <DialogContent>
                             {
                                 cameraImg?.length > 0 ? (
                                     <>
-                                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: Constants.padding, }}>
 
-                                            {cameraImg.map((item, index) =>
-                                                <View style={styles.cameraContainer}>
-                                                    <Image source={{ uri: item.uri }} alt='Img' style={{
-                                                        width: '80%',
-                                                        height: 100,
-                                                        resizeMode: 'contain',
-                                                        margin: 5, marginBottom: 20
-                                                    }} />
-                                                    <Pressable onPress={() => removeImg(index)} style={styles.removeImg}><Text style={styles.removeIcon}>X</Text></Pressable>
-                                                </View>
-                                            )}
-                                        </View>
 
                                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Pressable style={styles.cameraContainer} onPress={openCamera}>
@@ -271,6 +314,7 @@ const EditService = (props) => {
                         multiline={true}
                         numberOfLines={4}
                         placeholder='Enter Service Description'
+                        value={serviceDescription}
                         onChangeText={text => setServiceDescription(text)}
                         style={globatStyles.inputText} />
 
@@ -390,12 +434,12 @@ const EditService = (props) => {
                                                 />
                                             </View>
                                             <View>
-                                                <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveField(index)}>
+                                                <TouchableOpacity onPress={() => handleRemoveField(index)}>
                                                     <AntDesign
                                                         name='delete'
                                                         size={25}
                                                         color='red'
-                                                        onPress={() => removeAddMoreOption(index)}
+                                                        onPress={() => handleRemoveField(index)}
                                                     />
                                                 </TouchableOpacity>
                                             </View>

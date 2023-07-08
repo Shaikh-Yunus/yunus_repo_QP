@@ -10,8 +10,8 @@ import Constants from '../../../shared/Constants'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import globatStyles from '../../../shared/globatStyles'
 
-const ShareSuccessMsg = ({navigation})=>{
-    const gotoShareAndEarn = ()=>{
+const ShareSuccessMsg = ({ navigation }) => {
+    const gotoShareAndEarn = () => {
         navigation.navigate('/share-and-earn')
     }
     return (
@@ -21,11 +21,11 @@ const ShareSuccessMsg = ({navigation})=>{
                 <View style={styles.circle}>
                     <AntDesign name='sharealt' size={35} color={Constants.colors.whiteColor} />
                 </View>
-                <Text style={styles.successHeading}>Shared successful</Text>
+                <Text style={styles.successHeading}>Shared successful </Text>
                 <Text style={styles.successText}>
-                    It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    Your article has been shared successfully. You can view your progress anytime at the 'Share & Earn' section.
                 </Text>
-                <Pressable onPress={gotoShareAndEarn} style={[globatStyles.button, {backgroundColor: Constants.colors.whiteColor, marginTop: 40,}]}>
+                <Pressable onPress={gotoShareAndEarn} style={[globatStyles.button, { backgroundColor: Constants.colors.whiteColor, marginTop: 40, }]}>
                     <Text style={[globatStyles.btnText, { color: Constants.colors.primaryColor }]}>Continue</Text>
                 </Pressable>
             </View>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: Constants.padding,
     },
-    circle:{
+    circle: {
         padding: 35,
         backgroundColor: 'rgba(255,255,255,0.6)',
         borderRadius: 100,
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     successText: {
         fontFamily: Constants.fontFamily,
         color: Constants.colors.whiteColor,
+        textAlign:'center'
     },
 })
 

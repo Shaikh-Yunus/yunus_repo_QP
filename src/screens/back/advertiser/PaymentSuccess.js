@@ -10,8 +10,8 @@ import Constants from '../../../shared/Constants'
 import Feather from 'react-native-vector-icons/Feather'
 import globatStyles from '../../../shared/globatStyles'
 
-const PaymentSuccess = ({navigation})=>{
-    const gotoCategory = ()=>{
+const PaymentSuccess = ({ navigation }) => {
+    const gotoCategory = () => {
         navigation.navigate('/category')
     }
     return (
@@ -23,9 +23,9 @@ const PaymentSuccess = ({navigation})=>{
                 </View>
                 <Text style={styles.successHeading}>Payment successful</Text>
                 <Text style={styles.successText}>
-                    It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    Payment confirmed! We have successfully processed your transaction and a confirmation mail has been sent to your registered e-mail address. Thank you for choosing our services and placing your trust in us!
                 </Text>
-                <Pressable onPress={gotoCategory} style={[globatStyles.button, {backgroundColor: Constants.colors.whiteColor, marginTop: 40,}]}>
+                <Pressable onPress={gotoCategory} style={[globatStyles.button, { backgroundColor: Constants.colors.whiteColor, marginTop: 40, }]}>
                     <Text style={[globatStyles.btnText, { color: Constants.colors.primaryColor }]}>Continue</Text>
                 </Pressable>
             </View>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: Constants.padding,
     },
-    circle:{
+    circle: {
         padding: 35,
         backgroundColor: 'rgba(255,255,255,0.6)',
         borderRadius: 100,

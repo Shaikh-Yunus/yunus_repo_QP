@@ -271,7 +271,7 @@ const AdvertiserRegistration = (props) => {
         <SafeAreaView style={styles.wrapper}>
             <Text style={styles.heading}>Advertiser Registration</Text>
             <ScrollView showsVerticalScrollIndicator={false} onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.subHeading}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                <Text style={styles.subHeading}>Fill in your business details to be registered as an advertiser.</Text>
                 {/* <Text style={styles.heading}>Avatar image</Text> */}
                 <Dialog
                     visible={visible}
@@ -369,7 +369,7 @@ const AdvertiserRegistration = (props) => {
                 <TextInput style={globatStyles.inputText} placeholder='Company address' onChangeText={setcompanyAddress} />
                 <TextInput style={globatStyles.inputText} placeholder='Company owner name' onChangeText={setcompanyOwnerName} />
                 <TextInput style={globatStyles.inputText} placeholder='Gst number' onChangeText={setgstNo} />
-                <TextInput style={globatStyles.inputText} placeholder='Pan card number' onChangeText={setpanCard} />
+                <TextInput style={globatStyles.inputText} maxLength={10} placeholder='Pan card number' onChangeText={setpanCard} />
                 <TextInput keyboardType={'name-phone-pad'} placeholder='Phone number' style={globatStyles.inputText} onChangeText={setPhone} />
 
                 <View style={{ marginTop: 12, }}>

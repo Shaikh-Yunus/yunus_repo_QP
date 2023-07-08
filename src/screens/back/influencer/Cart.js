@@ -15,15 +15,15 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import globatStyles from '../../../shared/globatStyles'
 import { FlashList } from '@shopify/flash-list'
 
-const Cart = ({navigation})=>{
+const Cart = ({ navigation }) => {
     const cartItems = [
-        {id: 1},
-        {id: 2},
-        {id: 3},
-        {id: 4},
-        {id: 5},
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 },
+        { id: 5 },
     ]
-    const gotoSelectAddress = ()=>{
+    const gotoSelectAddress = () => {
         navigation.navigate('/goto-select-address')
     }
     return (
@@ -32,17 +32,16 @@ const Cart = ({navigation})=>{
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Cart' headerRight={false} />
             <ScrollView style={styles.wrapper}>
                 <Text style={styles.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
-                </Text>
+                    Confirm your cart items and proceed to 'Checkout' to complete your purchase.                </Text>
                 <FlashList
                     data={cartItems}
-                    style={{marginBottom: 10,}}
+                    style={{ marginBottom: 10, }}
                     showsVerticalScrollIndicator={false}
-                    renderItem={item=><RenderCart item={item} />}
-                    keyExtractor={item=>item?.id?.toString()} 
-                    estimatedItemSize={200}/>
-            </ScrollView> 
-            <Pressable onPress={gotoSelectAddress} style={[globatStyles.button, {marginTop: 10}]}><Text style={globatStyles.btnText}>Proceeds ( <FontAwesome name='rupee' /> 1250 )</Text></Pressable>
+                    renderItem={item => <RenderCart item={item} />}
+                    keyExtractor={item => item?.id?.toString()}
+                    estimatedItemSize={200} />
+            </ScrollView>
+            <Pressable onPress={gotoSelectAddress} style={[globatStyles.button, { marginTop: 10 }]}><Text style={globatStyles.btnText}>Proceeds ( <FontAwesome name='rupee' /> 1250 )</Text></Pressable>
         </View>
     )
 }

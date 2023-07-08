@@ -184,8 +184,7 @@ const AddAddress = (props)=>{
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Add Address' headerRight={false} />
             <ScrollView style={styles.wrapper}>
                 <Text style={styles.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
-                </Text>
+                Fill in all the required details and click 'Save' to complete your address.                </Text>
                 <View style={{marginTop: 12, paddingBottom: 30,}}>
                     <TextInput style={globatStyles.inputText} placeholder='Address Label' value={locationName} onChangeText={setlocationName} />
                     <TextInput style={globatStyles.inputText} placeholder='Address Line' value={addressLine} onChangeText={setAddressLine}/>

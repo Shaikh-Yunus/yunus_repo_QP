@@ -66,6 +66,7 @@ const BusinessSignIn = (props) => {
                                     setIsLoading(false)
                                 })
                             showToastmsg("Login successfull")
+                            // console.log("this is userdetails",JSON.stringify(response.data.user));
                             await AsyncStorage.setItem("userDetails", JSON.stringify(response.data.user));
                             await AsyncStorage.setItem("userType", JSON.stringify(props.route.params.login_type));
                             if (props.route.params.login_type == 'Business') { navigation.navigate('/home', { "userDetails": response.data.user }) }
@@ -86,9 +87,11 @@ const BusinessSignIn = (props) => {
                 }
                 else {
                     setIsLoading(false)
-                    showToastmsg('enter valid user and password')
+                    showToastmsg('enter valid username and password')
                 }
             }
+            {console.log('props?.route?.params?.login_type', fcmtoken)}
+
         } catch (error) {
             console.log(error)
             setIsLoading(false)
@@ -122,7 +125,6 @@ const BusinessSignIn = (props) => {
 
     return (
         <View style={styles.background}>
-            {console.log('props?.route?.params?.login_type', props?.route?.params?.login_type)}
             <VideoPlayer
                 video={props?.route?.params?.login_type === "Business" ? Videos.businessVideo
                     : props?.route?.params?.login_type === "Influencer" ?

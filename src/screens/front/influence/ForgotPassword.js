@@ -8,13 +8,13 @@ import {
 import CustomAppBar from '../../../components/influencer/CustomAppBar'
 import Constants from '../../../shared/Constants'
 
-const ForgotPassword =()=>{
+const ForgotPassword = () => {
     return (
         <View style={styles.container}>
             <CustomAppBar isMainscreen={false} title='Forgot Password' />
             <ScrollView>
                 <Text style={styles.desc}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    Reset your password securely and continue using our services.
                 </Text>
             </ScrollView>
         </View>

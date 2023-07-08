@@ -75,7 +75,7 @@ const ViewExploreProfile = (props) => {
 
             <ScrollView>
                 <View style={styles.container}>
-                    <Text style={styles.editText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                    <Text style={styles.editText}></Text>
                 </View>
                 <View style={styles.container}>
                     {

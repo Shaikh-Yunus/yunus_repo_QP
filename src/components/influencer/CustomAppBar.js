@@ -87,8 +87,8 @@ const CustomAppBar = (props) => {
     };
 
     return (
-        <View style={styles.wrapper}>
-            {console.log('props?.userDetails', props?.userDetails)}
+        <View style={[styles.wrapper, { backgroundColor: 'rgba(0, 0, 0, 0)' }]}>
+             {console.log('props?.userDetails', props?.userDetails)}
             {
                 props.isMainscreen ? (
                     <View style={[styles.logoContainer, props.title ? ({ alignItems: 'center' }) : null]}>
@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-
     },
     logoContainer: {
         flexDirection: 'row',
@@ -251,12 +250,12 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
     addnewPost: {
-        position: 'absolute',
+        position:'absolute',
         backgroundColor: Constants.colors.whiteColor,
         right: 20,
         top: 40,
         width: "170%",
-        zIndex: 9999,
+        zIndex: 9999999,
         borderTopLeftRadius: 12,
         borderBottomRightRadius: 12,
         borderBottomLeftRadius: 12,

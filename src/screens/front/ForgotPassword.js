@@ -12,9 +12,9 @@ import CustomAppBar from '../../components/business/CustomAppBar'
 import Constants from '../../shared/Constants'
 import globatStyles from '../../shared/globatStyles'
 
-const ForgotPassword = (props)=>{
-    const navation  = useNavigation()
-    const sendEmail = ()=>{
+const ForgotPassword = (props) => {
+    const navation = useNavigation()
+    const sendEmail = () => {
         navation.navigate('/reset-password')
     }
 
@@ -24,9 +24,9 @@ const ForgotPassword = (props)=>{
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.forgotPasswordText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                        Reset your password securely and continue using our services.
                     </Text>
-                    <Text style={[styles.forgotPasswordText, {marginBottom: 12}]}>
+                    <Text style={[styles.forgotPasswordText, { marginBottom: 12 }]}>
                         *Recovery Email ID (**********eer@gmail.com)
                     </Text>
                     <TextInput style={globatStyles.inputText} placeholder='Enter Email ID' />
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginTop: Constants.margin,
     },
-    
+
 })
 
 export default ForgotPassword

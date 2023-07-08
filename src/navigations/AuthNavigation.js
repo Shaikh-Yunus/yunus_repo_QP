@@ -87,6 +87,7 @@ import AdvertiserList from '../screens/back/business/AdvertiserList'
 import AdvertiserPillar from '../screens/back/business/AdvertiserPillar'
 import AddService from '../screens/back/business/AddService'
 import EditService from '../screens/back/business/EditService'
+import SetNewPassword from '../screens/common/SetNewPassword'
 const Stack = createNativeStackNavigator()
 
 const AuthNavigation = (props) => {
@@ -183,6 +184,8 @@ const AuthNavigation = (props) => {
                 <Stack.Screen name="/add-product-preview" component={AddProductPreview} />
                 <Stack.Screen name="/Notification" component={Notification} />
                 <Stack.Screen name="/NotificationScreen" component={NotificationScreen} />
+                <Stack.Screen name="/Set-New-Password" component={SetNewPassword} />
+
                 {/* <Stack.Screen name='/admin-signin' component={AdminSignin} />
                 <Stack.Screen name='/forgot-password-admin' component={ForgotPasswordAdmin} />
                 <Stack.Screen name='/set-password-admin' component={SetPasswordAdmin} />

@@ -321,6 +321,7 @@ const InfluencerRegistration = (props) => {
             axios.post(props.route.params.type == 'Explorer' ? `${Constants.BASE_URL}explore/registration` : `${Constants.BASE_URL}influencer/registration`, formdata, {
                 headers: headers
             }).then((response) => {
+                {console.log('response_exploreer',response.status)}
                 showToastmsg(response.data.msg)
                 if (response.status == 200) {
 
@@ -419,7 +420,12 @@ const InfluencerRegistration = (props) => {
         <SafeAreaView style={styles.container} >
             <Text style={styles.influencerRegiHeading}>{props.route.params.type} Registration</Text>
             <ScrollView showsVerticalScrollIndicator={false} onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.desc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                {props.route.params.type == 'Explorer' ? 
+                <Text style={styles.desc}> Fill in your details and create a profile for others to explore.</Text> 
+                :
+                <Text style={styles.desc}>Edit public information about yourself. These changes will be visible to the other users.</Text> 
+ 
+                }
 
                 <Dialog
                     visible={visible}
@@ -734,6 +740,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontFamily,
         marginTop: Constants.margin,
         marginBottom: Constants.margin,
+        textAlign:'center'
     },
     calenderIcon: {
         position: 'absolute',

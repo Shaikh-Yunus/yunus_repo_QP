@@ -14,22 +14,30 @@ import Feather from 'react-native-vector-icons/Feather'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import Dialog, { SlideAnimation, DialogContent, DialogTitle } from 'react-native-popup-dialog';
 import showToastmsg from '../../../shared/showToastmsg'
+import { useEffect } from 'react'
 
 const AddService = (props) => {
+    // useEffect
+    useEffect(() => {
+        CategoryToType()
+        getServiceTitle()
+    }, [])
+
     const navigation = useNavigation()
     // loader
     const [buttonLoader, setbuttonLoader] = useState(false)
     // checking props
 
-    const CheckingProps = props?.route?.params?.userDetails?.id
+    const CheckingProps = props?.route?.params?.userDetails?.business?.catorige
 
-    console.log("this is UserDetails in AddService", CheckingProps);
+    console.log("this is props in AddService", CheckingProps);
     // images
     const [visible, setvisible] = useState(false)
     const [cameraImg, setCameraImg] = useState([])
     console.log("this is camera image", cameraImg);
     const [serviceDescription, setServiceDescription] = useState()
     const [Title, setTitle] = useState('')
+    console.log("this is service title after selecting option", Title);
     const [price, setPrice] = useState('')
 
     // formfields
@@ -45,7 +53,7 @@ const AddService = (props) => {
 
     const data = [
         { label: 'TextInput', value: '1' },
-        { label: 'DrowpDown', value: '2' },
+        { label: 'Dropdown', value: '2' },
         { label: 'Time', value: '3' },
         { label: 'Date', value: '4' },
         // { label: 'Time', value: '4' },
@@ -56,7 +64,8 @@ const AddService = (props) => {
     const [isFocusTwo, setIsFocusTwo] = useState(false);
     const [valueTwo, setValueTwo] = useState(null)
     const [labelTwo, setLabelTwo] = useState('')
-
+    const [isfocusThree, setIsfocusThree] = useState(false)
+    const [valueThree, setValueThree] = useState(null)
     // time picker for form
     const [timeData, setTimeData] = useState([])
     // console.log("time data in array=>", timeData);
@@ -67,7 +76,27 @@ const AddService = (props) => {
     const [dateTwo, setDateTwo] = useState(new Date())
     // console.log("this is Date=>", dateTwo);
     const [isOpen, setIsOpen] = useState([{ label: '', isOpen: false }])
+    // service names
+    const [serviceName, setServiceName] = useState([])
+    console.log("this is serviceName", serviceName);
+    // business category
+    const [businessType, setbusinessType] = useState()
+    console.log("this is buisness type", businessType);
 
+    const CategoryToType = () => {
+        if (props?.route?.params?.userDetails?.business?.catorige == "Travel") {
+            setbusinessType(1)
+        }
+        else if (props?.route?.params?.userDetails?.business?.catorige == "Food") {
+            setbusinessType(2)
+        }
+        else if (props?.route?.params?.userDetails?.business?.catorige == "LifeStyle") {
+            setbusinessType(3)
+        }
+        else if (props?.route?.params?.userDetails?.business?.catorige == "Fashion") {
+            setbusinessType(4)
+        }
+    }
 
     // images functionality
     const openCamera = async () => {
@@ -121,37 +150,7 @@ const AddService = (props) => {
         setFormFields([...formFields, { title: Title, label: text, type: type, options: AddOptions, timeData: timeData }]);
         console.log(formFields);
     }
-    // const HandleSubmit = () => {
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Accept", "application/json");
-    //     myHeaders.append("Content-Type", "application/json");
 
-    //     var raw = JSON.stringify({
-    //         "business_id": props?.route?.params?.userDetails?.userDetails?.id,
-    //         "title": Title,
-    //         "form_json": JSON.stringify(formFields)
-
-    //     });
-
-    //     var requestOptions = {
-    //         method: 'POST',
-    //         headers: myHeaders,
-    //         body: raw,
-    //         redirect: 'follow'
-    //     };
-
-    //     fetch(`${Constants.BASE_URL}business/Add/Service`, requestOptions)
-    //         .then(response => response.json())
-    //         .then(result => {
-    //             console.log(result)
-    //             if (result.Status == 200) {
-    //                 navigation.navigate('/productScreen')
-    //             }
-    //         }
-    //         )
-    //         .catch(error => console.log('error', error));
-    //     console.log("this is submit!");
-    // }
     const HandleSumbitMain = () => {
         if (Title == '' || Title.length < 0) {
             Alert.alert("Title is mandatory!")
@@ -172,6 +171,7 @@ const AddService = (props) => {
             Alert.alert("Price is mandatory!")
         }
         else {
+            setbuttonLoader(true)
             var myHeaders = new Headers();
             myHeaders.append("Accept", "application/json");
 
@@ -207,6 +207,35 @@ const AddService = (props) => {
                 });
         }
     }
+
+    const getServiceTitle = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "type": "3"
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(`${Constants.BASE_URL}business/GetServiuceNames`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                if (result.Status == 200) {
+                    setServiceName(result.Data)
+                }
+            })
+            .catch(error => {
+                console.log('error in getting service name', error)
+
+            });
+    }
     const handleRemoveField = (indexToRemove) => {
         const newFields = formFields.filter((field, index) => index !== indexToRemove);
         setFormFields(newFields);
@@ -219,6 +248,21 @@ const AddService = (props) => {
 
             <View style={styles.mainContainer}>
                 <ScrollView style={{ height: '90%' }}>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: Constants.padding, }}>
+
+                        {cameraImg.map((item, index) =>
+                            <View style={styles.cameraContainer}>
+                                <Image source={{ uri: item.uri }} alt='Img' style={{
+                                    width: '80%',
+                                    height: 100,
+                                    resizeMode: 'contain',
+                                    margin: 5, marginBottom: 20
+                                }} />
+                                <Pressable onPress={() => removeImg(index)} style={styles.removeImg}><Text style={styles.removeIcon}>X</Text></Pressable>
+                            </View>
+                        )}
+
+                    </View>
                     <Dialog
                         visible={visible}
                         onTouchOutside={() => setvisible(!visible)}
@@ -232,24 +276,11 @@ const AddService = (props) => {
                             {
                                 cameraImg?.length > 0 ? (
                                     <>
-                                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', padding: Constants.padding, }}>
 
-                                            {cameraImg.map((item, index) =>
-                                                <View style={styles.cameraContainer}>
-                                                    <Image source={{ uri: item.uri }} alt='Img' style={{
-                                                        width: '80%',
-                                                        height: 100,
-                                                        resizeMode: 'contain',
-                                                        margin: 5, marginBottom: 20
-                                                    }} />
-                                                    <Pressable onPress={() => removeImg(index)} style={styles.removeImg}><Text style={styles.removeIcon}>X</Text></Pressable>
-                                                </View>
-                                            )}
-                                        </View>
 
                                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                             <Pressable style={styles.cameraContainer} onPress={openCamera}>
-                                                <Image source={Images.cameraIcon} alt='Img' />
+                                                <Feather name="camera" style={{ fontSize: 20 }} />
                                                 <Text style={styles.addCameraText}>Add more</Text>
                                             </Pressable>
                                             <Pressable style={styles.cameraContainer} onPress={choosePhotoFromLibrary}>
@@ -261,7 +292,7 @@ const AddService = (props) => {
 
                                 ) : (<View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                                     <Pressable style={styles.cameraContainer} onPress={openCamera}>
-                                        <Image source={Images.cameraIcon} alt='Img' />
+                                        <Feather name="camera" style={{ fontSize: 20 }} />
                                         <Text style={styles.addCameraText}>Add</Text>
                                     </Pressable>
                                     <Pressable style={styles.cameraContainer} onPress={choosePhotoFromLibrary}>
@@ -283,14 +314,35 @@ const AddService = (props) => {
                     </View>
 
                     <Text style={styles.sectionHeading}>Service Name</Text>
-                    <TextInput
+                    <Dropdown
+                        style={[styles.dropdown, isfocusThree && { borderColor: 'blue' }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={serviceName}
+                        maxHeight={300}
+                        labelField="name"
+                        valueField="name"
+                        placeholder={!isfocusThree ? 'Select Your Service' : '...'}
+                        searchPlaceholder="Search..."
+                        value={Title}
+                        onFocus={() => setIsfocusThree(true)}
+                        onBlur={() => setIsfocusThree(false)}
+                        onChange={item => {
+                            setTitle(item.name);
+                            setIsfocusThree(false);
+                        }}
+
+                    />
+                    {/* <TextInput
                         style={styles.input}
                         placeholder='Enter Service Name'
                         placeholderTextColor="#A9A9A9"
                         value={Title}
                         onChangeText={setTitle}
                     // accessibilityLabel={label}
-                    />
+                    /> */}
 
                     <Text style={styles.sectionHeading}>Service Description</Text>
                     <TextInput
@@ -421,7 +473,7 @@ const AddService = (props) => {
                                                         name='delete'
                                                         size={25}
                                                         color='red'
-                                                        onPress={() => removeAddMoreOption(index)}
+                                                        onPress={() => handleRemoveField(index)}
                                                     />
                                                 </TouchableOpacity>
                                             </View>
@@ -590,6 +642,7 @@ const styles = StyleSheet.create({
     cameraContainer: {
         marginTop: Constants.margin,
         marginBottom: 12,
+        marginRight: 12,
         width: 90,
         height: 90,
         backgroundColor: Constants.colors.inputBgColor,
@@ -714,7 +767,7 @@ const styles = StyleSheet.create({
         padding: 14,
         width: '100%',
         borderRadius: Constants.borderRadius,
-        // marginTop: 35,
+        marginBottom: 20,
     },
     buttonText: {
         color: '#fff',

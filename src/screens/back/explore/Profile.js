@@ -13,20 +13,20 @@ import Constants from '../../../shared/Constants'
 import Feather from 'react-native-vector-icons/Feather'
 import globatStyles from '../../../shared/globatStyles'
 
-const Profile = (props)=>{
+const Profile = (props) => {
     const [cameraImg, setCameraImg] = useState(null)
-    const gotoEditUser = ()=>{
+    const gotoEditUser = () => {
         props.navigation.navigate('/edit-profile')
     }
-    const openCamera = async ()=>{
-		try{
-			const result = await launchCamera()
-			setCameraImg(result.assets[0].uri)
-		}catch(err){
-			console.log(err)
-		}
+    const openCamera = async () => {
+        try {
+            const result = await launchCamera()
+            setCameraImg(result.assets[0].uri)
+        } catch (err) {
+            console.log(err)
+        }
     }
-    const removeImg = ()=>{
+    const removeImg = () => {
         setCameraImg(null)
     }
     return (
@@ -36,15 +36,14 @@ const Profile = (props)=>{
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.myPillarText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
                     </Text>
                     {
-                        cameraImg?(
+                        cameraImg ? (
                             <View style={styles.cameraContainer}>
-                                <Image source={{uri: cameraImg}} alt='Img' style={styles.logo} />
+                                <Image source={{ uri: cameraImg }} alt='Img' style={styles.logo} />
                                 <Pressable onPress={removeImg} style={styles.removeImg}><Text style={styles.removeIcon}>X</Text></Pressable>
                             </View>
-                        ):(
+                        ) : (
                             <Pressable style={styles.cameraContainer} onPress={openCamera}>
                                 <Image source={Images.userInfoLogo} style={styles.logo} />
                                 <Image source={Images.cameraIcontTwo} style={styles.cameraIcon} />
@@ -72,7 +71,7 @@ const Profile = (props)=>{
                         <Text style={styles.value}>35 yrs</Text>
                     </View>
                     <View style={globatStyles.divider}></View>
-                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <View style={styles.summary}>
                             <Text style={styles.summaryText}>Orders 56</Text>
                         </View>
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     logo: {
         alignSelf: 'center',
         marginTop: Constants.margin,
-        marginBottom: Constants.margin+30,
+        marginBottom: Constants.margin + 30,
         borderWidth: 2,
     },
     cameraIcon: {
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     },
     userDetailContainer: {
         flexDirection: 'row',
-        marginBottom: Constants.margin-8,
+        marginBottom: Constants.margin - 8,
     },
     label: {
         width: '40%',
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     },
     editIcon: {
         position: 'absolute',
-        right: Constants.padding+10,
+        right: Constants.padding + 10,
         top: 30,
     },
     summary: {

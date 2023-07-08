@@ -14,16 +14,16 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import globatStyles from '../../../shared/globatStyles'
 import { useNavigation } from '@react-navigation/native'
 
-const SignupDetails = (props)=>{
+const SignupDetails = (props) => {
     const [date, setDate] = useState(new Date())
     const [open, setOpen] = useState(false)
-    const [gender,setGender] = useState('m')
+    const [gender, setGender] = useState('m')
     const navigation = useNavigation()
-    
-    const gotoUserManagement = ()=>{
+
+    const gotoUserManagement = () => {
         props.route.params.authentication('explore')
     }
-    const gotoSignin = ()=>{
+    const gotoSignin = () => {
         navigation.navigate('/goto-signin')
     }
     return (
@@ -31,7 +31,9 @@ const SignupDetails = (props)=>{
             <Text style={styles.header}>Signup</Text>
             <ScrollView>
                 <View style={styles.container}>
-                    <Text style={styles.editText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                    <Text style={styles.editText}>
+                        Fill in your details and create a profile for others to explore m
+                    </Text>
                 </View>
                 <View style={styles.container}>
                     <View>
@@ -41,7 +43,7 @@ const SignupDetails = (props)=>{
                         <TextInput style={globatStyles.inputText} placeholder='Email ID' />
                     </View>
                     <View>
-                        <Pressable style={[globatStyles.inputText,{height: 50,}]} onPress={()=>setOpen(true)}>
+                        <Pressable style={[globatStyles.inputText, { height: 50, }]} onPress={() => setOpen(true)}>
                             <Text>Date Of Birth</Text>
                             <AntDesign name='calendar' style={styles.calederIcon} />
                         </Pressable>
@@ -60,7 +62,7 @@ const SignupDetails = (props)=>{
                                 setOpen(false)
                             }}
                         />
-                        </View>
+                    </View>
                     <View>
                         <TextInput style={globatStyles.inputText} placeholder='Date Of Birth' />
                     </View>
@@ -68,13 +70,13 @@ const SignupDetails = (props)=>{
                         <Text style={globatStyles.inputLabel}>Gender</Text>
                         <View style={styles.gender}>
                             {
-                                gender==='m'?<Fontisto name='radio-btn-active' onPress={()=>setGender('m')} style={styles.genderIcon} />:<Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={()=>setGender('m')} />
+                                gender === 'm' ? <Fontisto name='radio-btn-active' onPress={() => setGender('m')} style={styles.genderIcon} /> : <Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={() => setGender('m')} />
                             }<Text style={styles.genderLabel}> Male</Text>
                             {
-                                gender==='f'?<Fontisto name='radio-btn-active' onPress={()=>setGender('f')} style={styles.genderIcon} />:<Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={()=>setGender('f')} />
+                                gender === 'f' ? <Fontisto name='radio-btn-active' onPress={() => setGender('f')} style={styles.genderIcon} /> : <Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={() => setGender('f')} />
                             }<Text style={styles.genderLabel}> Female</Text>
                             {
-                                gender==='o'?<Fontisto name='radio-btn-active' onPress={()=>setGender('o')} style={styles.genderIcon} />:<Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={()=>setGender('o')} />
+                                gender === 'o' ? <Fontisto name='radio-btn-active' onPress={() => setGender('o')} style={styles.genderIcon} /> : <Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={() => setGender('o')} />
                             }<Text style={styles.genderLabel}> Others</Text>
                         </View>
                         <View>
@@ -95,7 +97,7 @@ const SignupDetails = (props)=>{
     )
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
     },
@@ -108,7 +110,7 @@ const styles= StyleSheet.create({
         fontFamily: Constants.fontFamily,
         fontWeight: '800',
         marginBottom: Constants.margin,
-        marginTop: Constants.margin+10,
+        marginTop: Constants.margin + 10,
         marginLeft: Constants.margin,
     },
     editText: {
@@ -117,7 +119,7 @@ const styles= StyleSheet.create({
     logo: {
         alignSelf: 'center',
         marginTop: Constants.margin,
-        marginBottom: Constants.margin+30,
+        marginBottom: Constants.margin + 30,
         borderWidth: 2,
         width: 175,
         height: 175,
@@ -158,13 +160,13 @@ const styles= StyleSheet.create({
         flexDirection: 'row',
         marginBottom: Constants.margin,
     },
-    genderIcon:{
+    genderIcon: {
         fontSize: 24,
         marginTop: 10,
     },
     genderLabel: {
         marginLeft: 8,
-        marginRight: Constants.margin+12,
+        marginRight: Constants.margin + 12,
         marginTop: 10,
     },
     calederIcon: {

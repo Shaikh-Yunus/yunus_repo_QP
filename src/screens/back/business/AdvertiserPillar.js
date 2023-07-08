@@ -141,9 +141,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     tabs: {
+        marginTop:15,
         flexDirection: 'row',
         alignItems: 'center',
-        padding: Constants.padding,
+        padding: Constants.padding-15,
     },
     tabText: {
         fontFamily: Constants.fontFamily,

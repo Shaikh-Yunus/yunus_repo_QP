@@ -68,7 +68,7 @@ const AdDetails = (props) => {
             <StatusBar translucent={true} backgroundColor='transparent' />
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Ad Details' />
             <ScrollView style={styles.container}>
-                <Text style={{ fontFamily: Constants.fontFamily, }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                <Text style={{ fontFamily: Constants.fontFamily, }}>Please select your goal and audience type for your ads.</Text>
                 <Text style={{ fontFamily: Constants.fontFamily, fontSize: 22, marginTop: 20, marginBottom: 5, }}>Select A Goal</Text>
                 <View style={styles.boxContainer}>
                     <Pressable onPress={() => {

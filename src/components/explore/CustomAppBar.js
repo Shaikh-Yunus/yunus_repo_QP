@@ -7,6 +7,7 @@ import {
     Pressable,
     TextInput,
     SafeAreaView,
+    Dimensions,
 } from 'react-native'
 import Images from '../../assets/images/Images'
 import Constants from '../../shared/Constants'
@@ -14,6 +15,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation } from '@react-navigation/native'
 
+const {height ,width}=Dimensions.get('window')
 const CustomAppBar = (props) => {
     const navigation = useNavigation()
     const goBack = () => {
@@ -69,10 +71,11 @@ const CustomAppBar = (props) => {
 const styles = StyleSheet.create({
     wrapper: {
         padding: Constants.padding,
-        // paddingTop: Constants.padding+10,
+        marginTop: height*0.00,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        position:'relative'
 
     },
     logoContainer: {

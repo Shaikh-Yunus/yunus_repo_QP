@@ -149,7 +149,7 @@ const PreviewAd = (props) => {
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Preview' />
             <ScrollView style={styles.container}>
                 <Text style={{ fontFamily: Constants.fontFamily, flexWrap: 'wrap', }}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    Review and update the ad format optimisations.
                 </Text>
                 <View style={styles.boxContainer}>
                     <Text style={{ fontFamily: Constants.fontFamily, fontSize: 22, marginBottom: 12, }}>Post Details</Text>

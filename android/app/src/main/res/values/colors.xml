@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resources>
+  <color name="splash_text_color">#FFFFFF</color>
+  <color name="primary_color">#00A928</color>
+  <color name="status_bar_color">#00A928</color>
+</resources>

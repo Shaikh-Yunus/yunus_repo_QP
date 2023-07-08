@@ -493,7 +493,7 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
                             <Text style={[styles.iconText, { textAlign: "center", fontWeight: "900" }]}>{shareCount}</Text>
 
                             {save ?
-                                <FontAwesome name='bookmark-o' style={styles.icon}
+                                <FontAwesome name='bookmark-o' style={styles.bookmarkIcon}
                                     onPress={() => {
                                         SavedCollection();
                                         setshowsavedpopup(true);
@@ -534,7 +534,7 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
                                 },
                                 video: {
                                     width: '100%',
-                                    height: '103%',
+                                    height: '100%',
                                 },
                                 controls: {
                                     display: 'none',
@@ -742,7 +742,12 @@ const styles = StyleSheet.create({
         marginTop: 8,
         fontSize: responsiveFontSize(3.2),
         color: Constants.colors.whiteColor,
-
+    },
+    bookmarkIcon: {
+        marginTop: 8,
+        fontSize: responsiveFontSize(3.2),
+        color: Constants.colors.whiteColor,
+        marginLeft: 3
     },
     iconText: {
         fontFamily: Constants.fontFamily,

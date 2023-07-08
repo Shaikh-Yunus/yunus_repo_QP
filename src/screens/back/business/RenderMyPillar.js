@@ -39,8 +39,8 @@ const RenderMyPillar = (props) => {
 
     return (
         <View style={styles.wrapper}>
-            {console.log('item', props?.typename)}
-            {console.log('props?.pillars?.item?.collabration_id', props?.pillars?.item?.collabration_id)}
+            {/* {console.log('item', props?.typename)}
+            {console.log('props?.pillars?.item?.collabration_id', props?.pillars?.item)} */}
 
             <View style={styles.cardHeading}>
                 <FastImage source={{ uri: `${Constants.BASE_IMAGE_URL}${props?.pillars?.item?.avatar}` }} style={{ width: '20%', height: '100%' }} />
@@ -60,7 +60,9 @@ const RenderMyPillar = (props) => {
                 </Text>
             </View>
             <View style={styles.cardFooter}>
-                <Text style={styles.footerText}>{props?.pillars?.item?.collabration_status == 'onging' ? 'Started' : 'Ended'} on: 12/08/2021</Text>
+                {props?.pillars?.item?.collabration_status == 'pending' ? <Text style={styles.footerText}>Requested on :{props?.pillars?.item?.collabration_created_at} </Text>
+                :<Text style={styles.footerText}>{props?.pillars?.item?.collabration_status == 'approve' ? 'Started' : 'Ended'} on: {props?.pillars?.item?.collabration_created_at}</Text>
+            }
                 {props.tabs == 'ongoing' ?
                     loader ?
                         <ActivityIndicator size={30} color={'#FF0000'} /> :
@@ -75,6 +77,7 @@ const RenderMyPillar = (props) => {
                             <Text style={styles.btnText}>Cancel request</Text>
                         </Pressable>}</> : null}
             </View>
+            {console.log('props?.pillars?.item?.collabration_status', props?.pillars?.item?.collabration_status)}
         </View>
     )
 }

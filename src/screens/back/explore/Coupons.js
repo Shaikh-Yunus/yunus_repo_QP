@@ -14,17 +14,18 @@ import globatStyles from '../../../shared/globatStyles'
 import Clipboard from '@react-native-clipboard/clipboard'
 import { useNavigation } from '@react-navigation/native'
 
-const Coupons = (props)=>{
-    const navigation=useNavigation()
-    const copyCode = (text,discount)=>{
-        navigation.navigate('/payment-details',{price:props?.route?.params?.price-discount,
-            selectedAddress:props?.route?.params?.selectedAddress,
-            discount:props?.route?.params?.discount,
-            totalPrice:props?.route?.params?.totalPrice
-        ,couponCodeValue:discount,couponCode:text,
-        cartItems:props?.route?.params?.cartItems,
-        address_id:props?.route?.params?.address_id,
-        userDetails:props?.route?.params?.userDetails
+const Coupons = (props) => {
+    const navigation = useNavigation()
+    const copyCode = (text, discount) => {
+        navigation.navigate('/payment-details', {
+            price: props?.route?.params?.price - discount,
+            selectedAddress: props?.route?.params?.selectedAddress,
+            discount: props?.route?.params?.discount,
+            totalPrice: props?.route?.params?.totalPrice
+            , couponCodeValue: discount, couponCode: text,
+            cartItems: props?.route?.params?.cartItems,
+            address_id: props?.route?.params?.address_id,
+            userDetails: props?.route?.params?.userDetails
         })
     }
     return (
@@ -33,47 +34,47 @@ const Coupons = (props)=>{
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Coupon Code' headerRight={false} />
             <ScrollView style={styles.wrapper}>
                 <Text style={styles.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    Redeem your coupon code, click Apply Now and avail exciting offers and discounts on your purchase!
                 </Text>
                 <View style={styles.couponConatiner}>
-                    <View style={{flexDirection: 'row',}}>
+                    <View style={{ flexDirection: 'row', }}>
                         <Text style={styles.rupees}><FontAwesome name='rupee' size={25} /> 1000 off</Text>
                         <Text style={styles.divider}>|</Text>
                         <Text style={styles.code}>DIWALI</Text>
                     </View>
-                    <Pressable onPress={()=>props?.route?.params?.price>=1200&&copyCode('1000 off',1000)}><Text style={[styles.copy,{color:props?.route?.params?.price<1200?'#e5e5e5':Constants.colors.primaryColor}]}>Apply Code</Text></Pressable>
+                    <Pressable onPress={() => props?.route?.params?.price >= 1200 && copyCode('1000 off', 1000)}><Text style={[styles.copy, { color: props?.route?.params?.price < 1200 ? '#e5e5e5' : Constants.colors.primaryColor }]}>Apply Code</Text></Pressable>
                 </View>
-                {props?.route?.params?.price<1200?
-                    <Text style={[styles.rupees,{fontSize:15}]}>Add items worth <FontAwesome name='rupee' size={12} /> {1200-props?.route?.params?.price} more to unlock  </Text>
-                :null
+                {props?.route?.params?.price < 1200 ?
+                    <Text style={[styles.rupees, { fontSize: 15 }]}>Add items worth <FontAwesome name='rupee' size={12} /> {1200 - props?.route?.params?.price} more to unlock  </Text>
+                    : null
                 }
-                <View style={[globatStyles.divider, {marginTop: 5, marginBottom: 5,}]}></View>
+                <View style={[globatStyles.divider, { marginTop: 5, marginBottom: 5, }]}></View>
                 <View style={styles.couponConatiner}>
-                    <View style={{flexDirection: 'row',}}>
+                    <View style={{ flexDirection: 'row', }}>
                         <Text style={styles.rupees}><FontAwesome name='rupee' size={25} /> 600 off</Text>
                         <Text style={styles.divider}>|</Text>
                         <Text style={styles.code}>FESTIVENEW</Text>
                     </View>
-                    <Pressable onPress={()=>props?.route?.params?.price>=700&&copyCode('600 off',600)}><Text style={[styles.copy,{color:props?.route?.params?.price<700?'#e5e5e5':Constants.colors.primaryColor}]}>Apply Code</Text></Pressable>
+                    <Pressable onPress={() => props?.route?.params?.price >= 700 && copyCode('600 off', 600)}><Text style={[styles.copy, { color: props?.route?.params?.price < 700 ? '#e5e5e5' : Constants.colors.primaryColor }]}>Apply Code</Text></Pressable>
                 </View>
-                {props?.route?.params?.price<700?
-                    <Text style={[styles.rupees,{fontSize:15}]}>Add items worth <FontAwesome name='rupee' size={12} /> {700-props?.route?.params?.price} more to unlock  </Text>
-                :null
+                {props?.route?.params?.price < 700 ?
+                    <Text style={[styles.rupees, { fontSize: 15 }]}>Add items worth <FontAwesome name='rupee' size={12} /> {700 - props?.route?.params?.price} more to unlock  </Text>
+                    : null
                 }
-                <View style={[globatStyles.divider, {marginTop: 5, marginBottom: 5,}]}></View>
+                <View style={[globatStyles.divider, { marginTop: 5, marginBottom: 5, }]}></View>
                 <View style={styles.couponConatiner}>
-                    <View style={{flexDirection: 'row',}}>
+                    <View style={{ flexDirection: 'row', }}>
                         <Text style={styles.rupees}><FontAwesome name='rupee' size={25} /> 200 off</Text>
                         <Text style={styles.divider}>|</Text>
                         <Text style={styles.code}>NEWCOMER</Text>
                     </View>
-                    <Pressable onPress={()=>props?.route?.params?.price>=200&&copyCode('200 off',200)}><Text style={[styles.copy,{color:props?.route?.params?.price<400?'#e5e5e5':Constants.colors.primaryColor}]}>Apply Code</Text></Pressable>
+                    <Pressable onPress={() => props?.route?.params?.price >= 200 && copyCode('200 off', 200)}><Text style={[styles.copy, { color: props?.route?.params?.price < 400 ? '#e5e5e5' : Constants.colors.primaryColor }]}>Apply Code</Text></Pressable>
                 </View>
-                {props?.route?.params?.price<200?
-                    <Text style={[styles.rupees,{fontSize:15}]}>Add items worth <FontAwesome name='rupee' size={12} /> {400-props?.route?.params?.price} more to unlock  </Text>
-                :null
+                {props?.route?.params?.price < 200 ?
+                    <Text style={[styles.rupees, { fontSize: 15 }]}>Add items worth <FontAwesome name='rupee' size={12} /> {400 - props?.route?.params?.price} more to unlock  </Text>
+                    : null
                 }
-                <View style={[globatStyles.divider, {marginTop: 5, marginBottom: 5,}]}></View>
+                <View style={[globatStyles.divider, { marginTop: 5, marginBottom: 5, }]}></View>
             </ScrollView>
 
         </View>

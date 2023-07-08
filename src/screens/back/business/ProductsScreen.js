@@ -32,20 +32,20 @@ const ProductsScreen = (props) => {
     const [tabs, setTabs] = useState('products')
     const [showActionMenu, setShowActionMenu] = useState(false)
     const [userProdcuts, setuserProducts] = useState([])
-    console.log("this is userProducts", userProdcuts);
+    // console.log("this is userProducts", userProdcuts);
     // console.log("this is userProducts product name ", userProdcuts[0].product_name);
     const navigation = useNavigation()
     const [showDrawer, setShowDrawer] = useState(false)
     const [pageLoader, setpageLoader] = useState(false)
     const [searchText, setsearchText] = useState('')
-    console.log("this is search text", searchText);
+    // console.log("this is search text", searchText);
     // to search the products
     const [filteredProducts, setFilteredProducts] = useState([]);
-    console.log('this is filtered prod', filteredProducts);
+    // console.log('this is filtered prod', filteredProducts);
     const [filteredServices, setFilteredServices] = useState([]);
-    console.log("this is filteredServices", filteredServices);
+    // console.log("this is filteredServices", filteredServices);
     const [Services, setServices] = useState([])
-    console.log("this is services", Services);
+    // console.log("this is services", Services);
     // console.log("this is business id", props.route.params.userDetails.business.business_id);
     // console.log("this is props ", props.route.params);
 
@@ -84,7 +84,7 @@ const ProductsScreen = (props) => {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                setServices(result.Data)
+                setServices(result.Data.reverse())
             })
             .catch(error => console.log('error', error));
     }
@@ -102,8 +102,10 @@ const ProductsScreen = (props) => {
     useEffect(() => {
         getProductsbyuserid()
         getServicesbyuserid()
+        return () => {
+      }
     }, [props?.route?.params])
-
+    
     const [selectedOption, setSelectedOption] = useState(null);
     const [isVisible, setIsvisible] = useState(false);
     console.log("this is modal status =>", isVisible);
@@ -167,19 +169,22 @@ const ProductsScreen = (props) => {
                             {
                                 userProdcuts.length > 0 &&
                                     tabs == 'products'
-                                    ? <FlatList
+                                    ? 
+                                    <><FlatList
                                         data={filteredProducts.length > 0 ? filteredProducts : userProdcuts}
                                         renderItem={(item) => (
                                             <RenderProducts products={item} userDetails={props?.route?.params?.userDetails} />
                                         )}
                                         keyExtractor={(item) => item?.index}
                                     />
+                                   { userProdcuts.length == 0 ? <View style={{ display: 'flex', alignItems: 'center', paddingTop: 10 }}>
+                                        <Text style={[styles.actionMenuItem, { color: '#000' }]}>
+                                            No product found
+                                        </Text>
+                                    </View>:null }
+                                    </>
                                     :
-                                    // <View style={{ display: 'flex', alignItems: 'center', paddingTop: 10 }}>
-                                    //     <Text style={[styles.actionMenuItem, { color: '#000' }]}>
-                                    //         No product found
-                                    //     </Text>
-                                    // </View>
+                                    
                                     null
                             }
 
@@ -195,7 +200,7 @@ const ProductsScreen = (props) => {
                                         estimatedItemSize={999}
                                         renderItem={item => (
                                             <View key={item.id} style={styles.cardContainer}>
-                                                <Pressable onPress={() => navigation.navigate('/edit-service', { Services: item })} >
+                                                <Pressable onPress={() => navigation.navigate('/edit-service', { Services: item.item })} >
                                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                                         <Text style={{ color: 'black', fontSize: 'bold', fontSize: 20 }}>{item.item.title}</Text>
                                                     </View>
@@ -204,11 +209,11 @@ const ProductsScreen = (props) => {
                                         )}
                                     />
                                     :
-                                    <View style={{ display: 'flex', alignItems: 'center', paddingTop: 10 }}>
+                                    Services.length > 0 && tabs == 'services' ?  <View style={{ display: 'flex', alignItems: 'center', paddingTop: 10 }}>
                                         <Text style={[styles.actionMenuItem, { color: '#000' }]}>
                                             No Services found
                                         </Text>
-                                    </View>
+                                    </View>: null
 
                             }
                         </View>

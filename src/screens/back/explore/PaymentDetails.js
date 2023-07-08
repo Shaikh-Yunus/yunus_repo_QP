@@ -252,7 +252,7 @@ const PaymentDetails = (props) => {
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Payment' headerRight={false} />
             <ScrollView style={styles.wrapper}>
                 <Text style={styles.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                Please review the details below and proceed with the payment to complete your order.
                 </Text>
                 <View style={styles.addressContainer} >
                     <Text style={styles.addressHeading}>Selected Address</Text>

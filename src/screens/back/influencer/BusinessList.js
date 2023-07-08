@@ -48,7 +48,7 @@ const BusinessList = (props) => {
     useEffect(() => {
         setloader(true)
         axios.post(`${Constants.BASE_URL}Get/BusinessList`, {
-            advertiser_id: 15
+            advertiser_id: props?.route?.params?.userDetails?.advertiser?.advertiser_id
         })
             .then((response) => {
                 setloader(false)
@@ -67,12 +67,12 @@ const BusinessList = (props) => {
     return (
         <View style={globatStyles.wrapper}>
             {console.log('data_=', data)}
-            {console.log('props=', props?.route?.params?.userDetails)}
+            {console.log('props=', props?.route?.params?.userDetails?.advertiser?.advertiser_id)}
             <StatusBar translucent={true} backgroundColor='transparent' />
-            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Business List (10)' isCamera={true} />
+            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Business List ' isCamera={true} />
             <ScrollView style={styles.container}>
                 <Text style={styles.desc}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    View and manage your live business here.
                 </Text>
                 {/* <SearchBar /> */}
                 <View style={styles.searchContainer}>

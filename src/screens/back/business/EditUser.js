@@ -32,6 +32,7 @@ const EditUser = (props) => {
     const [visible, setvisible] = useState(false)
     const [name, setname] = useState()
     const [username, setusername] = useState()
+    const [Age, setAge] = useState()
     const [Email, setEmail] = useState()
     console.log("this is email", Email);
     const [phoneNumber, setPhoneNumber] = useState()
@@ -124,6 +125,11 @@ const EditUser = (props) => {
                 formdata.append("business_id", props?.route?.params?.userDetails?.business?.business_id);
                 formdata.append("sub_catorige", subCategory);
                 formdata.append('profile_avatar', { uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type });
+                formdata.append('mobile_number',phoneNumber);
+                formdata.append('email',Email );
+                formdata.append('age', Age);
+                formdata.append('name',name );
+                formdata.append('gender',gender );
                 console.log("form data", formdata);
                 axios.post(`${Constants.BASE_URL}business/edit-bussiness-profile`, formdata, {
                     headers: headers
@@ -256,6 +262,8 @@ const EditUser = (props) => {
             setPassword(datas?.password)
             setEmail(datas?.business?.owner_email)
             setPhoneNumber(datas?.mobile_number)
+            setGender(datas?.gender)
+            setAge(datas?.age)
 
         }
         else if (UserType == 'advertiser') {
@@ -296,8 +304,8 @@ const EditUser = (props) => {
                 </DialogContent>
             </Dialog>
             <ScrollView>
-                <View style={styles.container}>
-                    <Text style={styles.editText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                <View style={[styles.container, { alignSelf: 'center' }]}>
+                    <Text style={styles.editText}>Edit public information about yourself. These changes will be visible to the other users.</Text>
                 </View>
                 <View style={styles.container}>
                     {
@@ -328,16 +336,28 @@ const EditUser = (props) => {
                     </View>
                     {
                         UserType == 'business' &&
-                        <TextInput style={globatStyles.inputText} secureTextEntry value={password ? "*****" : setPassword} onChangeText={(pass) => setPassword(pass)} />
+                        <View>
+                            {/* <TextInput style={globatStyles.inputText} secureTextEntry value={password ? "*****" : setPassword} onChangeText={(pass) => setPassword(pass)} /> */}
+                            <Text style={globatStyles.inputLabel}>EmailId</Text>
+                            <TextInput style={globatStyles.inputText} value={Email} onChangeText={setEmail} />
+                            <Text style={globatStyles.inputLabel}>Phone Number</Text>
+                            <TextInput style={globatStyles.inputText}  keyboardType='number-pad'  value={phoneNumber} onChangeText={setPhoneNumber} />
+                            <Text style={globatStyles.inputLabel}>Age</Text>
+                            <TextInput style={globatStyles.inputText}  keyboardType='number-pad' value={Age} onChangeText={setAge} />
+                            <Text style={globatStyles.inputLabel}>Gender</Text>
+                            <View style={styles.gender}>
+                                {
+                                    gender === 'male' ? <Fontisto name='radio-btn-active' onPress={() => setGender('male')} style={styles.genderIcon} /> : <Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={() => setGender('male')} />
+                                }<Text style={styles.genderLabel}> Male</Text>
+                                {
+                                    gender === 'female' ? <Fontisto name='radio-btn-active' onPress={() => setGender('female')} style={styles.genderIcon} /> : <Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={() => setGender('female')} />
+                                }<Text style={styles.genderLabel}> Female</Text>
+                                {
+                                    gender === 'others' ? <Fontisto name='radio-btn-active' onPress={() => setGender('others')} style={styles.genderIcon} /> : <Fontisto style={styles.genderIcon} name='radio-btn-passive' onPress={() => setGender('others')} />
+                                }<Text style={styles.genderLabel}> Others</Text>
+                            </View>
+                        </View>
                     }
-                    {/* {
-                        UserType == 'business' &&
-                        <TextInput style={globatStyles.inputText} value={Email} onChangeText={setEmail} />
-                    }
-                    {
-                        UserType == 'business' &&
-                        <TextInput style={globatStyles.inputText} value={phoneNumber} onChangeText={setPhoneNumber} />
-                    } */}
                     {UserType !== 'business' &&
                         <><View>
                             <Text style={globatStyles.inputLabel}>Name</Text>
@@ -402,6 +422,7 @@ const styles = StyleSheet.create({
     },
     editText: {
         fontFamily: Constants.fontFamily,
+        flexWrap: 'wrap'
     },
     logo: {
         alignSelf: 'center',

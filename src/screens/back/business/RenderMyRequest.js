@@ -23,14 +23,17 @@ const RenderMyRequest = ({ pillars, tabs, getBussinessRequests }) => {
             "collobration_id": pillars?.item?.collabration_id,
             "status": status
         }).then((response) => {
-            console.log("collobration", pillars?.item?.collabration_id)
-            if (response.data.response == 200) {
+            console.log("collobration", response.status)
+            if (response.status == 200) {
                 setLoader(false)
                 showToastmsg(`Collaboration ${status} successfully`)
-                if (status == 'approve')
+                if (status == 'approve') {
+                    setLoader(false)
                     getBussinessRequests('ongoing')
-                else
+                }
+                else {
                     getBussinessRequests(tabs)
+                }
             }
         }).catch((error) => {
             setLoader(false)
@@ -41,10 +44,10 @@ const RenderMyRequest = ({ pillars, tabs, getBussinessRequests }) => {
     const createPost = () => {
         navigation.navigate('/profileScreen', { userDetails: pillars.item, type: 'influencer' })
     }
-    console.log("business data", pillars.item);
+    // console.log("business data", pillars.item);
     return (
         <View style={styles.wrapper}>
-            {console.log(' pillars.item,', pillars.item)}
+            {/* {console.log(' pillars.item,', pillars.item)} */}
             <View style={styles.cardHeading}>
                 <FastImage source={{ uri: `${Constants.BASE_IMAGE_URL}${pillars?.item?.business_profile_pic}` }} style={{ width: '20%', height: '100%' }} />
                 <View style={{ alignItems: 'flex-start', marginLeft: 16, marginRight: 16, }}>

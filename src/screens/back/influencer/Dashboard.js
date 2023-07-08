@@ -40,7 +40,7 @@ const Dashboard = (props, { userDetails }) => {
         useShadowColorFromDataset: false // optional
     }
     const yearlyData = {
-        labels: ["Mon", "Tue", "Thrus", "Wed", "Fri", "Sat", "Sun"],
+        labels: ["Mon", "Tue", "Thu", "Wed", "Fri", "Sat", "Sun"],
         datasets: [
             {
                 data: [120, 700, 200, 800, 250, 620, 230],
@@ -50,7 +50,7 @@ const Dashboard = (props, { userDetails }) => {
         ],
     }
     const monthlyData = {
-        labels: ["Jan", "Feb", "Mar", "April", "May", "Jun", "Jly", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July ", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [
             {
                 data: [1200, 1900, 3000, 8000, 9000, 4000, 2500, 5000, 6000, 7500, 3500, 4500],
@@ -110,7 +110,7 @@ const Dashboard = (props, { userDetails }) => {
                     :
                     <View style={styles.container}>
                         <Text style={styles.normalText}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                            Monitor your progress and track your metrics to measure your professional growth.
                         </Text>
                         {console.log("checking_data=>", dashBoardData)}
                         <View style={styles.tabs}>
@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     },
     normalText: {
         fontFamily: Constants.fontFamily,
+        textAlign:'center'
     },
     space: {
         width: 10,

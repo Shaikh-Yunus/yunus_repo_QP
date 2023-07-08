@@ -15,26 +15,27 @@ import globatStyles from '../../../shared/globatStyles'
 import Clipboard from '@react-native-clipboard/clipboard'
 import axios from 'axios'
 import showToastmsg from '../../../shared/showToastmsg'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import { useNavigation } from '@react-navigation/native'
 
-
-
-const Settings = (props, { navigation }) => {
+const Settings = (props) => {
     const [notification, setNotification] = useState(true)
     const [imageOptimisaztion, setImageOptimisaztion] = useState(true)
     const [checkoutFlow, setCheckoutFlow] = useState(true)
     const [notificationstatus, setnotificationstatus] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [userdata, setuserData] = useState()
+    const [userid, setuserid] = useState()
+    const navigation = useNavigation();
 
     const storeData = () => {
         if (props?.route?.params?.userDetails?.business) {
-            setuserData(props?.route?.params?.userDetails?.business?.business_id)
+            setuserid(props?.route?.params?.userDetails?.business?.business_id)
         } else if (props?.route?.params?.userDetails?.influencer) {
-            setuserData(props?.route?.params?.userDetails?.influencer?.influencer_id)
+            setuserid(props?.route?.params?.userDetails?.influencer?.influencer_id)
         } else if (props?.route?.params?.userDetails?.explore) {
-            setuserData(props?.route?.params?.userDetails?.explore?.explore_id)
+            setuserid(props?.route?.params?.userDetails?.explore?.explore_id)
         } else {
-            setuserData(props?.route?.params?.userDetails?.advertiser?.advertiser_id)
+            setuserid(props?.route?.params?.userDetails?.advertiser?.advertiser_id)
         }
     }
     useEffect(() => {
@@ -46,7 +47,7 @@ const Settings = (props, { navigation }) => {
 
     const notificationupdate = () => {
         axios.post(`${Constants.BASE_URL}auth/Notification-on-off`, {
-            "user_id": userdata,
+            "user_id": userid,
             "status": notificationstatus
         }).then((response) => {
             setIsLoading(false)
@@ -56,14 +57,20 @@ const Settings = (props, { navigation }) => {
 
         }).catch((error) => {
             console.log("email otp error", error);
-            showToastmsg("Faled to update")
+            showToastmsg("Failed to update")
             setIsLoading(false)
         })
     }
+
+    const handlePress = () => {
+        // Handle onPress event here
+        navigation.navigate('/Set-New-Password',{ userid:userid , userDetails:props?.route?.params?.userDetails });
+        console.log("Change password pressed");
+    };
     return (
         <View style={styles.container}>
-            {console.log('props?.route?.params?.userDetails', props?.route?.params?.userDetails)}
-            {console.log('userdata', userdata)}
+            {console.log('props?.route?.params?.userDetails', props?.route?.params)}
+            {console.log('userid', userid)}
             <StatusBar translucent={true} backgroundColor='transparent' />
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Settings' headerRight={false} />
             <View style={styles.wrapper}>
@@ -89,7 +96,6 @@ const Settings = (props, { navigation }) => {
                                 imageOptimisaztion ? <Fontisto onPress={() => setImageOptimisaztion(false)} name='checkbox-active' size={26} color={Constants.colors.primaryColor} /> :
                                     <Fontisto name='checkbox-passive' onPress={() => setImageOptimisaztion(true)} size={26} color={Constants.colors.primaryColor} />
                             }
-
                         </View>
                         <View style={[styles.notification, { marginLeft: Constants.margin }]}>
                             <Text style={styles.label}>Optimized Checkout Flow</Text>
@@ -97,8 +103,13 @@ const Settings = (props, { navigation }) => {
                                 checkoutFlow ? <Fontisto onPress={() => setCheckoutFlow(false)} name='checkbox-active' size={26} color={Constants.colors.primaryColor} /> :
                                     <Fontisto name='checkbox-passive' onPress={() => setCheckoutFlow(true)} size={26} color={Constants.colors.primaryColor} />
                             }
-
                         </View>
+                    </View>
+                    <View style={styles.passwordcontainer}>
+                        <Pressable onPress={handlePress} style={styles.button}>
+                            <Text style={styles.buttonText}>Change Password</Text>
+                            <AntDesign name='arrowright' size={25} />
+                        </Pressable>
                     </View>
                 </ScrollView>
             </View>
@@ -138,6 +149,22 @@ const styles = StyleSheet.create({
     optimize: {
         fontFamily: Constants.fontFamily,
         fontSize: 22,
+    },
+    passwordcontainer: {
+        marginTop: 30,
+        width: "100%",
+    },
+    button: {
+        backgroundColor: '#FFFFFF',
+        padding: 10,
+        borderRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    buttonText: {
+        color: '#000', // Text color (e.g., white)
+        fontSize: 18,
+        fontWeight: '400',
     },
 })
 

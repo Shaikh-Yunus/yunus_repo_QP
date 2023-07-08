@@ -233,7 +233,7 @@ const HomeScreen = (props) => {
                 if (Array.isArray(response?.data?.data?.dashboardDetails?.country)) {
                     tempdata.country = {}
                 }
-                // console.log("rssss=>", tempdata);
+                console.log("rssss=>", tempdata);
                 setdashBoardData(tempdata);
                 setmaleData(Object.values(tempdata.AgeRange))
                 setmaleValue(parseInt(tempdata?.Gender["male"]))
@@ -248,7 +248,7 @@ const HomeScreen = (props) => {
             .catch((error) => {
                 setLoader(false)
                 console.log("error->", error);
-                showToastmsg("Something went wrong")
+                // showToastmsg("Something went wrong for dashboard!")
             })
     }
     useEffect(() => {
@@ -306,10 +306,10 @@ const HomeScreen = (props) => {
                 </View>
                 <ScrollView style={styles.drawerItemContainer}>
                     {
-                        setMenuItem(setActiveMenu, activeMenu, 'ant', 'layout', 'My Pillars', navigation, '/my-pillars', props)
+                        setMenuItem(setActiveMenu, activeMenu, 'ant', 'layout', 'Influencer Pillars', navigation, '/my-pillars', props)
                     }
                     {
-                        setMenuItem(setActiveMenu, activeMenu, 'ant', 'layout', 'Advertiser Pillar', navigation, '/Advertiser-Pillar', props)
+                        setMenuItem(setActiveMenu, activeMenu, 'ant', 'layout', 'Advertiser Pillars', navigation, '/Advertiser-Pillar', props)
                     }
                     {
                         setMenuItem(setActiveMenu, activeMenu, 'fa5', 'confluence', 'Influencer list', navigation, '/influencer-list', props)
@@ -689,7 +689,7 @@ const HomeScreen = (props) => {
                             </View>
                         </View>
                         <Text style={styles.switchText}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                            Your account has been switched to an Advertiser Account giving you access to advertising features.
                         </Text>
                         <View style={styles.accountContainer}>
 
@@ -815,7 +815,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         color: 'black',
-        textTransform: "capitalize"
+        textTransform: "capitalize",
+        flexWrap:'wrap',
+        width:170,
+        overflow: 'hidden'
     },
     founder: {
         color: 'black',

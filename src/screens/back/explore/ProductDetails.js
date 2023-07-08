@@ -28,15 +28,18 @@ import { useEffect } from 'react'
 import DatePicker from 'react-native-date-picker'
 import moment from 'moment'
 import { Dropdown } from 'react-native-element-dropdown';
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
 
 const ProductDetails = (props) => {
     const navigation = useNavigation()
+    // loading
+    const [IsLoading, setIsLoading] = useState(false)
+
     // checking props
-    const propsCheck = props?.route?.params?.userDetails?.id
+    const propsCheck = props?.route?.params?.productDetails
     console.log("this is propsCheck=>", propsCheck);
     const [serviceId, setServiceId] = useState(props?.route?.params?.productDetails?.service_id)
     console.log("this is serviceId ProductDetails.js =>", serviceId);
-
     // const [newFormFields, setNewFormFields] = useState([])
     // console.log("this is new form fields", newFormFields);
     const [serviceForm, setserviceForm] = useState([])
@@ -69,6 +72,23 @@ const ProductDetails = (props) => {
     console.log("this is selected color", selectedColor);
     const [selectedSize, setSelectedSize] = useState();
     console.log("this is selectedSize", selectedSize);
+
+    const [zeroIndexVar, setZeroIndexVar] = useState()
+    console.log("this is zeroindexVar", zeroIndexVar);
+    // const zeroIndexVarArray = Object.keys(zeroIndexVar).map(key => ({ [key]: zeroIndexVar[key] }));
+    // console.log(zeroIndexVarArray);
+    // const newData = {
+    //     product_image: zeroIndexVar.product_image,
+    //     qty: zeroIndexVar.qty,
+    //     color_id: zeroIndexVar.color_id,
+    //     size_id: zeroIndexVar.size_id,
+    //     product_description: zeroIndexVar.product_description
+    // };
+    // console.log("this is zeroindex var newData", newData);
+
+    // const handlePushData = () => {
+    //     SetVariation(prevVariation => [...prevVariation, newData]);
+    // };
     useEffect(() => {
 
         // set default selection for color
@@ -115,13 +135,14 @@ const ProductDetails = (props) => {
         setSelectedSize(size)
     }
     const gotoBuy = () => {
-        if (!selectedColor || selectedColor === '') {
-            showToastmsg('Please select color')
-        }
-        else if (!selectedSize || selectedSize == '') {
-            showToastmsg('Please select size')
-        }
-        else if (!(parseInt(props?.route?.params?.productDetails?.business_product?.qty) >= parseInt(props?.route?.params?.productDetails?.business_product?.warning_qty))) {
+        // if (!selectedColor || selectedColor === '') {
+        //     showToastmsg('Please select color')
+        // }
+        // else if (!selectedSize || selectedSize == '') {
+        //     showToastmsg('Please select size')
+        // }
+        // else 
+        if (!(parseInt(props?.route?.params?.productDetails?.business_product?.qty) >= parseInt(props?.route?.params?.productDetails?.business_product?.warning_qty))) {
             showToastmsg("Out of stock! You cannot buy this product now")
         }
         else {
@@ -148,6 +169,7 @@ const ProductDetails = (props) => {
             })
                 .then((response) => {
                     setLoader(false)
+                    { console.log("response=====", response?.data) }
                     EventRegister.emit(emitConfig.API_CALLING, "Api called!")
                     if (response.data.response == 200) {
                         navigation.navigate('/cart', { userDetails: props?.route?.params?.userDetails })
@@ -175,7 +197,8 @@ const ProductDetails = (props) => {
         return unsubscribe;
     }, []);
 
-    const getVariations = () => {
+    const getVariations = async () => {
+        setLoader(true)
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -190,16 +213,22 @@ const ProductDetails = (props) => {
             redirect: 'follow'
         };
 
-        fetch(`${Constants.BASE_URL}business/GetVariationByID`, requestOptions)
+        await fetch(`${Constants.BASE_URL}business/GetVariationByID`, requestOptions)
             // await fetch("http://qp.flymingotech.in/quarterpillars_backend/public/api/v1/business/GetVariationByID", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
+                setLoader(false)
                 if (result.Status == 200) {
-                    SetVariation(result.Data)
+                    SetVariation(result.Data.variation)
+                    setZeroIndexVar(result.Data)
                 }
+                setLoader(false)
             })
-            .catch(error => console.log('error in getting variation of product', error));
+            .catch(error => {
+                console.log('error in getting variation of product', error)
+                setLoader(false)
+            });
     }
     const getServiceForm = () => {
         var requestOptions = {
@@ -246,349 +275,402 @@ const ProductDetails = (props) => {
             .then(result => {
                 console.log(result)
                 if (result.Status === 200) {
-                    navigation.navigate()
+                    showToastmsg('Service Added Successfully')
+                    navigation.goBack()
                 }
             })
             .catch(error => console.log('error in submiting form', error));
     }
     return (
-        <View style={styles.container}>
-            <ImageBackground
-                source={
-                    selectedColor ?
-                        { uri: `${Constants.BASE_IMAGE_URL}${JSON.parse(Variation.find(variant => variant.color === selectedColor)?.image)[0]}` } :
-                        JSON.parse(props?.route?.params?.productDetails?.image)[0] ?
-                            { uri: `${Constants.BASE_IMAGE_URL}${JSON.parse(props?.route?.params?.productDetails?.image)[0]}` } :
-                            Images.reelProduct
-                }
-                style={styles.bgImg}>
-                <CustomAppBar navigation={navigation} isMainscreen={false} isReel={true} title={props?.route?.params?.productDetails?.title} headerRight={false} />
-                <View style={styles.iconGroup}>
-                    {props?.route?.params?.isLiked ?
-                        <AntDesign name={'heart'} style={[styles.icon, { color: '#f54295' }]}
-                        // onPress={props?.route?.params?.removeLikeFn} 
-                        />
-                        : null
-                    }
-                    {!props?.route?.params?.isLiked ?
-                        <AntDesign name={'hearto'} style={[styles.icon, { color: '#FFF' }]}
-                        // onPress={props?.route?.params?.addLikeFn} 
-                        />
-                        : null}
-                    <Text style={[styles.iconText, { textAlign: "center" }]}>{props?.route?.params?.LikeCount ? props?.route?.params?.LikeCount : 0}</Text>
-                    <AntDesign name='message1' style={styles.icon}
-                        onPress={props?.route?.params?.gotoComments}
-                    />
-                    <Text style={[styles.iconText, { textAlign: "center" }]}>{props?.route?.params?.commentCount ? props?.route?.params?.commentCount : 0}</Text>
-                    <Feather name='send' style={styles.icon}
-                        onPress={props?.route?.params?.onShare}
-                    />
-                    <Text style={[styles.iconText, { textAlign: "center" }]}>{props?.route?.params?.shareCount ? props?.route?.params?.shareCount : 0}</Text>
-                    <Feather name='bookmark' style={styles.icon}
-                    // onPress={gotoDescription} 
-                    />
+        <View style={globatStyles.wrapper}>
+            {loader ?
+                <View style={{ flex: 1, alignItems: 'center', width: '100%' }}>
+                    <ActivityIndicator color={Constants.colors.primaryColor} />
                 </View>
-            </ImageBackground>
-            <>
-                {serviceId ?
-                    <ScrollView style={styles.bottomContainer}>
+                :
+                <View style={styles.container}>
 
-                        {/* {serviceForm && serviceForm.map((item, index) => (
-                            <View key={index}>
-                                <Text>{item.title}</Text>
-                            </View>
-                        ))} */}
-                        <View>
-                            <Text style={styles.productname}>
-                                {title}
-                            </Text>
-                        </View>
-                        <View>
-                            <Text style={styles.productname}>
-                                {description}
-                            </Text>
-                        </View>
-                        <View>
-                            <Text style={styles.productname}>
-                                Price: ₹{price}
-                            </Text>
-                        </View>
-                        {
-                            formFields.length > [] ?
-                                <View style={styles.cardContainer} >
-                                    {formFields.map((field, index) => {
-                                        if (field.type === '1') {
-                                            return (
-                                                <View style={{ flexDirection: 'row' }}>
-                                                    <View key={index} style={styles.TextInput}>
-                                                        <TextInput
-                                                            placeholder={`${field.label}`}
-                                                            placeholderTextColor="#A9A9A9"
-                                                            value={field.label}
-                                                            onChangeText={(text) => {
-                                                                const newFields = [...formFields];
-                                                                newFields[index].label = text;
-                                                                setFormFields(newFields);
-                                                            }}
-                                                        />
-                                                    </View>
+                    <ImageBackground
 
-                                                </View>
-                                            );
-                                        }
-                                        else if (field.type === '2') {
-                                            return (
-                                                <View style={{ flexDirection: 'row', marginTop: 10 }}>
-
-                                                    <View style={{ flex: 1 }}>
-                                                        <Dropdown
-                                                            style={[styles.dropdownRender, isFocusTwo && { borderColor: 'blue' }]}
-                                                            placeholderStyle={styles.placeholderStyle}
-                                                            selectedTextStyle={styles.selectedTextStyle}
-                                                            inputSearchStyle={styles.inputSearchStyle}
-                                                            iconStyle={styles.iconStyle}
-                                                            data={field.options}
-                                                            maxHeight={300}
-                                                            labelField="option"
-                                                            valueField="option"
-                                                            // valueField="value"
-                                                            placeholder={!isFocusTwo ? field.label : '...'}
-                                                            searchPlaceholder="Search..."
-                                                            // value={value}
-                                                            onFocus={() => setIsFocusTwo(true)}
-                                                            onBlur={() => setIsFocusTwo(false)}
-                                                            onChange={item => {
-                                                                // setValue(item.value);
-                                                                // setIsFocus(false);
-                                                                console.log(item.option);
-                                                                const newFields = [...formFields];
-                                                                newFields[index].selectedOption = item.option;
-                                                            }}
-                                                        />
-                                                    </View>
-
-                                                </View>
-                                            );
-                                        }
-                                        else if (field.type === '3') {
-                                            return (
-                                                <View>
-                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                        <View style={styles.DateAndTime}>
-                                                            <TouchableOpacity onPress={() => setOpen(true)}>
-                                                                <AntDesign name="clockcircleo" color="black" size={25} />
-                                                            </TouchableOpacity>
-                                                            <TextInput
-                                                                style={{ color: 'black', paddingLeft: 5 }}
-                                                                placeholder={field.label}
-                                                                placeholderTextColor="grey"
-                                                                value={timeData ? moment(timeData).format('hh:mm A') : ''}
-                                                                editable={false}
-                                                            />
-                                                        </View>
-                                                    </View>
-                                                    {open && (
-                                                        <DatePicker
-                                                            modal
-                                                            open={open}
-                                                            date={date}
-                                                            mode="time"
-                                                            onConfirm={(selectedDate) => {
-                                                                setTimeData(selectedDate);
-                                                                const newFields = [...formFields];
-                                                                newFields[index].timeData = selectedDate;
-                                                                setFormFields(newFields);
-                                                                setOpen(null);
-                                                            }}
-                                                            onCancel={() => setOpen(null)}
-                                                        />
-                                                    )}
-                                                </View>
-                                            );
-                                        }
-
-                                        else if (field.type === '4') {
-                                            return (
-                                                <View>
-                                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-
-                                                        <View style={styles.DateAndTime}>
-                                                            <TouchableOpacity onPress={() => setOpenTwo(true)}>
-                                                                <AntDesign name="calendar" color='black' size={25} />
-                                                            </TouchableOpacity>
-                                                            <TextInput
-                                                                style={{ color: 'black', paddingLeft: 5, }}
-                                                                placeholder={field.label}
-                                                                placeholderTextColor='grey'
-                                                                value={dateTwo ? moment(dateTwo).format('MMMM Do YYYY') : ''}
-                                                                editable={false}
-                                                            />
-                                                        </View>
-
-                                                    </View>
-
-                                                    {openTwo && (
-                                                        <DatePicker
-                                                            modal
-                                                            open={openTwo}
-                                                            date={dateTwo}
-                                                            mode='date'
-                                                            onConfirm={(dateTwo) => {
-                                                                setDateTwo(dateTwo);
-                                                                const newFields = [...formFields];
-                                                                newFields[index].timeData = dateTwo;
-                                                                setFormFields(newFields);
-                                                                // setTimeData(date)
-                                                                setOpenTwo(null);
-                                                            }}
-                                                            onCancel={() => setOpenTwo(null)}
-                                                        />
-                                                    )}
-
-                                                </View>
-                                            )
-                                        }
-                                    })}
-                                    {formFields.length > [] ?
-
-                                        <TouchableOpacity style={styles.button} onPress={() => HandleSumbitMain()}>
-                                            <Text style={globatStyles.btnText}>Submit</Text>
-                                        </TouchableOpacity>
-
-                                        :
-                                        null
-                                    }
-                                    <View style={{marginTop:30}}>
-
-                                    </View>
-                                </View>
+                        source={
+                            selectedColor && Variation.length > 0
+                                ? { uri: `${Constants.BASE_IMAGE_URL}${JSON.parse(Variation.find(variant => variant.color === selectedColor).image)[0]}` }
                                 :
-                                null
+                                { uri: `${Constants.BASE_IMAGE_URL}${JSON.parse(props?.route?.params?.productDetails?.image)[0]}` }
                         }
-                    </ScrollView>
-                    :
-                    <ScrollView style={styles.bottomContainer}>
-                        <View style={styles.header}>
-                            <View style={styles.headerTop}>
-                                <Text style={styles.productname}>
-                                    {props?.route?.params?.productDetails?.business_product?.product_name}
-                                </Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FontAwesome name='rupee' size={16} style={styles.icons} /><Text style={{ color: '#979797', fontWeight: '700', fontFamily: Constants.fontFamily }}> {props?.route?.params?.productDetails?.business_product?.sales_price}  </Text>
-                                        <View style={styles.strikethrough}></View>
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FontAwesome name='rupee' size={16} style={[styles.icons, { color: '#000000' }]} /><Text style={{ fontWeight: '700', fontFamily: Constants.fontFamily }}> {
-                                            parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) - (parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) * (parseFloat(props?.route?.params?.productDetails?.business_product?.dicount) / 100))
-                                        }  </Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <FontAwesome name='rupee' size={16} style={[styles.icons, { color: Constants.colors.primaryColor }]} /><Text style={{ fontFamily: Constants.fontFamily, color: Constants.colors.primaryColor }}>
-                                            {parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) -
-                                                (parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) - (parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) * (parseFloat(props?.route?.params?.productDetails?.business_product?.dicount) / 100)))}
-                                            off</Text>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={[styles.headerTop, { marginBottom: 0, }]}>
-                                {/* {props?.route?.params?.productDetails?.business_product?.qty} */}
-                                <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, }}>
-                                    {selectedColor && (
-                                        <Text style={styles.variableValue}>Units {Variation.find(variation => variation.color === selectedColor).qty}</Text>
-                                    )}
-                                </Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, }}>Availability: </Text>
-                                    {parseInt(props?.route?.params?.productDetails?.business_product?.qty) >= parseInt(props?.route?.params?.productDetails?.business_product?.warning_qty) ?
-                                        <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, color: Constants.colors.primaryColor }}>In Stock</Text>
-                                        :
-                                        <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, color: "red" }}>Out of Stock</Text>}
-                                </View>
-                            </View>
-                        </View>
-                        <View style={globatStyles.divider}></View>
-                        <View style={styles.review}>
-                            <FontAwesome name='star' style={styles.rattingStar} />
-                            <FontAwesome name='star' style={styles.rattingStar} />
-                            <FontAwesome name='star' style={styles.rattingStar} />
-                            <FontAwesome name='star' style={styles.rattingStar} />
-                            <FontAwesome name='star-o' style={[styles.rattingStar, { color: '#999999' }]} />
-                            <Pressable onPress={() =>
-                                // console.log("pressed review button")
-                                navigation.navigate('/explore-review', { prodId: props?.route?.params?.productDetails?.business_product?.id })
-                            }>
-                                <Text style={styles.reviewText}>Reviews</Text>
-                            </Pressable>
-                        </View>
-                        <View style={styles.buynow}>
-                            <View style={[styles.buynowBtn, { marginTop: -16 }]}>
-                                <Pressable onPress={gotoBuy} style={[globatStyles.button, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },]}>
 
-                                    {loader ?
-                                        <View style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                                            <ActivityIndicator color={Constants.colors.whiteColor} />
+
+                        // source={
+                        //     selectedColor ?
+                        //         { uri: `${Constants.BASE_IMAGE_URL}${JSON.parse(Variation.find(variant => variant.color === selectedColor)?.image)[0]}` } :
+                        //         JSON.parse(props?.route?.params?.productDetails?.image)[0] ?
+                        //             { uri: `${Constants.BASE_IMAGE_URL}${JSON.parse(props?.route?.params?.productDetails?.image)[0]}` } :
+                        //             Images.reelProduct
+                        // }
+                        style={styles.bgImg} >
+                        <CustomAppBar navigation={navigation} isMainscreen={false} isReel={true} title={props?.route?.params?.productDetails?.title} headerRight={false} />
+                        <View style={styles.iconGroup}>
+                            {props?.route?.params?.isLiked ?
+                                <AntDesign name={'heart'} style={[styles.icon, { color: '#f54295' }]}
+                                // onPress={props?.route?.params?.removeLikeFn} 
+                                />
+                                : null
+                            }
+                            {!props?.route?.params?.isLiked ?
+                                <AntDesign name={'hearto'} style={[styles.icon, { color: '#FFF' }]}
+                                // onPress={props?.route?.params?.addLikeFn} 
+                                />
+                                : null}
+                            <Text style={[styles.iconText, { textAlign: "center" }]}>{props?.route?.params?.LikeCount ? props?.route?.params?.LikeCount : 0}</Text>
+                            <AntDesign name='message1' style={styles.icon}
+                                onPress={props?.route?.params?.gotoComments}
+                            />
+                            <Text style={[styles.iconText, { textAlign: "center" }]}>{props?.route?.params?.commentCount ? props?.route?.params?.commentCount : 0}</Text>
+                            <Feather name='send' style={styles.icon}
+                                onPress={props?.route?.params?.onShare}
+                            />
+                            <Text style={[styles.iconText, { textAlign: "center" }]}>{props?.route?.params?.shareCount ? props?.route?.params?.shareCount : 0}</Text>
+                            <Feather name='bookmark' style={styles.icon}
+                            // onPress={gotoDescription} 
+                            />
+                        </View>
+                    </ImageBackground>
+
+                    <>
+                        {serviceId ?
+                            <ScrollView style={styles.bottomContainer}>
+
+
+                                <View>
+                                    <Text style={styles.productname}>
+                                        {title}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.productname}>
+                                        {description}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.productname}>
+                                        Price: ₹{price}
+                                    </Text>
+                                </View>
+                                {
+                                    formFields.length > [] ?
+                                        <View style={styles.cardContainer} >
+                                            {formFields.map((field, index) => {
+                                                if (field.type === '1') {
+                                                    return (
+                                                        <View style={{ flexDirection: 'row' }}>
+                                                            <View key={index} style={styles.TextInput}>
+                                                                <TextInput
+                                                                    placeholder={`${field.label}`}
+                                                                    placeholderTextColor="#A9A9A9"
+                                                                    value={field.label}
+                                                                    onChangeText={(text) => {
+                                                                        const newFields = [...formFields];
+                                                                        newFields[index].label = text;
+                                                                        setFormFields(newFields);
+                                                                    }}
+                                                                />
+                                                            </View>
+
+                                                        </View>
+                                                    );
+                                                }
+                                                else if (field.type === '2') {
+                                                    return (
+                                                        <View style={{ flexDirection: 'row', marginTop: 10 }}>
+
+                                                            <View style={{ flex: 1 }}>
+                                                                <Dropdown
+                                                                    style={[styles.dropdownRender, isFocusTwo && { borderColor: 'blue' }]}
+                                                                    placeholderStyle={styles.placeholderStyle}
+                                                                    selectedTextStyle={styles.selectedTextStyle}
+                                                                    inputSearchStyle={styles.inputSearchStyle}
+                                                                    iconStyle={styles.iconStyle}
+                                                                    data={field.options}
+                                                                    maxHeight={300}
+                                                                    labelField="option"
+                                                                    valueField="option"
+                                                                    // valueField="value"
+                                                                    placeholder={!isFocusTwo ? field.label : '...'}
+                                                                    searchPlaceholder="Search..."
+                                                                    // value={value}
+                                                                    onFocus={() => setIsFocusTwo(true)}
+                                                                    onBlur={() => setIsFocusTwo(false)}
+                                                                    onChange={item => {
+                                                                        // setValue(item.value);
+                                                                        // setIsFocus(false);
+                                                                        console.log(item.option);
+                                                                        const newFields = [...formFields];
+                                                                        newFields[index].selectedOption = item.option;
+                                                                    }}
+                                                                />
+                                                            </View>
+
+                                                        </View>
+                                                    );
+                                                }
+                                                else if (field.type === '3') {
+                                                    return (
+                                                        <View>
+                                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                                <View style={styles.DateAndTime}>
+                                                                    <TouchableOpacity onPress={() => setOpen(true)}>
+                                                                        <AntDesign name="clockcircleo" color="black" size={25} />
+                                                                    </TouchableOpacity>
+                                                                    <TextInput
+                                                                        style={{ color: 'black', paddingLeft: 5 }}
+                                                                        placeholder={field.label}
+                                                                        placeholderTextColor="grey"
+                                                                        value={timeData ? moment(timeData).format('hh:mm A') : ''}
+                                                                        editable={false}
+                                                                    />
+                                                                </View>
+                                                            </View>
+                                                            {open && (
+                                                                <DatePicker
+                                                                    modal
+                                                                    open={open}
+                                                                    date={date}
+                                                                    mode="time"
+                                                                    onConfirm={(selectedDate) => {
+                                                                        setTimeData(selectedDate);
+                                                                        const newFields = [...formFields];
+                                                                        newFields[index].timeData = selectedDate;
+                                                                        setFormFields(newFields);
+                                                                        setOpen(null);
+                                                                    }}
+                                                                    onCancel={() => setOpen(null)}
+                                                                />
+                                                            )}
+                                                        </View>
+                                                    );
+                                                }
+
+                                                else if (field.type === '4') {
+                                                    return (
+                                                        <View>
+                                                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+
+                                                                <View style={styles.DateAndTime}>
+                                                                    <TouchableOpacity onPress={() => setOpenTwo(true)}>
+                                                                        <AntDesign name="calendar" color='black' size={25} />
+                                                                    </TouchableOpacity>
+                                                                    <TextInput
+                                                                        style={{ color: 'black', paddingLeft: 5, }}
+                                                                        placeholder={field.label}
+                                                                        placeholderTextColor='grey'
+                                                                        value={dateTwo ? moment(dateTwo).format('MMMM Do YYYY') : ''}
+                                                                        editable={false}
+                                                                    />
+                                                                </View>
+
+                                                            </View>
+
+                                                            {openTwo && (
+                                                                <DatePicker
+                                                                    modal
+                                                                    open={openTwo}
+                                                                    date={dateTwo}
+                                                                    mode='date'
+                                                                    onConfirm={(dateTwo) => {
+                                                                        setDateTwo(dateTwo);
+                                                                        const newFields = [...formFields];
+                                                                        newFields[index].timeData = dateTwo;
+                                                                        setFormFields(newFields);
+                                                                        // setTimeData(date)
+                                                                        setOpenTwo(null);
+                                                                    }}
+                                                                    onCancel={() => setOpenTwo(null)}
+                                                                />
+                                                            )}
+
+                                                        </View>
+                                                    )
+                                                }
+                                            })}
+                                            {formFields.length > [] ?
+
+                                                <TouchableOpacity style={styles.button} onPress={() => HandleSumbitMain()}>
+                                                    <Text style={globatStyles.btnText}>Submit</Text>
+                                                </TouchableOpacity>
+
+                                                :
+                                                null
+                                            }
+                                            <View style={{ marginTop: 30 }}>
+
+                                            </View>
                                         </View>
                                         :
-                                        <>
-                                            <Text style={globatStyles.btnText}>Buy</Text><FontAwesome name='angle-right' size={16} color={Constants.colors.whiteColor} />
-                                        </>
-                                    }
-                                </Pressable>
-                            </View>
-                            <View style={styles.increaseDecreasebtn}>
-                                <Pressable style={styles.increDecreBtn} onPress={decreaseQty}><Text style={{ fontSize: 30, color: Constants.colors.whiteColor }}>-</Text></Pressable>
-                                <Text style={styles.qty}>{qty}</Text>
-                                <Pressable style={styles.increDecreBtn} onPress={increaseQty}><Text style={{ fontSize: 30, color: Constants.colors.whiteColor }}>+</Text></Pressable>
-                            </View>
-                        </View>
-                        <View style={{ marginTop: 14 }}>
-                            <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18 }}>Colors</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                {Variation.map(variant => (
-                                    <Pressable
-                                        key={variant.id}
-                                        onPress={() => handleColorSelection(variant.color)}
-                                        style={[styles.variable, { backgroundColor: selectedColor === variant.color ? '#D1D1D1' : '#FFF' }]}
-                                    >
-                                        <Text style={styles.variableValue}>{variant.color}</Text>
+                                        null
+                                }
+                            </ScrollView>
+                            :
+
+                            <ScrollView style={styles.bottomContainer}>
+                                <View style={styles.header}>
+
+                                    <View style={styles.headerTop}>
+                                        <Text style={styles.productname}>
+                                            {props?.route?.params?.productDetails?.business_product?.product_name}
+                                        </Text>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <FontAwesome name='rupee' size={16} style={styles.icons} /><Text style={{ color: '#979797', fontWeight: '700', fontFamily: Constants.fontFamily }}> {props?.route?.params?.productDetails?.business_product?.sales_price}  </Text>
+                                                <View style={styles.strikethrough}></View>
+                                            </View>
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <FontAwesome name='rupee' size={16} style={[styles.icons, { color: '#000000' }]} /><Text style={{ fontWeight: '700', fontFamily: Constants.fontFamily }}> {
+                                                    parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) - (parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) * (parseFloat(props?.route?.params?.productDetails?.business_product?.dicount) / 100))
+                                                }  </Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <FontAwesome name='rupee' size={16} style={[styles.icons, { color: Constants.colors.primaryColor }]} /><Text style={{ fontFamily: Constants.fontFamily, color: Constants.colors.primaryColor }}>
+                                                    {parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) -
+                                                        (parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) - (parseFloat(props?.route?.params?.productDetails?.business_product?.sales_price) * (parseFloat(props?.route?.params?.productDetails?.business_product?.dicount) / 100)))}
+                                                    off</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+
+
+                                    <View style={[styles.headerTop, { marginBottom: 0, }]}>
+                                        <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, }}>
+                                            {selectedColor && Variation.length > 0 ? (
+                                                <Text style={styles.variableValue}>
+                                                    Units {Variation.find(variation => variation.color === selectedColor).qty}
+                                                </Text>
+                                            ) :
+                                                <Text style={styles.variableValue}>{(zeroIndexVar && zeroIndexVar.qty)}</Text>
+                                            }
+
+                                        </Text>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, }}>Availability: </Text>
+                                            {parseInt(props?.route?.params?.productDetails?.business_product?.qty) >= parseInt(props?.route?.params?.productDetails?.business_product?.warning_qty) ?
+                                                <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, color: Constants.colors.primaryColor }}>In Stock</Text>
+                                                :
+                                                <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, color: "red" }}>Out of Stock</Text>}
+                                        </View>
+                                    </View>
+                                </View>
+                                <View style={globatStyles.divider}></View>
+                                <View style={styles.review}>
+                                    <FontAwesome name='star' style={styles.rattingStar} />
+                                    <FontAwesome name='star' style={styles.rattingStar} />
+                                    <FontAwesome name='star' style={styles.rattingStar} />
+                                    <FontAwesome name='star' style={styles.rattingStar} />
+                                    <FontAwesome name='star-o' style={[styles.rattingStar, { color: '#999999' }]} />
+                                    <Pressable onPress={() =>
+                                        navigation.navigate('/explore-review', { prodId: props?.route?.params?.productDetails?.business_product?.id })
+                                    }>
+                                        <Text style={styles.reviewText}>Reviews</Text>
                                     </Pressable>
-                                ))}
-                            </View>
-                        </View>
+                                </View>
+                                <View style={styles.buynow}>
+                                    <View style={[styles.buynowBtn, { marginTop: -16 }]}>
+                                        <Pressable onPress={gotoBuy} style={[globatStyles.button, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },]}>
+
+                                            {loader ?
+                                                <View style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                                                    <ActivityIndicator color={Constants.colors.whiteColor} />
+                                                </View>
+                                                :
+                                                <>
+                                                    <Text style={globatStyles.btnText}>Buy</Text><FontAwesome name='angle-right' size={16} color={Constants.colors.whiteColor} />
+                                                </>
+                                            }
+                                        </Pressable>
+                                    </View>
+                                    <View style={styles.increaseDecreasebtn}>
+                                        <Pressable style={styles.increDecreBtn} onPress={decreaseQty}><Text style={{ fontSize: 30, color: Constants.colors.whiteColor }}>-</Text></Pressable>
+                                        <Text style={styles.qty}>{qty}</Text>
+                                        <Pressable style={styles.increDecreBtn} onPress={increaseQty}><Text style={{ fontSize: 30, color: Constants.colors.whiteColor }}>+</Text></Pressable>
+                                    </View>
+                                </View>
+                                <View style={{ marginTop: 14 }}>
+                                    <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18 }}>Colors</Text>
+
+                                    {Variation.length > 0 ? (
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                            {Variation.map(variant => (
+                                                <Pressable
+                                                    key={variant.id}
+                                                    onPress={() => handleColorSelection(variant.color)}
+                                                    style={[styles.variable, { backgroundColor: selectedColor === variant.color ? '#D1D1D1' : '#FFF' }]}
+                                                >
+                                                    <Text style={styles.variableValue}>{variant.color}</Text>
+                                                </Pressable>
+                                            ))}
+                                        </View>
+                                    ) : (
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                            <Pressable
+                                                onPress={() => handleColorSelection(zeroIndexVar.color_id)}
+                                                style={[styles.variable, { backgroundColor: selectedColor === (zeroIndexVar && zeroIndexVar.color_id) ? '#D1D1D1' : '#FFF' }]}
+                                            >
+                                                <Text style={styles.variableValue}>{(zeroIndexVar && zeroIndexVar.color_id) || 'Default Color'}</Text>
+                                            </Pressable>
+                                        </View>
+                                    )}
 
 
-                        <View style={{ marginTop: 14 }}>
-                            <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18 }}>Size</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                {Variation.map(variant => (
-                                    <Pressable
-                                        key={variant.id}
-                                        onPress={() => getSize(variant.size)}
-                                        style={[styles.variable, { backgroundColor: selectedSize === variant.size ? '#D1D1D1' : '#FFF' }]}
-                                    >
-                                        <Text style={styles.variableValue}>{variant.size}</Text>
-                                    </Pressable>
-                                ))}
-                            </View>
-                        </View>
+                                </View>
 
-                        <View style={{ marginTop: 14, marginBottom: 10 }}>
-                            <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, }}>Description</Text>
-                            <Text style={styles.productdescription}>
-                                {selectedColor && (
-                                    <Text style={styles.variableValue}>Units {Variation.find(variation => variation.color === selectedColor).desc}</Text>
-                                )}
-                                {/* {
-                            props?.route?.params?.productDetails?.description
-                        } */}
-                            </Text>
-                        </View>
-                    </ScrollView>
-                }
-            </>
+
+                                <View style={{ marginTop: 14 }}>
+                                    <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18 }}>Size</Text>
+                                    {Variation.length > 0 ? (
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                            {Variation.map(variant => (
+                                                <Pressable
+                                                    key={variant.id}
+                                                    onPress={() => getSize(variant.size)}
+                                                    style={[styles.variable, { backgroundColor: selectedSize === variant.size ? '#D1D1D1' : '#FFF' }]}
+                                                >
+                                                    <Text style={styles.variableValue}>{variant.size ? variant.size : 'Default Size'}</Text>
+                                                </Pressable>
+                                            ))}
+                                        </View>
+                                    ) : (
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                            <Pressable
+                                                onPress={() => getSize(zeroIndexVar.size_id)}
+                                                style={[styles.variable, { backgroundColor: selectedSize === (zeroIndexVar && zeroIndexVar.size_id) ? '#D1D1D1' : '#FFF' }]}
+                                            >
+                                                <Text style={styles.variableValue}>{(zeroIndexVar && zeroIndexVar.size_id) || 'Default Size'}</Text>
+                                            </Pressable>
+                                        </View>
+                                    )}
+
+                                </View>
+
+                                <View style={{ marginTop: 14, marginBottom: 10 }}>
+                                    <Text style={{ fontFamily: Constants.fontFamily, fontSize: 18, }}>Description</Text>
+                                    <Text style={styles.productdescription}>
+                                        {selectedColor && Variation.length > 0 ? (
+                                            <Text style={styles.variableValue}>
+                                                {Variation.find(variation => variation.color === selectedColor)?.desc}
+                                            </Text>
+                                        ) : (
+                                            <Text style={styles.variableValue}>
+                                                {(zeroIndexVar && zeroIndexVar.product_description) || 'Default Description'}
+                                            </Text>
+                                        )}
+                                    </Text>
+
+                                </View>
+                            </ScrollView>
+
+                        }
+                    </>
+                </View >
+            }
         </View >
-
     )
 }
 
@@ -728,7 +810,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.fontFamily,
         marginBottom: Constants.margin,
         flex: 1,
-        marginTop:10,
+        marginTop: 10,
     },
     DateAndTime: {
         backgroundColor: Constants.colors.inputBgColor,

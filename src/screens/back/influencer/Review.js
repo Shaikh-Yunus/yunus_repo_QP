@@ -14,25 +14,25 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import RenderReview from './RenderReview'
 import { FlashList } from '@shopify/flash-list'
 
-const Review=({navigation})=>{
+const Review = ({ navigation }) => {
     const reviews = [
-        {id: 1},
-        {id: 2},
-        {id: 3},
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
     ]
     return (
         <View style={styles.container}>
             <StatusBar translucent={true} backgroundColor='transparent' />
-            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Reviews' headerRight={false} searchbar={false} />
+            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Reviews ' headerRight={false} searchbar={false} />
             <ScrollView style={styles.wrapper}>
                 <Text style={styles.summaryDesc}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    Thank You for taking the time to share your experience.
                 </Text>
                 <View style={styles.reviewContainer}>
                     <Text style={styles.reviewLabel}>Reviews </Text>
                     <Text style={styles.reviewValue}> 4.1</Text>
                 </View>
-                <View style={{flexDirection: 'row',justifyContent: 'center', alignItems: 'center',}}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
                     <FontAwesome name='star' style={styles.reviewStar} />
                     <FontAwesome name='star' style={styles.reviewStar} />
                     <FontAwesome name='star' style={styles.reviewStar} />
@@ -46,9 +46,9 @@ const Review=({navigation})=>{
                 </View>
                 <FlashList
                     data={reviews}
-                    renderItem={item=><RenderReview item={item} />}
-                    keyExtractor={item=>item?.id?.toString()} 
-                    estimatedItemSize={200}/>
+                    renderItem={item => <RenderReview item={item} />}
+                    keyExtractor={item => item?.id?.toString()}
+                    estimatedItemSize={200} />
             </ScrollView>
         </View>
     )

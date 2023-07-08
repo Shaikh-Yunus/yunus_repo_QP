@@ -24,12 +24,11 @@ import { useState } from 'react'
 
 const AddProductPreview = ({ route}, props, ) => {
     const navigation = useNavigation()
-
+    console.log("this is props on preview",props?.route?.params);
     const {
         cameraImg,
         isRefundable,
         cod,
-        productVideoUrl,
         productName,
         productBrand,
         productUnit,
@@ -52,7 +51,7 @@ const AddProductPreview = ({ route}, props, ) => {
     } = route.params;
     // console.log("this is cameraimage=>", cameraImg);
     const imageUri = cameraImg[0]?.uri
-    // console.log("this is image uri");
+    console.log("this is image uri");
     return (
         <View style={globatStyles.wrapper}>
 

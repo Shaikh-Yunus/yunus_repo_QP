@@ -23,9 +23,9 @@ import RenderOrders from './RenderOrders'
 const MyOrders = (props) => {
     const navigation = useNavigation()
     const [tabs, setTabs] = useState('products')
-    const [loader, setLoader] = useState(false) 
+    const [loader, setLoader] = useState(false)
     const [orderData, setOrderData] = useState([])
-    const [refresh, setRefresh] = useState(false) 
+    const [refresh, setRefresh] = useState(false)
     let img = `${Constants.BASE_IMAGE_URL}image/153/6749701.png`
     const products = [
         { id: 1, name: 'Iphone Watch', actualPrice: 2400, price: 2400, discount: 1000, qty: 2, size: 'XL', img: img },
@@ -60,22 +60,32 @@ const MyOrders = (props) => {
         getOrderData()
     }, [])
 
-    useEffect(() => {
-        if (orderData.length > 0) {
-            orderData.map(item =>
-                console.log("order data=>", item)
-            )
-        }
-    }, [orderData])
+    // useEffect(() => {
+    //     if (orderData.length > 0) {
+    //         orderData.map(item =>
+    //             console.log("order data=>", item)
+    //         )
+    //     }
+    // }, [orderData])
     return (
         <View style={globatStyles.container}>
+            {console.log('props', props?.route?.params?.userDetails?.influencer)}
             <StatusBar translucent={true} backgroundColor='transparent' />
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='My Orders' headerRight={false} />
             <ScrollView style={styles.wrapper} refreshControl={<RefreshControl
                 refreshing={refresh}
                 onRefresh={() => getOrderData()}
             />} >
-                <Text style={{ marginBottom: 10 }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .</Text>
+                {props?.route?.params?.userDetails?.influencer == undefined ?
+                    <Text style={{ marginBottom: 10 ,textAlign:'center' }}>
+                        Access order details and stay updated on the delivery progress
+                    </Text>
+                    :
+                    <Text style={{ marginBottom: 10 }}>
+                        Access order details and stay updated on your ongoing and past articles.
+                    </Text>
+                }
+
                 {/* <View style={styles.tabContainer}>
                     <Pressable onPress={()=>setTabs('products')}><Text style={[styles.tabs, tabs==='products'?styles.activeTabs:null]}>Products</Text></Pressable>
                     <Pressable onPress={()=>setTabs('services')}><Text style={[styles.tabs, tabs==='services'?styles.activeTabs:null]}>Services</Text></Pressable>
@@ -89,7 +99,7 @@ const MyOrders = (props) => {
                             renderItem={item => <RenderOrders item={item} />}
                             style={{ paddingBottom: 130, }}
                             keyExtractor={item => item?.id?.toString()}
-                            />
+                        />
                         :
                         <View style={{ width: '100%', paddingTop: 20, paddingBottom: 10 }}>
                             <Text style={[styles.headingText, { fontSize: 20, textAlign: 'center' }]}>

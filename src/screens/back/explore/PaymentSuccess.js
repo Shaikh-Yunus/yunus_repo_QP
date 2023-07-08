@@ -109,7 +109,7 @@ const PaymentSuccess = (props) => {
                 </View>
                 <Text style={styles.successHeading}>Payment {props?.route?.params?.error ? 'failed' : 'successful'}</Text>
                 <Text style={styles.successText}>
-                    It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut . It Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    We have successfully processed your transaction and a confirmation mail has been sent to your registered email address. Thank you for choosing our services and placing your trust in us!
                 </Text>
                 <Pressable onPress={
                     props?.route?.params?.error ? retryPayment :

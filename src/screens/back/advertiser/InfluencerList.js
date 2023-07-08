@@ -50,9 +50,9 @@ const InfluencerList = (props) => {
     ]
     const getInfluencerList = () => {
         setLoading(true)
-        axios.get(`${Constants.BASE_URL}influencer/get-all-influencers`).then((response) => {
+        axios.get(`${Constants.BASE_URL}influencer/get-all-influencers/${props?.route?.params?.userDetails?.business?.business_id}`).then((response) => {
             setLoading(false)
-            if (response.data.response == 200) {
+            if (response.data.response == 200){
                 setinfluencerData(response.data.data.influencers)
             }
         }).catch((error) => {
@@ -68,8 +68,9 @@ const InfluencerList = (props) => {
     // }
     return (
         <View style={globatStyles.wrapper}>
+            {console.log('influencerData',influencerData)}
             <StatusBar translucent={true} backgroundColor='transparent' />
-            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title={`Influencer List (${influencerData.length})`} isCamera={true} />
+            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title={`Influencer List  (${influencerData.length})`} isCamera={true} />
             <ScrollView style={styles.container}>
                 <Text style={styles.desc}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .

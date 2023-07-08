@@ -194,14 +194,14 @@ const styles = StyleSheet.create({
     },
     discoverContent: {
         position: 'absolute',
-        bottom: Constants.padding,
+        bottom: Constants.padding-15,
         justifyContent: 'space-between',
         paddingLeft: Constants.padding + 10,
         paddingRight: Constants.padding + 10,
         flexDirection: 'row',
     },
     menuTextContainer: {
-        paddingEnd: 35,
+        paddingEnd: 20,
         width: '90%',
     },
     menuTitle: {
@@ -209,15 +209,17 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: '800',
         color: Constants.colors.whiteColor,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
     },
     menuText: {
         fontFamily: Constants.fontFamily,
         color: Constants.colors.whiteColor,
+        textAlignVertical: 'bottom'
     },
     menuIcon: {
         marginTop: 20,
         width: '10%',
+        alignSelf: 'center'
     },
     enterAsAdmin: {
         flex: 1,

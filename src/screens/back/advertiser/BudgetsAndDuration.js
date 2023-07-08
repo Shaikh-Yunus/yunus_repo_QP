@@ -55,7 +55,7 @@ const BudgetsAndDuration = (props) => {
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Budget & Duration' />
             <ScrollView>
                 <Text style={{ fontFamily: Constants.fontFamily, padding: Constants.padding, }}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
+                    Select your budget and duration.
                 </Text>
                 <View style={[styles.boxContainer, { margin: Constants.margin }]}>
                     <View>
