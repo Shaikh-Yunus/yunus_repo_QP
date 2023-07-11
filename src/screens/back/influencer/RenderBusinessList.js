@@ -26,21 +26,59 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
     const createPost = () => {
         navigation.navigate('/profileScreen', { userDetails: item?.item, type: 'advertiser', advertiser: userdetails })
     }
-    const endContractFn = (status) => {
+    const Reject = () => {
         setLoader(true)
         axios.post(`${Constants.BASE_URL}Change/AdvertiserCollabration/Status`, {
-            "From": 1,
+            "From": 2,
+            "collabration_id": item?.item?.id,
+            "status": 3
+        }).then((response) => {
+            console.log("collobration", response?.data)
+            if (response.status == 200) {
+                setLoader(false)
+                showToastmsg('Collaboration Rejected')
+                getBussinessRequests('ongoing')
+                getBussinessRequests(tabs)
+            }
+        }).catch((error) => {
+            setLoader(false)
+            console.log("error data", error.response);
+            showToastmsg("Can't Reject this collaboration, please try again later.")
+        })
+    }
+    const Accept = () => {
+        setLoader(true)
+        axios.post(`${Constants.BASE_URL}Change/AdvertiserCollabration/Status`, {
+            "From": 2,
             "collabration_id": item?.item?.id,
             "status": 2
         }).then((response) => {
-            // console.log("collobration", pillars?.item?.collabration_id)
+            console.log("collobration", response?.data)
             if (response.status == 200) {
                 setLoader(false)
                 showToastmsg('Collaboration successfully')
-                if (status == 2)
-                    getBussinessRequests('ongoing')
-                else
-                    getBussinessRequests(tabs)
+                getBussinessRequests('ongoing')
+                getBussinessRequests(tabs)
+            }
+        }).catch((error) => {
+            setLoader(false)
+            console.log("error data", error.response);
+            showToastmsg("Can't approved this collaboration, please try again later.")
+        })
+    }
+    const endContractFn = () => {
+        setLoader(true)
+        axios.post(`${Constants.BASE_URL}Change/AdvertiserCollabration/Status`, {
+            "From": 2,
+            "collabration_id": item?.item?.id,
+            "status": 4
+        }).then((response) => {
+            console.log("collobration", response?.data)
+            if (response.status == 200) {
+                setLoader(false)
+                showToastmsg('Contract Ended')
+                getBussinessRequests('ongoing')
+                getBussinessRequests(tabs)
             }
         }).catch((error) => {
             setLoader(false)
@@ -50,6 +88,7 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
     }
     return (
         <View style={styles.container}>
+            {console.log("collobrationid", item)}
             {console.log('check_list', userdetails)}
             <View style={styles.headingLine}>
                 <View style={{ flexDirection: 'row', }}>
@@ -66,7 +105,7 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
                         <Text style={{ fontFamily: Constants.fontFamily, color: '#A4A4B2' }}>Fashion</Text>
                     </View>
                 </View>
-                <Text style={{ fontFamily: Constants.fontFamily, fontWeight: '700', }}>24M Followers</Text>
+                {/* <Text style={{ fontFamily: Constants.fontFamily, fontWeight: '700', }}>24M Followers</Text> */}
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ width: '70%' }}>
@@ -90,17 +129,18 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
             {tabs == 'pending' ? loader ?
                 <ActivityIndicator size={30} color={'#FF0000'} /> :
                 <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
-                    <Pressable onPress={() => endContractFn('approve')} style={[styles.btnOutline, { borderColor: Constants.colors.primaryColor, marginRight: 8 }]}>
+                    <Pressable onPress={() => Accept('approve')} style={[styles.btnOutline, { borderColor: Constants.colors.primaryColor, marginRight: 8 }]}>
                         <Text style={[styles.btnText, { color: '#00A928' }]}>Accept</Text>
                     </Pressable>
-                    <Pressable onPress={() => endContractFn('reject')} style={styles.btnOutline}>
+                    <Pressable onPress={() => Reject('reject')} style={styles.btnOutline}>
                         <Text style={styles.btnText}>Reject</Text>
                     </Pressable>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
+                        <Text style={{ fontFamily: Constants.fontFamily, fontSize: 12, color: '#747474', marginTop: 12, }}>Requested at: {item?.item?.StartedAt}</Text>
+                        {/* <Text style={{ fontFamily: Constants.fontFamily, fontSize: 12, color: '#747474', marginTop: 10, }}>ending on: 12/09/2021</Text> */}
+                    </View>
                 </View> : null}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
-                <Text style={{ fontFamily: Constants.fontFamily, fontSize: 12, color: '#747474', marginTop: 12, }}>Started on: {item?.item?.StartedAt}</Text>
-                {/* <Text style={{ fontFamily: Constants.fontFamily, fontSize: 12, color: '#747474', marginTop: 10, }}>ending on: 12/09/2021</Text> */}
-            </View>
+
 
         </View>
     )

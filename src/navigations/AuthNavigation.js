@@ -88,6 +88,8 @@ import AdvertiserPillar from '../screens/back/business/AdvertiserPillar'
 import AddService from '../screens/back/business/AddService'
 import EditService from '../screens/back/business/EditService'
 import SetNewPassword from '../screens/common/SetNewPassword'
+import AdvertiserRequest from '../screens/back/business/AdvertiserRequest'
+import RenderAdvertiserCollobrationRequest from '../screens/back/business/RenderAdvertiserCollobrationRequest'
 const Stack = createNativeStackNavigator()
 
 const AuthNavigation = (props) => {
@@ -184,8 +186,10 @@ const AuthNavigation = (props) => {
                 <Stack.Screen name="/add-product-preview" component={AddProductPreview} />
                 <Stack.Screen name="/Notification" component={Notification} />
                 <Stack.Screen name="/NotificationScreen" component={NotificationScreen} />
-                <Stack.Screen name="/Set-New-Password" component={SetNewPassword} />
-
+                <Stack.Screen name="/Set-New-Password" component={SetNewPassword} /> 
+                <Stack.Screen name="/Advertiser-Request" component={AdvertiserRequest} />
+                <Stack.Screen name="/Render-AdvertiserCollobrationRequest" component={RenderAdvertiserCollobrationRequest} />
+                 
                 {/* <Stack.Screen name='/admin-signin' component={AdminSignin} />
                 <Stack.Screen name='/forgot-password-admin' component={ForgotPasswordAdmin} />
                 <Stack.Screen name='/set-password-admin' component={SetPasswordAdmin} />

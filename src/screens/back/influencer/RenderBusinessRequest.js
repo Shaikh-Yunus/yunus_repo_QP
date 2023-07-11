@@ -44,16 +44,16 @@ const RenderBusinessRequest = ({ item, userDetails }) => {
     }
     return (
         <View style={styles.container}>
-            {console.log('item', item?.item?.avtar)}
-            {console.log('userDetails_userDetails=>>', userDetails?.advertiser?.advertiser_id)}
+            {console.log('item', item?.item?.business_profile_pic)}
+            {console.log('userDetails_userDetails=>', userDetails?.advertiser?.advertiser_id)}
             <View style={styles.headingLine}>
                 <View style={{ flexDirection: 'row', }}>
                     <View style={styles.barndIcon}>
-                        <FastImage source={item?.item?.avtar ?
-                            { uri: `${Constants.BASE_IMAGE_URL}${item?.item?.avtar}` }
+                        <FastImage source={item?.item?.business_profile_pic ?
+                            { uri: `${Constants.BASE_IMAGE_URL}${item?.item?.business_profile_pic}` }
                             : Images.nike} style={{
-                                width: item?.item?.avtar && 48,
-                                height: item?.item?.avtar && 48,
+                                width: item?.item?.business_profile_pic && 48,
+                                height: item?.item?.business_profile_pic && 48,
                                 borderRadius: 15
                             }} />
                     </View>

@@ -18,6 +18,7 @@ import RenderBusinessList from './RenderBusinessList'
 import { FlashList } from '@shopify/flash-list'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios'
+import showToastmsg from '../../../shared/showToastmsg'
 
 
 const BusinessList = (props) => {
@@ -51,13 +52,14 @@ const BusinessList = (props) => {
             advertiser_id: props?.route?.params?.userDetails?.advertiser?.advertiser_id
         })
             .then((response) => {
-                setloader(false)
+                console.log('advertiser list',response?.data?.Data?.Ongoing)
+                setloader(false) 
                 setdata(response.data);
-                setOngoing(response?.data?.Data?.Ongoing.concat(response?.data?.Data?.UserData));
+                setOngoing(response?.data?.Data?.Ongoing);
                 setPending(response?.data?.Data?.Pending);
-                console.log('"advertiser', response?.data?.Data?.Pending)
+                console.log('"advertiser==>>', response?.data?.Data?.Pending)
             })
-            .catch((error) => {
+            .catch((error) => { 
                 setloader(false)
                 showToastmsg("Something went wrong")
                 console.log("error=>", error);
@@ -67,7 +69,7 @@ const BusinessList = (props) => {
     return (
         <View style={globatStyles.wrapper}>
             {console.log('data_=', data)}
-            {console.log('props=', props?.route?.params?.userDetails?.advertiser?.advertiser_id)}
+            {console.log('props=', props?.route?.params?.userDetails?.advertiser)}
             <StatusBar translucent={true} backgroundColor='transparent' />
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Business List ' isCamera={true} />
             <ScrollView style={styles.container}>

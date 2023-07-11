@@ -8,6 +8,7 @@ import {
     FlatList,
     Pressable,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native'
 import CustomAppBar from '../../../components/advertiser/CustomAppBar'
 import { useNavigation } from '@react-navigation/native'
@@ -16,6 +17,8 @@ import Constants from '../../../shared/Constants'
 import SearchBar from '../../../components/explore/SearchBar'
 import axios from 'axios'
 import RenderAdvertiserRequest from './RenderAdvertiserRequest'
+import { constants } from 'buffer'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 
 const AdvertiserList = (props) => {
@@ -47,6 +50,10 @@ const AdvertiserList = (props) => {
         { id: 4, },
         { id: 5, },
     ]
+    const GotoAdvertiserRequest=()=>{
+       console.log('gotoadvertiser request')
+       navigation.navigate('/Advertiser-Request',{ props : props })
+    }
     const getAdverticerList = () => {
         setLoading(true)
         axios.get(`${Constants.BASE_URL}Get/Adverticer/${props?.route?.params?.userDetails?.business?.business_id}`).then((response) => {
@@ -81,6 +88,12 @@ const AdvertiserList = (props) => {
                     <Text style={[styles.tab, {color: tabs==='pending'?Constants.colors.primaryColor:'#676767', textDecorationLine: tabs==='pending'?'underline':'none',}]} onPress={()=>setTab('pending')}>Pending</Text>
                 </View> */}
                 {/* {console.log("data==>",influencerData)} */}
+                <TouchableOpacity onPress={GotoAdvertiserRequest} style={{flexDirection:'row', justifyContent:'space-evenly'}}>
+                    <View>
+                    <Text style={{ color: Constants.colors.primaryColor, fontWeight: '600', fontSize: 18 }}> See Advertiser Request</Text>
+                    </View>
+                    <AntDesign name='arrowright'  size={25} />
+                </TouchableOpacity>
                 {loading ?
                     <ActivityIndicator size={30} color={'#80FFB9'} style={{ marginTop: 30 }} />
                     :

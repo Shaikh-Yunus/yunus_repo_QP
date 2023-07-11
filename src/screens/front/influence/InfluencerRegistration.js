@@ -32,6 +32,7 @@ import {
     launchImageLibrary
 } from 'react-native-image-picker';
 import Feather from 'react-native-vector-icons/Feather'
+import { Console } from 'console'
 
 const InfluencerRegistration = (props) => {
     const navigation = useNavigation()
@@ -321,12 +322,13 @@ const InfluencerRegistration = (props) => {
             axios.post(props.route.params.type == 'Explorer' ? `${Constants.BASE_URL}explore/registration` : `${Constants.BASE_URL}influencer/registration`, formdata, {
                 headers: headers
             }).then((response) => {
-                {console.log('response_exploreer',response.status)}
+                {console.log('response_exploreer',response)}
                 showToastmsg(response.data.msg)
                 if (response.status == 200) {
 
                     try {
                         axios.post(`${Constants.BASE_URL}auth/mobile-number`, { mobile_number: phone }).then((res) => {
+                            console.log('auth/mobile-number==>',response)
 
                             if (res.data.response == 200) {
                                 setButtonLoader(false)
@@ -858,6 +860,7 @@ const styles = StyleSheet.create({
         // marginBottom: 0, position: 'relative',
         // top: 0 - 13,
         // fontSize: 13
+        
     },
 })
 
