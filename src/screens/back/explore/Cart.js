@@ -43,7 +43,7 @@ const Cart = (props) => {
             setLoader(false)
             if (response.data.data.cart_item) {
                 let tempcartItems = []
-                let tempprice = 0
+                let tempprice =  0
                 let tempdiscount = 0
                 let temptotalPrice = 0
                 if (response.data.data.cart_item.length > 0)
