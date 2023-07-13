@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
     View,
     Text,
@@ -6,31 +6,45 @@ import {
     StatusBar,
     ScrollView,
     FlatList,
-    Pressable,
-    TextInput,
 } from 'react-native'
 import CustomAppBar from '../../../components/influencer/CustomAppBar'
 import { useNavigation } from '@react-navigation/native'
 import globatStyles from '../../../shared/globatStyles'
 import Constants from '../../../shared/Constants'
 import SearchBar from '../../../components/explore/SearchBar'
-import RenderBusinessList from './RenderBusinessList'
-import { FlashList } from '@shopify/flash-list'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import RenderAdvertiserCollobrationRequest from './RenderAdvertiserCollobrationRequest'
+import { useEffect } from 'react'
 import axios from 'axios'
 import showToastmsg from '../../../shared/showToastmsg'
-import AdvertiserList from './AdvertiserList'
-import RenderAdvertiserRequest from './RenderAdvertiserRequest'
-
 
 const AdvertiserRequest = (props) => {
+    const navigation = useNavigation()
+    const [tabs, setTab] = useState('ongoing')
     const [data, setdata] = useState({})
     const [loader, setloader] = useState(false)
     const [ongoing, setOngoing] = useState([]);
     const [pending, setPending] = useState([]);
 
-    const navigation = useNavigation()
-    const [tabs, setTab] = useState('ongoing')
+    useEffect(() => {
+        setloader(true)
+        axios.post(`${Constants.BASE_URL}getBuiness/Collaboration`, {
+            business_id: props?.route?.params?.props?.userDetails?.business?.business_id
+        })
+            .then((response) => {
+                console.log('advertiser list',response?.data)
+                setloader(false) 
+                setdata(response.data);
+                setOngoing(response?.data?.Data?.Ongoing);
+                setPending(response?.data?.Data?.Pending);
+                console.log('"advertiser==>>', response?.data?.Data?.Pending)
+            })
+            .catch((error) => { 
+                setloader(false)
+                showToastmsg("Something went wrong")
+                console.log("error=>", error);
+            })
+
+    }, [])
     // const ongoing = [
     //     { id: 1, },
     //     { id: 2, },
@@ -45,65 +59,34 @@ const AdvertiserRequest = (props) => {
     //     { id: 4, },
     //     { id: 5, },
     // ]
-    
-    useEffect(() => {
-        setloader(true)
-        axios.post(`${Constants.BASE_URL}getBuisnessAdvertiser/Collaboration`, {
-            business_id: 3
-        })
-            .then((response) => {
-                console.log('advertiser list',response?.data?.Data?.Ongoing)
-                setloader(false) 
-                setdata(response.data);
-                setOngoing(response?.data?.Data?.Ongoing);
-                setPending(response?.data?.Data?.Pending);
-                console.log('"advertiser==>>', response?.data?.Data?.Pending)
-            })
-            .catch((error) => { 
-                setloader(false)
-                showToastmsg("Something went wrong")
-                console.log("error=>", error);
-            })
 
-    }, [])
+
+
     return (
         <View style={globatStyles.wrapper}>
-            {console.log('data_=', data)}
-            {console.log('props=', props?.route?.params?.userDetails?.advertiser)}
+            
             <StatusBar translucent={true} backgroundColor='transparent' />
-            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Business List ' isCamera={true} />
+            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Advertiser Requested ' isCamera={true} />
             <ScrollView style={styles.container}>
                 <Text style={styles.desc}>
-                    View and manage your live business here.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
                 </Text>
                 {/* <SearchBar /> */}
-                <View style={styles.searchContainer}>
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Search"
-                    />
-                    <FontAwesome
-                        name='search'
-                        size={24}
-                        color="black"
-                        style={styles.searchIcon}
-                    />
-                </View>
                 <View style={styles.tabContainer}>
-                    <Text style={[styles.tab, { color: tabs === 'ongoing' ? Constants.colors.primaryColor : '#676767', textDecorationLine: tabs === 'ongoing' ? 'underline' : 'none', }]} onPress={() => setTab('ongoing')}>Ongoing</Text>
-                    <Text style={[styles.tab, { color: tabs === 'pending' ? Constants.colors.primaryColor : '#676767', textDecorationLine: tabs === 'pending' ? 'underline' : 'none', }]} onPress={() => setTab('pending')}>Pending</Text>
+                {console.log('props====',props?.route?.params?.props?.userDetails?.business?.business_id)}
+                    <Text style={[styles.tab, {color: tabs==='ongoing'?Constants.colors.primaryColor:'#676767', textDecorationLine: tabs==='ongoing'?'underline':'none',}]} onPress={()=>setTab('ongoing')}>Ongoing</Text>
+                    <Text style={[styles.tab, {color: tabs==='pending'?Constants.colors.primaryColor:'#676767', textDecorationLine: tabs==='pending'?'underline':'none',}]} onPress={()=>setTab('pending')}>Pending</Text>
                 </View>
                 <FlatList
                     data={tabs === 'ongoing' ? ongoing : pending}
-                    renderItem={item => <RenderAdvertiserCollobrationRequest item={item} userdetails={props?.route?.params?.userDetails} tabs={tabs}
+                    renderItem={item => <RenderAdvertiserCollobrationRequest item={item} userdetails={props?.route?.params?.props?.userDetails} tabs={tabs}
                         keyExtractor={item => item?.id?.tostring()}
                     />} />
-                
-
             </ScrollView>
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -124,22 +107,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginRight: 12,
         color: '#676767',
-    },
-    searchContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderRadius: 10,
-        width: '95%',
-        paddingHorizontal: 10,
-        marginVertical: 10,
-    },
-    searchInput: {
-        flex: 1,
-        paddingVertical: 10,
-    },
-    searchIcon: {
-        marginLeft: 10,
     },
 
 })

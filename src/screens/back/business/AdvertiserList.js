@@ -52,7 +52,7 @@ const AdvertiserList = (props) => {
     ]
     const GotoAdvertiserRequest=()=>{
        console.log('gotoadvertiser request')
-       navigation.navigate('/Advertiser-Request',{ props : props })
+       navigation.navigate('/Advertiser-Request',{ props:props?.route?.params })
     }
     const getAdverticerList = () => {
         setLoading(true)
