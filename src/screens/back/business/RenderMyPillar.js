@@ -37,17 +37,17 @@ const RenderMyPillar = (props) => {
         })
     }
 
+    const username = props?.pillars?.item?.username;
+    const truncatedUsername = username && username.length > 10 ? username.slice(0, 10) + '...' : username;
     return (
         <View style={styles.wrapper}>
-            {/* {console.log('item', props?.typename)}
-            {console.log('props?.pillars?.item?.collabration_id', props?.pillars?.item)} */}
+            {/* {console.log('item', props?.typename)} */}
+            {console.log('props?.pillars?.item?.collabration_id', props?.pillars?.item)}
 
             <View style={styles.cardHeading}>
                 <FastImage source={{ uri: `${Constants.BASE_IMAGE_URL}${props?.pillars?.item?.avatar}` }} style={{ width: '20%', height: '100%' }} />
                 <View style={{ alignItems: 'flex-start', marginLeft: 16, marginRight: 16, }}>
-                    <Text style={styles.heading}>{
-                        props?.pillars?.item?.username.length > 10 ? props?.pillars?.item?.username.slice(0, 10) + '...' :
-                            props?.pillars?.item?.username}</Text>
+                    <Text style={styles.heading}>{truncatedUsername}</Text>
                     <Text style={styles.designation}>Influencer</Text>
                 </View>
                 <View style={styles.ongoingWrapper}>
@@ -61,8 +61,8 @@ const RenderMyPillar = (props) => {
             </View>
             <View style={styles.cardFooter}>
                 {props?.pillars?.item?.collabration_status == 'pending' ? <Text style={styles.footerText}>Requested on :{props?.pillars?.item?.collabration_created_at} </Text>
-                :<Text style={styles.footerText}>{props?.pillars?.item?.collabration_status == 'approve' ? 'Started' : 'Ended'} on: {props?.pillars?.item?.collabration_created_at}</Text>
-            }
+                    : <Text style={styles.footerText}>{props?.pillars?.item?.collabration_status == 'approve' ? 'Started' : 'Ended'} on: {props?.pillars?.item?.collabration_created_at}</Text>
+                }
                 {props.tabs == 'ongoing' ?
                     loader ?
                         <ActivityIndicator size={30} color={'#FF0000'} /> :

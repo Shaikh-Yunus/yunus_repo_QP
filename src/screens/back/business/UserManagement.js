@@ -61,6 +61,7 @@ const UserManagement = (props) => {
                     })
                 // setLoader(false)
                 setUsers(response.data.data.auth_sub_user)
+                console.log('response.data.data.auth_sub_user',response?.data)
 
             })
             .catch((error) => {
@@ -153,6 +154,7 @@ const UserManagement = (props) => {
     return (
         <View style={styles.wrapper}>
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='User Management' />
+            {console.log('users',users)}
             {loader ?
                 <ActivityIndicator color={Constants.colors.primaryColor} size={40} style={{ marginTop: 20 }} />
                 : <ScrollView style={styles.container}>
@@ -206,7 +208,7 @@ const UserManagement = (props) => {
                             </View>
                         )
                     }
-                </ScrollView>}
+                </ScrollView>} 
         </View>
     )
 }
@@ -219,10 +221,10 @@ const styles = StyleSheet.create({
         padding: Constants.padding,
     },
     infoText: {
-        alignSelf:'center',
-        flexWrap:'wrap',
+        alignSelf: 'center',
+        flexWrap: 'wrap',
         fontFamily: Constants.fontFamily,
-        textAlign:'center'
+        textAlign: 'center'
     },
     header: {
         marginTop: Constants.margin,

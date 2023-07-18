@@ -269,7 +269,7 @@ const HomeScreen = (props) => {
     };
     return (
         <View style={globatStyles.wrapper}>
-            {/* {console.log("dashsboard_recent_order=>",dashBoardData?.RecentOrder)} */}
+            {console.log("dashsboard_recent_order=>",props?.route?.params?.userDetails?.privilages)}
 
             {
                 Animated?.timing(scaleValue, {
@@ -288,6 +288,7 @@ const HomeScreen = (props) => {
             {showDrawer && <View style={styles.menubg}>
                 <StatusBar translucent={true} backgroundColor={'transparent'} />
                 <View style={styles.header}>
+                {console.log("privalage",props?.route?.params)}
 
                     <View style={styles.profileDetails}>
                         <Pressable onPress={openDrawer} style={{ zIndex: 999, paddingTop: 10 }}><AntDesign name='close' size={26} style={{ paddingRight: 10 }} /></Pressable>

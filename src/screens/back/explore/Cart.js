@@ -39,7 +39,7 @@ const Cart = (props) => {
         await axios.post(`${Constants.BASE_URL}auth/get-cart-item`, {
             user_id: props?.route?.params?.userDetails?.id
         }).then((response) => {
-            (console.log('response check', response))
+            (console.log('response check', response?.data))
             setLoader(false)
             if (response.data.data.cart_item) {
                 let tempcartItems = []

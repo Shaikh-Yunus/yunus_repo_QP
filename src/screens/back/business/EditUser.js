@@ -120,20 +120,24 @@ const EditUser = (props) => {
                 })
             }
             else if (UserType == 'business') {
-                console.log("business api");
+                console.log("business_id",props?.route?.params?.userDetails?.business);
 
                 formdata.append("business_id", props?.route?.params?.userDetails?.business?.business_id);
-                formdata.append("sub_catorige", subCategory);
-                formdata.append('profile_avatar', { uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type });
+                // formdata.append("sub_catorige", subCategory);
+                formdata.append('profile_avatar', {uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type });
                 formdata.append('mobile_number',phoneNumber);
-                formdata.append('email',Email );
+                // formdata.append('email',Email );
                 formdata.append('age', Age);
-                formdata.append('name',name );
+                formdata.append('name',username );
                 formdata.append('gender',gender );
-                console.log("form data", formdata);
+                console.log("form data business", formdata);
+                console.log("profile_avatar_business",{uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type })
+                
                 axios.post(`${Constants.BASE_URL}business/edit-bussiness-profile`, formdata, {
                     headers: headers
                 }).then((response) => {
+                    {console.log('response.data.data.user_details',response.data.data.user_details )}
+                    {console.log("business edit response",response?.data?.data)}
                     if (response.status == 200) {
                         setButtonLoader(false)
                         navigation.navigate('/profileScreen', { userDetails: response.data.data.user_details })
@@ -158,6 +162,7 @@ const EditUser = (props) => {
                 axios.post(`${Constants.BASE_URL}advertiser/edit_advertiser_profile`, formdata, {
                     headers: headers
                 }).then((response) => {
+                    
                     if (response.status == 200) {
                         setButtonLoader(false)
                         navigation.navigate('/advertiser-product', { userDetails: response.data.data.user_details })
@@ -258,13 +263,13 @@ const EditUser = (props) => {
         }
         else if (UserType == 'business') {
             setSubCategory(datas?.business?.sub_catorige)
-            setusername(datas?.name)
+            setusername(datas?.business?.username)
             setPassword(datas?.password)
             setEmail(datas?.business?.owner_email)
             setPhoneNumber(datas?.mobile_number)
             setGender(datas?.gender)
             setAge(datas?.age)
-
+console.log('datas',datas?.business)
         }
         else if (UserType == 'advertiser') {
             setname(datas?.advertiser?.name)
@@ -280,7 +285,7 @@ const EditUser = (props) => {
     return (
         <View style={styles.wrapper}>
             <CustomAppBar navigation={props.navigation} isMainscreen={false} isReel={false} title='Edit User Info' />
-            {console.log('checking_data0', props?.route?.params?.userDetails)}
+         
             <Dialog
                 visible={visible}
                 onTouchOutside={() => setvisible(!visible)}
@@ -305,6 +310,7 @@ const EditUser = (props) => {
             </Dialog>
             <ScrollView>
                 <View style={[styles.container, { alignSelf: 'center' }]}>
+                {console.log('checking_data=>', props?.route?.params?.userDetails?.business?.business_id)}
                     <Text style={styles.editText}>Edit public information about yourself. These changes will be visible to the other users.</Text>
                 </View>
                 <View style={styles.container}>
@@ -338,8 +344,8 @@ const EditUser = (props) => {
                         UserType == 'business' &&
                         <View>
                             {/* <TextInput style={globatStyles.inputText} secureTextEntry value={password ? "*****" : setPassword} onChangeText={(pass) => setPassword(pass)} /> */}
-                            <Text style={globatStyles.inputLabel}>EmailId</Text>
-                            <TextInput style={globatStyles.inputText} value={Email} onChangeText={setEmail} />
+                            {/* <Text style={globatStyles.inputLabel}>EmailId</Text>
+                            <TextInput style={globatStyles.inputText} value={Email} onChangeText={setEmail} /> */}
                             <Text style={globatStyles.inputLabel}>Phone Number</Text>
                             <TextInput style={globatStyles.inputText}  keyboardType='number-pad'  value={phoneNumber} onChangeText={setPhoneNumber} />
                             <Text style={globatStyles.inputLabel}>Age</Text>
