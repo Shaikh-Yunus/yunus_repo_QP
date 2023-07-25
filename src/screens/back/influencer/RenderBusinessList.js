@@ -23,6 +23,7 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
 
     const [loader, setLoader] = useState(false)
     const navigation = useNavigation()
+
     const createPost = () => {
         navigation.navigate('/profileScreen', { userDetails: item?.item, type: 'advertiser', advertiser: userdetails })
     }
@@ -37,8 +38,8 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
             if (response.status == 200) {
                 setLoader(false)
                 showToastmsg('Collaboration Rejected')
-                getBussinessRequests('ongoing')
-                getBussinessRequests(tabs)
+                // getBussinessRequests('ongoing')
+                // getBussinessRequests(tabs)
             }
         }).catch((error) => {
             setLoader(false)
@@ -57,13 +58,13 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
             if (response.status == 200) {
                 setLoader(false)
                 showToastmsg('Collaboration successfully')
-                getBussinessRequests('ongoing')
-                getBussinessRequests(tabs)
+                // getBussinessRequests('ongoing')
+                // getBussinessRequests(tabs)
             }
         }).catch((error) => {
             setLoader(false)
             console.log("error data", error.response);
-            showToastmsg("Can't approved this collaboration, please try again later.")
+             showToastmsg("Can't approved this collaboration, please try again later.")
         })
     }
     const endContractFn = () => {
@@ -77,8 +78,8 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
             if (response.status == 200) {
                 setLoader(false)
                 showToastmsg('Contract Ended')
-                getBussinessRequests('ongoing')
-                getBussinessRequests(tabs)
+                // getBussinessRequests('ongoing')
+                // getBussinessRequests(tabs)
             }
         }).catch((error) => {
             setLoader(false)
@@ -88,7 +89,7 @@ const RenderBusinessList = ({ item, userdetails, tabs }) => {
     }
     return (
         <View style={styles.container}>
-            {console.log("collobrationid", item)}
+            {console.log("collobrationid", item?.item)}
             {console.log('check_list', userdetails)}
             <View style={styles.headingLine}>
                 <View style={{ flexDirection: 'row', }}>

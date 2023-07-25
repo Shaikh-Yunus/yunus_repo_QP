@@ -6,6 +6,7 @@ import {
     ScrollView,
     Pressable,
     TextInput,
+    Button,
 } from 'react-native'
 import CustomAppBar from '../../../components/business/CustomAppBar'
 import Constants from '../../../shared/Constants'
@@ -13,17 +14,62 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
+import WebView from 'react-native-webview'
+import { useEffect } from 'react'
+import { useRef } from 'react'
 
-const HelpAndSupports = (props)=>{
+const HelpAndSupports = (props) => {
     const navigation = useNavigation()
-    
-    const gotoTermsAndConditions = ()=>{
+
+    const gotoTermsAndConditions = () => {
 
     }
+
+    const webViewRef = useRef(null);
+
+    useEffect(() => {
+        if (webViewRef.current) {
+            // Inject the Tawk.to script into the WebView
+            webViewRef.current.injectJavaScript(`
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/64b933d694cf5d49dc64cca3/1h5pn5077';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+      })();
+      `);
+        }
+    }, []);
+    // Function to send a message with user details
+    const sendMessageWithDetails = () => {
+        if (webViewRef.current) {
+            // Replace the following with your desired user details
+            const userDetails = {
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+                // Add other user details you want to send
+            };
+
+            // Convert the user details object to a JSON string
+            const userDetailsJson = JSON.stringify(userDetails);
+
+            // Use injectedJavaScript to pass user details to the Tawk.to widget
+            webViewRef.current.injectJavaScript(`
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.onChatMaximized) {
+              Tawk_API.onChatMaximized();
+              Tawk_API.sendMessage('Your message text', ${userDetailsJson});
+            }
+          `);
+        }
+    };
+
     return (
         <View style={styles.wrapper}>
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Help/Support' headerRight={false} />
-            <ScrollView>
+            {/* <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.helpSupportText}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
@@ -57,8 +103,25 @@ const HelpAndSupports = (props)=>{
                         <Ionicons name='send-sharp' size={20} color='#FFF' />
                     </Pressable>
                 </View>
-            </View>
-        </View>
+            </View> */}
+            <WebView
+                ref={webViewRef}
+                source={{ uri: 'https://tawk.to/chat/64b933d694cf5d49dc64cca3/1h5pn5077' }} // Replace with your Tawk.to script URL
+                style={styles.webview}
+                injectedJavaScriptBeforeContentLoaded={`
+          var Tawk_API = Tawk_API || {};
+          Tawk_API.onChatMaximized = function () {
+            console.log('Chat widget maximized');
+          };
+        `}
+                onMessage={(event) => {
+                    // Handle messages from the Tawk.to widget (if needed)
+                    console.log('Received message from Tawk.to:', event.nativeEvent.data);
+                }}
+            />
+
+            {/* <WebView source={{uri:'https://tawk.to/chat/64b933d694cf5d49dc64cca3/1h5pn5077'}} /> */}
+        </View >
     )
 }
 
@@ -177,6 +240,9 @@ const styles = StyleSheet.create({
         borderRadius: Constants.borderRadius,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    webview: {
+        flex: 1,
     },
 })
 

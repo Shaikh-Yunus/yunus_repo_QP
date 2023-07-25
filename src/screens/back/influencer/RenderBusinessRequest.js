@@ -23,6 +23,7 @@ const RenderBusinessRequest = ({ item, userDetails }) => {
     const sendRequest = () => {
         setLoader(true)
         axios.post(`${Constants.BASE_URL}BusinessAdvertiser/Collabration`, {
+            "from":1,
             "advertiser_id": userDetails?.advertiser?.advertiser_id,
             "business_id": item?.item?.id,
         }).then((response) => {

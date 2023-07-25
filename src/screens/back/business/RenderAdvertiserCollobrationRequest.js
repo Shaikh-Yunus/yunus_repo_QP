@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     View,
     Text,
@@ -20,17 +20,16 @@ import { useNavigation } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 import RenderAdvertiserRequest from './RenderAdvertiserRequest'
 
+
 const RenderAdvertiserCollobrationRequest = ({ item, userdetails, tabs }) => {
 
     const [loader, setLoader] = useState(false)
     const navigation = useNavigation()
-    const createPost = () => {
-        navigation.navigate('/profileScreen', { userDetails: item?.item, type: 'advertiser', advertiser: userdetails })
-    }
+    
     const Reject = () => {
         setLoader(true)
         axios.post(`${Constants.BASE_URL}Change/AdvertiserCollabration/Status`, {
-            "From": 1,
+            "From": 2,
             "collabration_id": item?.item?.id,
             "status": 3
         }).then((response) => {
@@ -38,19 +37,19 @@ const RenderAdvertiserCollobrationRequest = ({ item, userdetails, tabs }) => {
             if (response.status == 200) {
                 setLoader(false)
                 showToastmsg('Collaboration Rejected')
-                getBussinessRequests('ongoing')
-                getBussinessRequests(tabs)
+                // getBussinessRequests('ongoing')
+                // getBussinessRequests(tabs)
             }
         }).catch((error) => {
             setLoader(false)
             console.log("error data", error.response);
-            showToastmsg("Can't Reject this collaboration, please try again later.")
+            showToastmsg("something went wrong")
         })
     }
     const Accept = () => {
         setLoader(true)
         axios.post(`${Constants.BASE_URL}Change/AdvertiserCollabration/Status`, {
-            "From": 1,
+            "From": 2,
             "collabration_id": item?.item?.id,
             "status": 2
         }).then((response) => {
@@ -58,19 +57,21 @@ const RenderAdvertiserCollobrationRequest = ({ item, userdetails, tabs }) => {
             if (response.status == 200) {
                 setLoader(false)
                 showToastmsg('Collaboration successfully')
-                getBussinessRequests('ongoing')
-                getBussinessRequests(tabs)
+r
+                // getBussinessRequests('ongoing')
+                // getBussinessRequests(tabs)
             }
-        }).catch((error) => {
+        }).catch((error) => { 
             setLoader(false)
-            console.log("error data", error.response);
-            showToastmsg("Can't approved this collaboration, please try again later.")
+             {error === undefined ? null :showToastmsg("Something went wrong")}
+            console.log("error=>", error);
         })
     }
+    
     const endContractFn = () => {
         setLoader(true)
         axios.post(`${Constants.BASE_URL}Change/AdvertiserCollabration/Status`, {
-            "From": 1,
+            "From": 2,
             "collabration_id": item?.item?.id,
             "status": 4
         }).then((response) => {
@@ -78,15 +79,18 @@ const RenderAdvertiserCollobrationRequest = ({ item, userdetails, tabs }) => {
             if (response.status == 200) {
                 setLoader(false)
                 showToastmsg('Contract Ended')
-                getBussinessRequests('ongoing')
-                getBussinessRequests(tabs)
+                
+
+                // getBussinessRequests('ongoing')
+                // getBussinessRequests(tabs)
             }
         }).catch((error) => {
             setLoader(false)
             console.log("error data", error.response);
-            showToastmsg("Can't approved this collaboration, please try again later.")
+            showToastmsg("something went wrong")
         })
     }
+
     return (
         <View style={styles.container}>
             {console.log("collobrationid", item)}
@@ -119,10 +123,8 @@ const RenderAdvertiserCollobrationRequest = ({ item, userdetails, tabs }) => {
             </View>
             {tabs == 'ongoing' ? loader ?
                 <ActivityIndicator size={30} color={'#FF0000'} /> :
-                <View style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
-                    <Pressable onPress={createPost} style={[styles.btnOutline, { borderColor: Constants.colors.primaryColor, marginRight: 8 }]}>
-                        <Text style={[styles.btnText, { color: '#00A928' }]}>Create Post</Text>
-                    </Pressable>
+                <View style={{ display: 'flex',alignItems:'center', marginTop: 10 }}>
+                    
                     <Pressable style={styles.btnOutline} onPress={() => endContractFn('ended')}>
                         <Text style={styles.btnText}>End Contract</Text>
                     </Pressable>
@@ -141,8 +143,6 @@ const RenderAdvertiserCollobrationRequest = ({ item, userdetails, tabs }) => {
                         {/* <Text style={{ fontFamily: Constants.fontFamily, fontSize: 12, color: '#747474', marginTop: 10, }}>ending on: 12/09/2021</Text> */}
                     </View>
                 </View> : null}
-
-
         </View>
     )
 }

@@ -235,6 +235,15 @@
                 android:resource="@xml/imagepicker_provider_paths" />
         </provider>
         <provider
+            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+            android:authorities="com.quarterpillars.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+        <provider
             android:name="com.RNFetchBlob.Utils.FileProvider"
             android:authorities="com.quarterpillars.provider"
             android:exported="false"
@@ -420,7 +429,13 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" /> <!-- Receiver Service -->
+            android:value="@integer/google_play_services_version" />
+
+        <provider
+            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+            android:authorities="com.quarterpillars.lifecycle-process"
+            android:exported="false"
+            android:multiprocess="true" /> <!-- Receiver Service -->
         <service
             android:name="app.notifee.core.ReceiverService"
             android:exported="false" />
@@ -470,6 +485,12 @@
                 <action android:name="android.app.action.NOTIFICATION_CHANNEL_GROUP_BLOCK_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.jakewharton.processphoenix.ProcessPhoenix"
+            android:exported="false"
+            android:process=":phoenix"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

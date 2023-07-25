@@ -51,6 +51,8 @@ import ui.photoeditor.RNPhotoEditorPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
+// react-native-restart
+import com.reactnativerestart.RestartPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
@@ -67,6 +69,8 @@ import com.brentvatne.react.ReactVideoPackage;
 import com.reactnative.videocache.VideoCachePackage;
 // react-native-video-compressor
 import com.react.videocompressor.VideoComPressorPackage;
+// react-native-webview
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 // rn-fetch-blob
 import com.RNFetchBlob.RNFetchBlobPackage;
 
@@ -134,6 +138,7 @@ public class PackageList {
       new RNPhotoEditorPackage(),
       new ReactNativePushNotificationPackage(),
       new ReanimatedPackage(),
+      new RestartPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new SplashScreenReactPackage(),
@@ -142,6 +147,7 @@ public class PackageList {
       new ReactVideoPackage(),
       new VideoCachePackage(),
       new VideoComPressorPackage(),
+      new RNCWebViewPackage(),
       new RNFetchBlobPackage()
     ));
   }

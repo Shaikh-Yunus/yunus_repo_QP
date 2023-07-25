@@ -16,34 +16,45 @@ import RenderAdvertiserCollobrationRequest from './RenderAdvertiserCollobrationR
 import { useEffect } from 'react'
 import axios from 'axios'
 import showToastmsg from '../../../shared/showToastmsg'
+import RNRestart from 'react-native-restart';
+
 
 const AdvertiserRequest = (props) => {
     const navigation = useNavigation()
-    const [tabs, setTab] = useState('ongoing')
+    const [tabs, setTab] = useState('pending')
     const [data, setdata] = useState({})
     const [loader, setloader] = useState(false)
     const [ongoing, setOngoing] = useState([]);
     const [pending, setPending] = useState([]);
 
+    const EmptyListMessage = ({ item }) => {
+        return (
+            // Flat List Item
+            <Text
+                style={styles.emptyListStyle}
+            >
+                {tabs === 'pending' ? 'No pending requests found' : 'No ongoing request found'}
+            </Text>
+        );
+    };
     useEffect(() => {
         setloader(true)
         axios.post(`${Constants.BASE_URL}getBuiness/Collaboration`, {
             business_id: props?.route?.params?.props?.userDetails?.business?.business_id
+        }).then((response) => {
+            console.log('advertiser list', response?.data)
+            setloader(false)
+            setdata(response.data);
+            setOngoing(response?.data?.Data?.Ongoing);
+            setPending(response?.data?.Data?.Pending);
+            console.log('"advertiser==>>', response?.data?.Data?.Ongoing)
         })
-            .then((response) => {
-                console.log('advertiser list',response?.data)
-                setloader(false) 
-                setdata(response.data);
-                setOngoing(response?.data?.Data?.Ongoing);
-                setPending(response?.data?.Data?.Pending);
-                console.log('"advertiser==>>', response?.data?.Data?.Pending)
-            })
-            .catch((error) => { 
+            .catch((error) => {
                 setloader(false)
                 showToastmsg("Something went wrong")
                 console.log("error=>", error);
             })
-
+            
     }, [])
     // const ongoing = [
     //     { id: 1, },
@@ -64,7 +75,7 @@ const AdvertiserRequest = (props) => {
 
     return (
         <View style={globatStyles.wrapper}>
-            
+
             <StatusBar translucent={true} backgroundColor='transparent' />
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Advertiser Requested ' isCamera={true} />
             <ScrollView style={styles.container}>
@@ -73,14 +84,15 @@ const AdvertiserRequest = (props) => {
                 </Text>
                 {/* <SearchBar /> */}
                 <View style={styles.tabContainer}>
-                {console.log('props====',props?.route?.params?.props?.userDetails?.business?.business_id)}
-                    <Text style={[styles.tab, {color: tabs==='ongoing'?Constants.colors.primaryColor:'#676767', textDecorationLine: tabs==='ongoing'?'underline':'none',}]} onPress={()=>setTab('ongoing')}>Ongoing</Text>
-                    <Text style={[styles.tab, {color: tabs==='pending'?Constants.colors.primaryColor:'#676767', textDecorationLine: tabs==='pending'?'underline':'none',}]} onPress={()=>setTab('pending')}>Pending</Text>
+                    {console.log('props====', props?.route?.params?.props?.userDetails?.business?.business_id)}
+                    <Text style={[styles.tab, { color: tabs === 'ongoing' ? Constants.colors.primaryColor : '#676767', textDecorationLine: tabs === 'ongoing' ? 'underline' : 'none', }]} onPress={() => setTab('ongoing')}>Ongoing</Text>
+                    <Text style={[styles.tab, { color: tabs === 'pending' ? Constants.colors.primaryColor : '#676767', textDecorationLine: tabs === 'pending' ? 'underline' : 'none', }]} onPress={() => setTab('pending')}>Pending</Text>
                 </View>
                 <FlatList
                     data={tabs === 'ongoing' ? ongoing : pending}
                     renderItem={item => <RenderAdvertiserCollobrationRequest item={item} userdetails={props?.route?.params?.props?.userDetails} tabs={tabs}
                         keyExtractor={item => item?.id?.tostring()}
+
                     />} />
             </ScrollView>
         </View>
@@ -108,7 +120,13 @@ const styles = StyleSheet.create({
         marginRight: 12,
         color: '#676767',
     },
-
+    emptyListStyle: {
+        padding: 10,
+        fontSize: 20,
+        marginTop: 20,
+        textAlign: 'center',
+        color: '#000'
+    },
 })
 
 export default AdvertiserRequest

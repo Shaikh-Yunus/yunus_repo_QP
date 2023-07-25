@@ -119,7 +119,7 @@ const SalesDashboard = (props, { userDetails }) => {
                             <View>
                                 <View style={styles.graphHeading}>
                                     <Text style={styles.headingText}>Weekly Sales</Text>
-                                    <Text style={styles.headingValue}><FontAwesome name='rupee' size={18} /> {dashBoardData?.total_weekly_amoun ? parseFloat(parseFloat(dashBoardData?.total_weekly_amoun).toFixed(2)).toLocaleString() : "0.00"}</Text>
+                                    <Text style={styles.headingValue}><FontAwesome name='rupee' size={18} /> {dashBoardData?.Weekly?.GrossSales?.ThisWeek ? parseFloat(parseFloat(dashBoardData?.Weekly?.GrossSales?.ThisWeek).toFixed(2)).toLocaleString() : "0.00"}</Text>
                                 </View>
                                 <LineChart
                                     data={weeklyData}
@@ -141,7 +141,7 @@ const SalesDashboard = (props, { userDetails }) => {
                             <View>
                                 <View style={styles.graphHeading}>
                                     <Text style={styles.headingText}>Monthly Sales</Text>
-                                    <Text style={styles.headingValue}><FontAwesome name='rupee' size={18} /> {dashBoardData?.total_monthly_amount ? parseFloat(parseFloat(dashBoardData?.total_monthly_amount).toFixed(2)).toLocaleString() : "0.00"}</Text>
+                                    <Text style={styles.headingValue}><FontAwesome name='rupee' size={18} /> {dashBoardData?.data?.Monthly?.GrossSales?.ThisMonth ? parseFloat(parseFloat(dashBoardData?.data?.Monthly?.GrossSales?.ThisMonth).toFixed(2)).toLocaleString() : "0.00"}</Text>
                                 </View>
                                 <LineChart
                                     data={monthlyData}
@@ -163,7 +163,7 @@ const SalesDashboard = (props, { userDetails }) => {
                             <View>
                                 <View style={styles.graphHeading}>
                                     <Text style={styles.headingText}>Yearly Sales</Text>
-                                    <Text style={styles.headingValue}><FontAwesome name='rupee' size={18} /> {dashBoardData?.total_yearly_amount ? parseFloat(parseFloat(dashBoardData?.total_yearly_amount).toFixed(2)).toLocaleString() : "0.00"}</Text>
+                                    <Text style={styles.headingValue}><FontAwesome name='rupee' size={18} /> {dashBoardData?.data?.Yearly?.GrossSales?.ThisYear ? parseFloat(parseFloat(dashBoardData?.data?.Yearly?.GrossSales?.ThisYear).toFixed(2)).toLocaleString() : "0.00"}</Text>
                                 </View>
                                 <LineChart
                                     data={yearlyData}
@@ -184,6 +184,7 @@ const SalesDashboard = (props, { userDetails }) => {
                         )
                         }
                         <View style={styles.boxContainer}>
+                            {console.log('dashBoardData?.data',dashBoardData?.data?.Monthly?.GrossSales?.ThisMonth)}
                             <View style={styles.box}>
                                 <Text style={styles.boxHeading}>Gross Sales</Text>
                                 <Text style={styles.boxValue}><FontAwesome name='rupee' size={20} /> {dashBoardData?.data?.Monthly?.GrossSales?.Total ? parseFloat(parseFloat(dashBoardData?.data?.Monthly?.GrossSales?.Total).toFixed(2)).toLocaleString() : "0.00"}</Text>
@@ -191,17 +192,17 @@ const SalesDashboard = (props, { userDetails }) => {
                             </View>
                             <View style={styles.box}>
                                 <Text style={styles.boxHeading}>Net Sales</Text>
-                                <Text style={styles.boxValue}><FontAwesome name='rupee' size={20} /> {dashBoardData?.earning?.total_amount ? parseFloat(parseFloat(dashBoardData?.earning.total_amount).toFixed(2)).toLocaleString() : "0.00"}</Text>
+                                <Text style={styles.boxValue}><FontAwesome name='rupee' size={20} /> {dashBoardData?.data?.NetSale?.Total ? parseFloat(parseFloat(dashBoardData?.data?.NetSale?.Total).toFixed(2)).toLocaleString() : "0.00"}</Text>
                                 <Text style={styles.boxArrow}><AntDesign name='arrowup' /> {dashBoardData?.earning?.percentage ? parseFloat(parseFloat(dashBoardData?.earning.percentage).toFixed(2)).toLocaleString() : "0.00"}%</Text>
                             </View>
                             <View style={styles.box}>
                                 <Text style={styles.boxHeading}>Discounts</Text>
-                                <Text style={styles.boxValue}><FontAwesome name='rupee' size={20} /> {dashBoardData?.data?.Monthly?.Discount?.Amount ? parseFloat(parseFloat(dashBoardData?.data?.Monthly?.Discount?.Total).toFixed(2)).toLocaleString() : "0.00"}</Text>
+                                <Text style={styles.boxValue}><FontAwesome name='rupee' size={20} /> {dashBoardData?.data?.Discount?.Total ? parseFloat(parseFloat(dashBoardData?.data?.Discount?.Total).toFixed(2)).toLocaleString() : "0.00"}</Text>
                                 <Text style={styles.boxArrow}><AntDesign name='arrowup' /> {dashBoardData?.total_sale?.percentage ? parseFloat(parseFloat(dashBoardData?.total_sale.percentage).toFixed(2)).toLocaleString() : "0.00"}%</Text>
                             </View>
                             <View style={styles.box}>
                                 <Text style={styles.boxHeading}>Tax</Text>
-                                <Text style={styles.boxValue}><FontAwesome name='rupee' size={20} /> {dashBoardData?.data?.Monthly?.Discount?.Amount ? parseFloat(parseFloat(dashBoardData?.data?.Monthly?.Discount?.Amount).toFixed(2)).toLocaleString() : "0.00"}</Text>
+                                <Text style={styles.boxValue}><FontAwesome name='rupee' size={20} /> {dashBoardData?.data?.Tax?.Total ? parseFloat(parseFloat(dashBoardData?.data?.Tax?.Total).toFixed(2)).toLocaleString() : "0.00"}</Text>
                                 <Text style={styles.boxArrow}><AntDesign name='arrowup' /> {dashBoardData?.earning?.percentage ? parseFloat(parseFloat(dashBoardData?.earning.percentage).toFixed(2)).toLocaleString() : "0.00"}%</Text>
                             </View>
                         </View>

@@ -62,7 +62,7 @@ const ShareAndEarn = (props) => {
         <View>
             <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} title='Share & Earn' />
             <ScrollView style={styles.container}>
-                {console.log('zsd',data?.data?.Earn?.toFixed(2))}
+                {console.log('zsd',data)}
                 <Text style={{ fontFamily: Constants.fontFamily, textAlign:'center' }}>Track your earnings and views here. Stay informed about your progress.</Text>
                 <View style={styles.earningDetails}>
                     <View style={{ alignItems: 'center' }}>

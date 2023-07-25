@@ -71,13 +71,13 @@ const BusinessList = (props) => {
             {console.log('data_=', data)}
             {console.log('props=', props?.route?.params?.userDetails?.advertiser)}
             <StatusBar translucent={true} backgroundColor='transparent' />
-            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Business List ' isCamera={true} />
+            <CustomAppBar navigation={navigation} isMainscreen={false} isReel={false} headerRight={false} title='Business List' isCamera={true} />
             <ScrollView style={styles.container}>
                 <Text style={styles.desc}>
                     View and manage your live business here.
                 </Text>
                 {/* <SearchBar /> */}
-                <View style={styles.searchContainer}>
+                {/* <View style={styles.searchContainer}>
                     <TextInput
                         style={styles.searchInput}
                         placeholder="Search"
@@ -88,7 +88,8 @@ const BusinessList = (props) => {
                         color="black"
                         style={styles.searchIcon}
                     />
-                </View>
+                </View> */}
+                
                 <View style={styles.tabContainer}>
                     <Text style={[styles.tab, { color: tabs === 'ongoing' ? Constants.colors.primaryColor : '#676767', textDecorationLine: tabs === 'ongoing' ? 'underline' : 'none', }]} onPress={() => setTab('ongoing')}>Ongoing</Text>
                     <Text style={[styles.tab, { color: tabs === 'pending' ? Constants.colors.primaryColor : '#676767', textDecorationLine: tabs === 'pending' ? 'underline' : 'none', }]} onPress={() => setTab('pending')}>Pending</Text>

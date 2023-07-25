@@ -22,6 +22,7 @@ const SetNewPassword = (props, { userid }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [buttonLoader, setButtonLoader] = useState(false)
     const navigation = useNavigation();
+    const [IsLoading, setIsLoading] = useState(false)
 
     const [isconfirmPassowrdValid, setIsconfirmPassowrdValid] = useState(true)
     const usernamePattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -38,11 +39,13 @@ const SetNewPassword = (props, { userid }) => {
             showToastmsg('Password must contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character')
         }
         else {
+            setIsLoading(true)
+
             axios.post(`${Constants.BASE_URL}VerifyCurrentPassword`, {
                 "user_id": props?.route?.params?.userid,
                 "password": currentpassword
             }).then((response) => {
-
+                setIsLoading(false)
                 if (response?.data?.Status == 401) {
                     showToastmsg('enter valid password ')
                     console.log("response", "please enter valid current pass")
@@ -51,7 +54,9 @@ const SetNewPassword = (props, { userid }) => {
                     setModalVisible(true)
                 }
             }).catch((err) => {
+                setIsLoading(false)
                 console.log("err", err)
+                showToastmsg(err[AxiosError])
             })
         }
     }
@@ -73,18 +78,36 @@ const SetNewPassword = (props, { userid }) => {
             setIsconfirmPassowrdValid(false)
             showToastmsg('Password did not match')
         }
+
         else {
-            axios.post(`${Constants.BASE_URL}ChangeCurrentPassword`,{
+            setIsLoading(true)
+
+            axios.post(`${Constants.BASE_URL}ChangeCurrentPassword`, {
                 "user_id": props?.route?.params?.userid,
                 "password": confirmPassowrd
             }).then((response) => {
-                if (response?.data?.Status == 200){
-                    navigation.navigate('/home', {"userDetails": props?.route?.params?.userDetails })
+                setIsLoading(false)
+                if (response?.data?.Status == 200) {
+                    navigation.goBack()
+                    // if (props?.route?.params?.userDetails == "business" ) {
+                    //     navigation.navigate('/home', { "userDetails": props?.route?.params?.userDetails })
+                    // }
+                    // else if (props?.route?.params?.userDetails == "advertiser" ) {
+                    //     navigation.navigate('/influencer-stack-navigation', { userDetails: props?.route?.params?.userDetails, userType: 'Advertiser' })
+                    // }
+                    // else if (props?.route?.params?.userDetails == "inflencer") {
+                    //     navigation.navigate('/influencer-stack-navigation', { userDetails: props?.route?.params?.userDetails, userType: 'Influencer' })
+                    // }
+                    // else  if(props?.route?.params?.userDetails == "explorer"){
+                    //     navigation.navigate('/influencer-stack-navigation', { userDetails: response.data.user, userType: 'Explorer' })
+                    // }
                     showToastmsg('password update successfully')
                     console.log("response", "done pass set")
                 }
             }).catch((err) => {
+                setIsLoading(false)
                 console.log("err", err)
+                showToastmsg("Network issue")
             })
         }
     }
@@ -110,11 +133,11 @@ const SetNewPassword = (props, { userid }) => {
                 </View>
 
                 <Text style={styles.forgotPassLink} onPress={gotoForgotPass}>Forgot Password</Text>
-
-                <Pressable onPress={CheckCurrentPassword} style={[globatStyles.button]}>
-                    {buttonLoader ? <ActivityIndicator size={20} color={Constants.colors.whiteColor} />
-                        : <Text style={globatStyles.btnText}>Verify Password </Text>}
-                </Pressable>
+                {IsLoading ? <ActivityIndicator size={30} color={Constants.colors.whiteColor} /> :
+                    <Pressable onPress={CheckCurrentPassword} style={[globatStyles.button]}>
+                        {buttonLoader ? <ActivityIndicator size={20} color={Constants.colors.whiteColor} />
+                            : <Text style={globatStyles.btnText}>Verify Password </Text>}
+                    </Pressable>}
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -154,11 +177,13 @@ const SetNewPassword = (props, { userid }) => {
                                 <FontAwesome name={showCPass ? 'eye-slash' : 'eye'} style={styles.eyeIcon} onPress={() => setShowCPass(!showCPass)} />
 
                             </View>
-                            <Pressable
-                                style={[globatStyles.button]} onPress={() => ChangePassword()}>
-                                {buttonLoader ? <ActivityIndicator size={20} color={Constants.colors.whiteColor} />
-                                    : <Text style={globatStyles.btnText}>Change password </Text>}
-                            </Pressable>
+                            {IsLoading ? <ActivityIndicator size={30} color={Constants.colors.whiteColor} /> :
+                                <Pressable
+                                    style={[globatStyles.button]} onPress={() => ChangePassword()}>
+                                    {buttonLoader ? <ActivityIndicator size={20} color={Constants.colors.whiteColor} />
+                                        : <Text style={globatStyles.btnText}>Change password </Text>}
+                                </Pressable>
+                            }
                         </View>
                     </View>
                 </Modal>

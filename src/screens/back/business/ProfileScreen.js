@@ -41,7 +41,6 @@ const ProfileScreen = (props, { advertiser }) => {
     }
     useEffect(() => {
         setLoader(true)
-
         axios.get(`${Constants.BASE_URL}business/get-my-business-profile/${props?.route?.params?.type ? props?.route?.params?.userDetails?.business_id : props?.route?.params?.userDetails?.id}`)
             .then((response) => {
                 setLoader(false)
@@ -58,7 +57,7 @@ const ProfileScreen = (props, { advertiser }) => {
     const CategoryRef = useRef(null);
     return (
         <View style={{ flex: 1 }}>
-            {console.log('props_check=>', props?.route?.params?.advertiser)}
+            {console.log('props_check=>', props?.route?.params?.userDetails)}
             <CustomAppBar title={props?.route?.params?.type ? '' : 'Hello!'}
                 editable={!props?.route?.params?.type}
                 shareble={!props?.route?.params?.type}

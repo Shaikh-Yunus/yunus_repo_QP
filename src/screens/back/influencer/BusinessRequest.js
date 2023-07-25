@@ -12,7 +12,7 @@ import CustomAppBar from '../../../components/influencer/CustomAppBar'
 import { useNavigation } from '@react-navigation/native'
 import globatStyles from '../../../shared/globatStyles'
 import Constants from '../../../shared/Constants'
-import SearchBar from '../../../components/explore/SearchBar'
+import SearchBar from '../../../components/business/SearchBar'
 import RenderBusinessRequest from './RenderBusinessRequest'
 import { FlashList } from '@shopify/flash-list'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -22,6 +22,8 @@ const BusinessRequest = (props) => {
     const [tabs, setTab] = useState('ongoing')
     const [Loading, setLoading] = useState(false)
     const [data, setData] = useState([])
+    const [searchText, setsearchText] = useState('')
+    const [Filtereddata, setFiltereddata] = useState([]);
 
 
     const ongoing = [
@@ -68,6 +70,13 @@ const BusinessRequest = (props) => {
                     <TextInput
                         style={styles.searchInput}
                         placeholder="Search"
+                        onChangeText={(text) => {
+                            const Filtereddata = data.filter((item) =>
+                                item.username.toLowerCase().includes(text.toLowerCase())
+                            );
+                            setFiltereddata(Filtereddata);
+                        }}
+                        value={data}
                     />
                     <FontAwesome
                         name='search'
@@ -76,7 +85,18 @@ const BusinessRequest = (props) => {
                         style={styles.searchIcon}
                     />
                 </View>
-                {/* <SearchBar /> */}
+                {/* <SearchBar
+                    setsearchText={(text) => {
+                        
+                            const Filtereddata = data.filter((item) =>
+                                item.username.toLowerCase().includes(text.toLowerCase())
+                            );
+                            setFiltereddata(Filtereddata);
+                        }
+                    }
+                    searchText={searchText}
+                />         */}
+                {console.log('datadata', data[0]?.username)}
                 {/* <View style={styles.tabContainer}>
                     <Text style={[styles.tab, {color: tabs==='ongoing'?Constants.colors.primaryColor:'#676767', textDecorationLine: tabs==='ongoing'?'underline':'none',}]} onPress={()=>setTab('ongoing')}>Ongoing</Text>
                     <Text style={[styles.tab, {color: tabs==='pending'?Constants.colors.primaryColor:'#676767', textDecorationLine: tabs==='pending'?'underline':'none',}]} onPress={()=>setTab('pending')}>Pending</Text>

@@ -120,24 +120,27 @@ const EditUser = (props) => {
                 })
             }
             else if (UserType == 'business') {
-                console.log("business_id",props?.route?.params?.userDetails?.business);
-
-                formdata.append("business_id", props?.route?.params?.userDetails?.business?.business_id);
+                console.log("business_id", props?.route?.params?.userDetails?.business);
+                {
+                    props?.route?.params?.userDetails?.privilages == 1 || 2 || 3 ?
+                    formdata.append("business_id", props?.route?.params?.userDetails?.id)
+                    : formdata.append("business_id", props?.route?.params?.userDetails?.business?.business_id);
+                }
                 // formdata.append("sub_catorige", subCategory);
-                formdata.append('profile_avatar', {uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type });
-                formdata.append('mobile_number',phoneNumber);
+                formdata.append('profile_avatar', { uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type });
+                formdata.append('mobile_number', phoneNumber);
                 // formdata.append('email',Email );
                 formdata.append('age', Age);
-                formdata.append('name',username );
-                formdata.append('gender',gender );
+                formdata.append('name', username);
+                formdata.append('gender', gender);
                 console.log("form data business", formdata);
-                console.log("profile_avatar_business",{uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type })
-                
+                console.log("profile_avatar_business", { uri: cameraImg.uri, name: cameraImg.fileName, type: cameraImg.type })
+
                 axios.post(`${Constants.BASE_URL}business/edit-bussiness-profile`, formdata, {
                     headers: headers
                 }).then((response) => {
-                    {console.log('response.data.data.user_details',response.data.data.user_details )}
-                    {console.log("business edit response",response?.data?.data)}
+                    { console.log('response.data.data.user_details', response.data.data.user_details) }
+                    { console.log("business edit response", response?.data?.data) }
                     if (response.status == 200) {
                         setButtonLoader(false)
                         navigation.navigate('/profileScreen', { userDetails: response.data.data.user_details })
@@ -162,7 +165,7 @@ const EditUser = (props) => {
                 axios.post(`${Constants.BASE_URL}advertiser/edit_advertiser_profile`, formdata, {
                     headers: headers
                 }).then((response) => {
-                    
+
                     if (response.status == 200) {
                         setButtonLoader(false)
                         navigation.navigate('/advertiser-product', { userDetails: response.data.data.user_details })
@@ -269,7 +272,7 @@ const EditUser = (props) => {
             setPhoneNumber(datas?.mobile_number)
             setGender(datas?.gender)
             setAge(datas?.age)
-console.log('datas',datas?.business)
+            console.log('datas', datas?.business)
         }
         else if (UserType == 'advertiser') {
             setname(datas?.advertiser?.name)
@@ -285,7 +288,7 @@ console.log('datas',datas?.business)
     return (
         <View style={styles.wrapper}>
             <CustomAppBar navigation={props.navigation} isMainscreen={false} isReel={false} title='Edit User Info' />
-         
+
             <Dialog
                 visible={visible}
                 onTouchOutside={() => setvisible(!visible)}
@@ -310,7 +313,7 @@ console.log('datas',datas?.business)
             </Dialog>
             <ScrollView>
                 <View style={[styles.container, { alignSelf: 'center' }]}>
-                {console.log('checking_data=>', props?.route?.params?.userDetails?.business?.business_id)}
+                    {console.log('checking_data=>', props?.route?.params?.userDetails?.business?.business_id)}
                     <Text style={styles.editText}>Edit public information about yourself. These changes will be visible to the other users.</Text>
                 </View>
                 <View style={styles.container}>
@@ -347,9 +350,9 @@ console.log('datas',datas?.business)
                             {/* <Text style={globatStyles.inputLabel}>EmailId</Text>
                             <TextInput style={globatStyles.inputText} value={Email} onChangeText={setEmail} /> */}
                             <Text style={globatStyles.inputLabel}>Phone Number</Text>
-                            <TextInput style={globatStyles.inputText}  keyboardType='number-pad'  value={phoneNumber} onChangeText={setPhoneNumber} />
+                            <TextInput style={globatStyles.inputText} keyboardType='number-pad' value={phoneNumber} onChangeText={setPhoneNumber} />
                             <Text style={globatStyles.inputLabel}>Age</Text>
-                            <TextInput style={globatStyles.inputText}  keyboardType='number-pad' value={Age} onChangeText={setAge} />
+                            <TextInput style={globatStyles.inputText} keyboardType='number-pad' value={Age} onChangeText={setAge} />
                             <Text style={globatStyles.inputLabel}>Gender</Text>
                             <View style={styles.gender}>
                                 {

@@ -380,6 +380,23 @@
                     }
                 },
                 {
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-3\\d2a779ed641a45b0d3d73a7fd1373957\\transformed\\work-runtime-2.8.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,120,190,254",
+                        "endColumns": "64,69,63,60",
+                        "endOffsets": "115,185,249,310"
+                    },
+                    "to": {
+                        "startLines": "853,854,855,857",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "37732,37797,37867,37993",
+                        "endColumns": "64,69,63,60",
+                        "endOffsets": "37792,37862,37926,38049"
+                    }
+                },
+                {
                     "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-3\\a012f57f8b2ba4125820129173ab8aed\\transformed\\jetified-library-2.4.1\\res\\values\\vpi__styles.xml",
                     "from": {
                         "startLines": "37,17,22,42,25",
@@ -525,23 +542,6 @@
                         "startOffsets": "100450,121325",
                         "endColumns": "51,59",
                         "endOffsets": "100497,121380"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-3\\f5aac15bf8c54cc570bae093b6d6303a\\transformed\\work-runtime-2.7.1\\res\\values\\values.xml",
-                    "from": {
-                        "startLines": "2,3,4,5",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,120,190,254",
-                        "endColumns": "64,69,63,60",
-                        "endOffsets": "115,185,249,310"
-                    },
-                    "to": {
-                        "startLines": "853,854,855,857",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "37732,37797,37867,37993",
-                        "endColumns": "64,69,63,60",
-                        "endOffsets": "37792,37862,37926,38049"
                     }
                 },
                 {
@@ -6987,6 +6987,16 @@
             "outputFile": "D:\\mujtaba(23-jun-23)\\Q_P\\android\\app\\build\\intermediates\\merged_res\\debug\\values-v23_values-v23.arsc.flat",
             "map": [
                 {
+                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-3\\d2a779ed641a45b0d3d73a7fd1373957\\transformed\\work-runtime-2.8.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,121",
+                        "endColumns": "65,62",
+                        "endOffsets": "116,179"
+                    }
+                },
+                {
                     "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-3\\10d3f12a36731f1f439040bc2ad31e99\\transformed\\material-1.3.0\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2,6",
@@ -7003,16 +7013,6 @@
                         "endLines": "58,62",
                         "endColumns": "10,10",
                         "endOffsets": "4063,4336"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\admin\\.gradle\\caches\\transforms-3\\f5aac15bf8c54cc570bae093b6d6303a\\transformed\\work-runtime-2.7.1\\res\\values-v23\\values-v23.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,121",
-                        "endColumns": "65,62",
-                        "endOffsets": "116,179"
                     }
                 },
                 {

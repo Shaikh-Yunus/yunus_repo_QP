@@ -26,7 +26,8 @@ const RenderAdvertiserRequest = ({ item, userDetails }) => {
     const navigation = useNavigation()
     const sendRequest = () => {
         setLoader(true)
-        axios.post(`${Constants.BASE_URL}Advertiser/Collabration`, {
+        axios.post(`${Constants.BASE_URL}Advertiser/Collabration`,{
+            "from":2,
             "advertiser_id": item?.item?.id,
             "business_id": userDetails?.business?.business_id,
         }).then((response) => {
