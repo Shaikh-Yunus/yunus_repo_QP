@@ -349,13 +349,13 @@ const Product = (props) => {
                                 props?.route?.params?.userType == 'influencer' &&
                                 setMenuItem(setActiveMenu, activeMenu, 'fa5', 'comments-dollar', 'Share & Earn', navigation, '/share-and-earn', props)
                             }
-                            {props?.route?.params?.userType !== 'explore' ?
+                            {/* {props?.route?.params?.userType !== 'explore' ?
                                 setMenuItem(setActiveMenu, activeMenu, 'fa5', 'users', 'User Management', navigation, '/user-management', props)
-                                : null}
+                                : null} */}
                             {/* {
                         setMenuItem(setActiveMenu, activeMenu, 'fa', 'money', 'Earnings', navigation, '/earnings',props)
                     } */}
- 
+
                             {props?.route?.params?.userType == 'influencer' &&
                                 setMenuItem(setActiveMenu, activeMenu, 'ant', 'dashboard', 'Dashboard', navigation, '/dashboard', props)
                             }
@@ -499,17 +499,17 @@ const Product = (props) => {
                         <View style={styles.switchViewText}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', paddingRight: 80 }}>Switch View As</Text>
                         </View>
-                        {props?.route?.params?.userType == 'influencer' ? 
-                        <Text style={styles.switchText}>
-                           Your account has been switched to an Explorer Account giving you access to advance exploring features.
+                        {props?.route?.params?.userType == 'influencer' ?
+                            <Text style={styles.switchText}>
+                                Your account has been switched to an Explorer Account giving you access to advance exploring features.
 
-                        </Text> 
-                        :
-                        <Text style={styles.switchText}>
-                            Your Explore account will be switched to an Influencer account giving you more access to advanced features.
+                            </Text>
+                            :
+                            <Text style={styles.switchText}>
+                                Your Explore account will be switched to an Influencer account giving you more access to advanced features.
 
-                        </Text> }
-                        
+                            </Text>}
+
                         <View style={styles.modalconatiner}>
                             <View style={{ display: "flex", justifyContent: 'flex-end', flexDirection: 'row', width: '100%', paddingTop: 20 }}>
                                 <AntDesign name='close' size={23} color='#000000' onPress={() => { setModalVisible(!modalVisible); setShowDrawer(true) }} />
