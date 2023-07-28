@@ -201,7 +201,7 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
     }
 
     const gotoProductDetails = () => {
-        navigation.navigate('/product-details', {
+        navigation.navigate('/product-details',{
             productDetails: item.item, userDetails: userDetails,
             LikeCount: LikeCount,
             commentCount: commentCount,

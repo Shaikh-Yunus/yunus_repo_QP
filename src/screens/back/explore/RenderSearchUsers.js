@@ -20,7 +20,7 @@ const RenderSearchUsers = ({ item, searchdata, setSearchData }) => {
     const navigation = useNavigation()
     return (
         <View>
-            {console.log("User_page==>", item?.item?.Influencer)}
+            {console.log("User_page==>", item?.item)}
             {/* {console.log("see_users-datapass=>", item?.item?.Influencer?.avatar)} */}
             <View>
                 <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate('/visit-profile', {

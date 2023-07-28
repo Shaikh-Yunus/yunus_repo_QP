@@ -1,10 +1,10 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-54:12
-INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-54:12
-INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-54:12
-INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-54:12
-MERGED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-54:12
+ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-55:12
+INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-55:12
+INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-55:12
+INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-55:12
+MERGED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-55:12
 MERGED from [com.facebook.flipper:flipper:0.125.0] C:\Users\admin\.gradle\caches\transforms-3\95e12340a5a622d1edacde9e6feeb240\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:8:1-18:12
 MERGED from [com.facebook.flipper:flipper-network-plugin:0.125.0] C:\Users\admin\.gradle\caches\transforms-3\2aaf75ef2d54ef7233cbd76b239b8995\transformed\jetified-flipper-network-plugin-0.125.0\AndroidManifest.xml:8:1-15:12
 MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.125.0] C:\Users\admin\.gradle\caches\transforms-3\192b226b7554e7e4bff1b2f016a706c5\transformed\jetified-flipper-fresco-plugin-0.125.0\AndroidManifest.xml:8:1-15:12
@@ -163,13 +163,13 @@ INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\debug\AndroidManifest.xm
 		INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\debug\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-54:12
+		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-55:12
 		INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\debug\AndroidManifest.xml
 	xmlns:tools
 		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:2:1-47
 	android:versionCode
 		INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-54:12
+		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:1-55:12
 		INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\debug\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:1:11-69
@@ -278,9 +278,9 @@ ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:20
 	android:name
 		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:20:15-59
 application
-ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:26:5-52:19
-MERGED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:26:5-52:19
-MERGED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:26:5-52:19
+ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:26:5-53:19
+MERGED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:26:5-53:19
+MERGED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:26:5-53:19
 MERGED from [:peb-lib-android-x:] C:\Users\admin\.gradle\caches\transforms-3\20d38a25b6f3ad621bcdd90326d417d7\transformed\jetified-peb-lib-android-x\AndroidManifest.xml:16:5-39:19
 MERGED from [:peb-lib-android-x:] C:\Users\admin\.gradle\caches\transforms-3\20d38a25b6f3ad621bcdd90326d417d7\transformed\jetified-peb-lib-android-x\AndroidManifest.xml:16:5-39:19
 MERGED from [com.google.android.material:material:1.3.0] C:\Users\admin\.gradle\caches\transforms-3\10d3f12a36731f1f439040bc2ad31e99\transformed\material-1.3.0\AndroidManifest.xml:22:5-20
@@ -428,7 +428,9 @@ MERGED from [:react-native-image-crop-picker] D:\mujtaba(23-jun-23)\Q_P\node_mod
 	android:name
 		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:35:95-142
 activity#com.quarterpillars.MainActivity
-ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:36:7-47:18
+ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:36:7-48:18
+	android:screenOrientation
+		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:43:9-51
 	android:label
 		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:38:9-41
 	android:launchMode
@@ -442,21 +444,21 @@ ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:36
 	android:name
 		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:37:9-37
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:43:9-46:25
+ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:44:9-47:25
 action#android.intent.action.MAIN
-ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:44:13-65
+ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:45:13-65
 	android:name
-		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:44:21-62
+		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:45:21-62
 category#android.intent.category.LAUNCHER
-ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:45:13-73
+ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:46:13-73
 	android:name
-		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:45:23-70
+		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:46:23-70
 meta-data#preloaded_fonts
-ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:49:9-51:57
+ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:50:9-52:57
 	android:resource
-		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:51:13-54
+		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:52:13-54
 	android:name
-		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:50:13-43
+		ADDED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml:51:13-43
 uses-sdk
 INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\mujtaba(23-jun-23)\Q_P\android\app\src\main\AndroidManifest.xml

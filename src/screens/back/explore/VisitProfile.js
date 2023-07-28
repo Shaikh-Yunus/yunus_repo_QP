@@ -39,11 +39,11 @@ const VisitProfile = (props) => {
     }
     useEffect(() => {
         setLoader(true)
-        axios.get(`${Constants.BASE_URL}${props?.route?.params?.userDetails?.role_id == 2 ? `influencer/get-influencer-profile/${props?.route?.params?.userDetails?.influencer.influencer_id}` :
+        axios.get(`${Constants.BASE_URL}${props?.route?.params?.userDetails?.role_id == 2 ? `influencer/get-influencer-profile/${props?.route?.params?.userDetails?.Influencer.influencer_id}` :
             props?.route?.params?.userDetails?.role_id == 1 ? `business/get-my-business-profile/${props?.route?.params?.userDetails?.id}` : ""
             }`)
             .then((response) => {
-                console.log("idid=>", props?.route?.params?.userDetails?.influencer.influencer_id)
+                console.log("idid=>", props?.route?.params?.userDetails?.Influencer.influencer_id)
                 setLoader(false)
                 if (response.data.data.influencers)
                     setuserData(response.data.data.influencers)
@@ -59,6 +59,8 @@ const VisitProfile = (props) => {
             <CustomAppBar editable={true} navigation={navigation} isMainscreen={false} isReel={false} title='Profile' userDetails={props?.route?.params?.userDetails} type={Object.keys(props.route.params.userDetails)[Object.keys(props.route.params.userDetails).length - 1]}
                 shareble={true}
             />
+{  console.log("check", props)}
+
             {/* <Text style={styles.summaryDesc}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut .
                     </Text> */}<View style={styles.companyDetails}>
