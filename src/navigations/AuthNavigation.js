@@ -90,6 +90,7 @@ import EditService from '../screens/back/business/EditService'
 import SetNewPassword from '../screens/common/SetNewPassword'
 import AdvertiserRequest from '../screens/back/business/AdvertiserRequest'
 import RenderAdvertiserCollobrationRequest from '../screens/back/business/RenderAdvertiserCollobrationRequest'
+import BookService from '../screens/back/explore/BookService'
 const Stack = createNativeStackNavigator()
 
 const AuthNavigation = (props) => {
@@ -189,7 +190,8 @@ const AuthNavigation = (props) => {
                 <Stack.Screen name="/Set-New-Password" component={SetNewPassword} /> 
                 <Stack.Screen name="/Advertiser-Request" component={AdvertiserRequest} />
                 <Stack.Screen name="/Render-AdvertiserCollobrationRequest" component={RenderAdvertiserCollobrationRequest} />
-                 
+                <Stack.Screen name="/Book-Service" component={BookService} />
+                {console.log('props===',props)}
                 {/* <Stack.Screen name='/admin-signin' component={AdminSignin} />
                 <Stack.Screen name='/forgot-password-admin' component={ForgotPasswordAdmin} />
                 <Stack.Screen name='/set-password-admin' component={SetPasswordAdmin} />

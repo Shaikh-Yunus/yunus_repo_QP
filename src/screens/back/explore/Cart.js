@@ -43,7 +43,7 @@ const Cart = (props) => {
             setLoader(false)
             if (response.data.data.cart_item) {
                 let tempcartItems = []
-                let tempprice =  0
+                let tempprice = 0
                 let tempdiscount = 0
                 let temptotalPrice = 0
                 if (response.data.data.cart_item.length > 0)
@@ -55,7 +55,6 @@ const Cart = (props) => {
                         // setprice(parseFloat(price)+
                         //     parseFloat(parseFloat(item?.sales_price) - (parseFloat(item?.sales_price) * (parseFloat(item?.dicount)/100)))
                         // )
-
                     })
                 console.log('tempcartItems', tempcartItems)
                 setCartItems(tempcartItems)
@@ -100,10 +99,10 @@ const Cart = (props) => {
                         <View>
                             <Text style={[styles.description, { fontSize: 20, textAlign: 'center', marginTop: 20 }]}>
                                 Uh-oh! Your Cart is Empty.
-                               
+
                             </Text>
                             <Text style={[styles.description, { fontSize: 12, textAlign: 'center', marginTop: 2 }]}>
-                            Looks like you haven't added anything to your cart yet!!
+                                Looks like you haven't added anything to your cart yet!!
                             </Text>
                         </View>
                 }
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     },
     description: {
         fontFamily: Constants.fontFamily,
-        textAlign:'center'
+        textAlign: 'center'
     },
     wrapper: {
         padding: Constants.padding,

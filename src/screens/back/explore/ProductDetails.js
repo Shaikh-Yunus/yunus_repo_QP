@@ -275,8 +275,7 @@ const ProductDetails = (props) => {
             .then(result => {
                 console.log(result)
                 if (result.Status === 200) {
-                    showToastmsg('Service Added Successfully')
-                    navigation.goBack()
+                    navigation.navigate('/Book-Service', { userDetails: props?.route?.params?.userDetails , productDetails : props?.route?.params?.productDetails ,price:price ,description:description ,title:title , formFields:formFields})
                 }
             })
             .catch(error => console.log('error in submiting form', error));
@@ -343,7 +342,7 @@ const ProductDetails = (props) => {
 
                                 <View>
                                     <Text style={styles.productname}>
-                                        {title}
+                                        {title} 
                                     </Text>
                                 </View>
                                 <View>
@@ -353,7 +352,7 @@ const ProductDetails = (props) => {
                                 </View>
                                 <View>
                                     <Text style={styles.productname}>
-                                        Price: ₹{price}
+                                        Price: ₹{price} 
                                     </Text>
                                 </View>
                                 {
