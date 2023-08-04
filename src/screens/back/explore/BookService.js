@@ -46,15 +46,17 @@ const BookService = (props) => {
     //         })
     // }
 
-    const callPaymentGateway = (accessKey) => {
+    const callPaymentGateway = (accessKey, totalPrice) => {
         var options = {
             access_key: accessKey,
             pay_mode: "test"
         }
         EasebuzzCheckout.open(options).then((data) =>{
-            if (data.result.includes("payment_successfull")){
+           console.log('payment response',data)
+           if(data?.result == "payment_successfull")
+           console.log("response succes")
                 navigation.navigate('/payment-success', { amount: totalPrice })
-            }
+            
         })
 
     }
