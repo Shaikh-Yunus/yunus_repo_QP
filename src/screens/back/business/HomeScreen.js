@@ -38,6 +38,7 @@ import ReactDatamaps from "react-india-states-map";
 import { inMill } from '@react-jvectormap/spain'
 import FastImage from 'react-native-fast-image'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import RenderRecentServices from './RenderRecentServices'
 
 
 const HomeScreen = (props) => {
@@ -54,6 +55,9 @@ const HomeScreen = (props) => {
     const [femaleValue, setfemaleValue] = useState(0)
     const [modalLoader, setmodalLoader] = useState(false)
     const [modalVisible, setModalVisible] = useState(false)
+    const [tabs2, setTabs2] = useState('products')
+    const [serviceData , setserviceData] = useState([])
+
 
     const offsetValue = useRef(new Animated.Value(0)).current
     const screenWidth = Dimensions.get("window").width;
@@ -251,11 +255,27 @@ const HomeScreen = (props) => {
                 // showToastmsg("Something went wrong for dashboard!")
             })
     }
+
+    const getservicedata = () => {
+        axios.get(`${Constants.BASE_URL}GetServiceDataWithCount/${props?.route?.params?.userDetails?.id}`)
+
+            .then((response) => {
+                console.log('response-', response?.data?.Status)
+                if (response?.data?.Status == 200) {
+                    setserviceData(response?.data?.Data)
+                    console.log('response==', response?.data?.Data)
+                    }
+            }).catch((err) => {
+                console.log("error", err)
+                showToastmsg("Something went wrong")
+            })
+    }
     useEffect(() => {
         setActiveMenu('')
         console.log("user details", props?.route?.params?.userDetails?.role_id);
         console.log("user details", props?.route?.params?.userDetails?.id);
         getDashBoardData()
+        getservicedata()
     }, [props])
     const EmptyListMessage = ({ item }) => {
         return (
@@ -269,7 +289,7 @@ const HomeScreen = (props) => {
     };
     return (
         <View style={globatStyles.wrapper}>
-            {console.log("dashsboard_recent_order=>",props?.route?.params?.userDetails?.privilages)}
+            {console.log("dashsboard_recent_order=>", props?.route?.params?.userDetails?.privilages)}
 
             {
                 Animated?.timing(scaleValue, {
@@ -288,7 +308,7 @@ const HomeScreen = (props) => {
             {showDrawer && <View style={styles.menubg}>
                 <StatusBar translucent={true} backgroundColor={'transparent'} />
                 <View style={styles.header}>
-                {console.log("privalage",props?.route?.params)}
+                    {console.log("privalage", props?.route?.params)}
 
                     <View style={styles.profileDetails}>
                         <Pressable onPress={openDrawer} style={{ zIndex: 999, paddingTop: 10 }}><AntDesign name='close' size={26} style={{ paddingRight: 10 }} /></Pressable>
@@ -383,7 +403,7 @@ const HomeScreen = (props) => {
                                 <Text style={styles.impressionValue}>
                                     {/* <FontAwesome size={18} name='rupee' style={styles.rupeeIcon} />  */}
                                     {dashBoardData?.Impression?.TotalViews ? parseFloat(parseFloat(dashBoardData?.Impression?.TotalViews).toFixed(2)).toLocaleString() : "0.00"}</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 12, }}>
+                                <View style={{ flexDirection: 'row', marginTop: 12, }}> 
                                     <AntDesign name='arrowup' size={18} color={Constants.colors.primaryColor} />
                                     <Text style={styles.impressionInPercentage}>{dashBoardData?.impresion ? "8.6" : "0.00"}%</Text>
                                 </View>
@@ -609,22 +629,58 @@ const HomeScreen = (props) => {
                             <Text style={styles.heading}>Recent Orders</Text>
                             <Pressable onPress={gotoAllOrders}><Text style={styles.viewAll}>View All</Text></Pressable>
                         </View>
-                        <View style={styles.tableContainer}>
-                            <Text style={styles.orderTableHeading}>Image</Text>
-                            <Text style={[styles.orderTableHeading, { flex: 4 }]}>Product Name</Text>
-                            <Text style={styles.orderTableHeading}>Quantity</Text>
-                            <Text style={styles.orderTableHeading}>Buyers</Text>
+                        <View style={styles.tabs2}>
+                            <Pressable onPress={() => setTabs2('products')}>
+                                <Text style={{ ...styles.tabText, color: tabs === 'products' ? Constants.colors.primaryColor : null, fontWeight: tabs === 'products' ? '800' : '400', textDecorationColor: tabs === 'Products' ? Constants.colors.primaryColor : 'transparent' }}>Products</Text>
+                                {tabs === 'products' ? <View style={styles.activeTab2}></View> : <View style={{ ...styles.activeTab2, backgroundColor: 'transparent' }}></View>}
+                            </Pressable>
+                            <Pressable onPress={() => setTabs2('services')}>
+                                <Text style={{ ...styles.tabText, color: tabs === 'services' ? Constants.colors.primaryColor : null, fontWeight: tabs === 'services' ? '800' : '400', textDecorationColor: tabs === 'Services' ? Constants.colors.primaryColor : 'transparent' }}>Services</Text>
+                                {tabs === 'services' ? <View style={styles.activeTab2}></View> : <View style={{ ...styles.activeTab2, backgroundColor: 'transparent' }}></View>}
+                            </Pressable>
+
                         </View>
-                        <View style={styles.divider}></View>
-                        {loader ?
+                        {tabs2 == "products" ?
+                            <>
+                                <View style={styles.tableContainer}>
+                                    <Text style={styles.orderTableHeading}>Image</Text>
+                                    <Text style={[styles.orderTableHeading, { flex: 4 }]}>Product Name</Text>
+                                    <Text style={styles.orderTableHeading}>Quantity</Text>
+                                    <Text style={styles.orderTableHeading}>Buyers</Text>
+                                </View>
+                                <View style={styles.divider}></View>
+                            </>
+                            :
+                            <>
+                                <View style={styles.tableContainer}>
+                                    {/* <Text style={styles.orderTableHeading}>Image....</Text>
+                                    <Text style={[styles.orderTableHeading, { flex: 4 }]}>Product Name</Text>
+                                    <Text style={styles.orderTableHeading}>Quantity</Text>
+                                    <Text style={styles.orderTableHeading}>Buyers</Text> */}
+                                </View>
+                                <View style={styles.divider}></View>
+                            </>
+                        }
+                        {tabs2 === "products" ? (loader ?
                             <DashBoardLoader />
+
                             : <FlatList
                                 data={dashBoardData?.RecentOrder}
                                 keyExtractor={item => item?.id?.toString()}
                                 ListEmptyComponent={EmptyListMessage}
                                 renderItem={(item) => <RenderRecentOrders order={item}
                                 />}
-                            />}
+                            />) : null}
+                        {tabs2 === "services" ? (loader ?
+                            <DashBoardLoader />
+
+                            : <FlatList
+                                data={serviceData}
+                                keyExtractor={item => item?.id?.toString()}
+                                ListEmptyComponent={EmptyListMessage}
+                                renderItem={(item) => <RenderRecentServices item={item}
+                                />}
+                            />) : null}
                     </View>
 
                 </ScrollView>
@@ -817,8 +873,8 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: 'black',
         textTransform: "capitalize",
-        flexWrap:'wrap',
-        width:170,
+        flexWrap: 'wrap',
+        width: 170,
         overflow: 'hidden'
     },
     founder: {
@@ -951,6 +1007,22 @@ const styles = StyleSheet.create({
         width: '50%',
         backgroundColor: 'rgba(229, 235, 237, 0.38)'
     },
+    activeTab2: {
+        height: 3,
+        width: '100%',
+        backgroundColor: Constants.colors.primaryColor,
+        marginTop: 6,
+    },
+    tabs2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: Constants.margin + 16,
+        backgroundColor: 'rgba(229, 235, 237, 0.38)'
+
+        // marginBottom: Constants.margin + 16,
+    },
+
     tabText: {
         fontFamily: Constants.fontFamily,
         fontSize: 19,

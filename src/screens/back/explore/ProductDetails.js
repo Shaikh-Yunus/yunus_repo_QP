@@ -55,9 +55,9 @@ const ProductDetails = (props) => {
     const [open, setOpen] = useState(false)
     const [openTwo, setOpenTwo] = useState(false)
     const [date, setDate] = useState(new Date())
-    // console.log("this is time=>", date);
+    console.log("this is time=>", date);
     const [dateTwo, setDateTwo] = useState(new Date())
-    // console.log("this is Date=>", dateTwo);
+    console.log("this is Date=>", dateTwo);
     const [isOpen, setIsOpen] = useState([{ label: '', isOpen: false }])
 
     const [qty, setQty] = useState(1)
@@ -251,35 +251,59 @@ const ProductDetails = (props) => {
             .catch(error => console.log('error in get service by id', error));
     }
     const HandleSumbitMain = () => {
-        // var checkingSubmitted = JSON.stringify(formFields)
-        // console.log("form submitted", checkingSubmitted);
         var myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
-
+      
         var raw = JSON.stringify({
-            "service_id": serviceId,
-            "form_json": JSON.stringify(formFields),
-            "user_id": props?.route?.params?.userDetails?.id
+          "service_id": serviceId,
+          "form_json": JSON.stringify(formFields),
+          "user_id": props?.route?.params?.userDetails?.id
         });
-
+      
         var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
         };
-
+      
         fetch(`${Constants.BASE_URL}business/Add/ServiceFormData`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                if (result.Status === 200) {
-                    navigation.navigate('/Book-Service', { userDetails: props?.route?.params?.userDetails , productDetails : props?.route?.params?.productDetails ,price:price ,description:description ,title:title , formFields:formFields})
-                }
-            })
-            .catch(error => console.log('error in submiting form', error));
-    }
+          .then(response => response.json())
+          .then(result => {
+            console.log(result);
+            if (result.Status === 200) {
+              axios.post(`${Constants.BASE_URL}BuyService`, {
+                "service_id": serviceId,
+                "user_id": props?.route?.params?.userDetails?.id,
+                "amount": parseFloat(price).toFixed(2),
+              })
+                .then(response => {
+                  console.log("response=to=payment", response?.data);
+                  setLoader(false);
+                  if (response.data.error) {
+                    setLoader(false);
+                    showToastmsg(response.data.msg);
+                  }
+                  else{
+                  navigation.navigate('/Book-Service', {
+                    userDetails: props?.route?.params?.userDetails,
+                    productDetails: props?.route?.params?.productDetails,
+                    price: price,
+                    description: description,
+                    title: title,
+                    formFields: formFields ,
+                    ID :response?.data?.ID,
+                  })};
+                })
+                .catch(error => console.log('Something went wrong', error));
+            } else {
+              console.log('Error in form submission:', result.Message);
+            }
+          })
+          .catch(error => console.log('error in submitting form', error));
+      };
+      
     return (
         <View style={globatStyles.wrapper}>
             {loader ?
@@ -342,7 +366,7 @@ const ProductDetails = (props) => {
 
                                 <View>
                                     <Text style={styles.productname}>
-                                        {title} 
+                                        {title}
                                     </Text>
                                 </View>
                                 <View>
@@ -352,7 +376,7 @@ const ProductDetails = (props) => {
                                 </View>
                                 <View>
                                     <Text style={styles.productname}>
-                                        Price: ₹{price} 
+                                        Price: ₹{price}
                                     </Text>
                                 </View>
                                 {

@@ -36,10 +36,10 @@ const CustomAppBar=(props)=>{
                             )
                         }
                     </View>
-                    
-                ):(
+                    ):(
                     <View style={styles.titleBar}>
-                        <Pressable onPress={goBack}><AntDesign name='left' size={24} style={props.isReel?styles.reelBackBtn:styles.backBtn} /></Pressable>
+                        <Pressable onPress={goBack}><AntDesign name='left' size={24} style={props.isReel?styles.reelBackBtn:styles.backBtn} />
+                        </Pressable>
                         <Text style={{...styles.title, color: props.isReel?Constants.colors.whiteColor: 'rgba(0,0,0,1)'}}>{props.title}</Text>
                     </View>
                 )

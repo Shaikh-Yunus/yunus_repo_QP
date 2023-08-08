@@ -46,17 +46,38 @@ const BookService = (props) => {
     //         })
     // }
 
-    const callPaymentGateway = (accessKey, totalPrice) => {
+    const callPaymentGateway = (accessKey, totalPrice,) => {
         var options = {
             access_key: accessKey,
             pay_mode: "test"
         }
-        EasebuzzCheckout.open(options).then((data) =>{
-           console.log('payment response',data)
-           if(data?.result == "payment_successfull")
-           console.log("response succes")
-                navigation.navigate('/payment-success', { amount: totalPrice })
-            
+        EasebuzzCheckout.open(options).then((data) => {
+            console.log('payment response', data)
+            if (data?.result == "payment_successfull") {
+                console.log("response succes")
+
+                axios.post(`${Constants.BASE_URL}CreateServiceTransaction?Application`, {
+                    "service_order_id": props?.route?.params?.ID,
+                    "user_id": props?.route?.params?.userDetails?.id,
+                    "total_amount": parseFloat(price).toFixed(2),
+                    "transaction_type": "online",
+                    "transaction_status": "success"
+                }).then(response => {
+                    console.log("response--", response?.data);
+                    setLoader(false);
+                    if (response.data.error) {
+                        setLoader(false);
+                        showToastmsg(response.data.msg);
+                    }
+                    else {
+                        navigation.navigate('/payment-success', { amount: totalPrice })
+
+                    };
+                })
+                    .catch(error => console.log('something went wrong', error));
+
+            }
+
         })
 
     }
@@ -104,7 +125,26 @@ const BookService = (props) => {
             })
         }
         else {
-            navigation.navigate('/payment-success', { amount: parseFloat(price).toFixed(2) })
+
+            axios.post(`${Constants.BASE_URL}CreateServiceTransaction?Application`, {
+                "service_order_id": props?.route?.params?.ID,
+                "user_id": props?.route?.params?.userDetails?.id,
+                "total_amount": parseFloat(price).toFixed(2),
+                "transaction_type": "cod",
+                "transaction_status": "pending"
+            }).then(response => {
+                console.log("response--", response?.data);
+                setLoader(false);
+                if (response.data.error) {
+                    setLoader(false);
+                    showToastmsg(response.data.msg);
+                }
+                else {
+                    navigation.navigate('/payment-success', { amount: parseFloat(price).toFixed(2) })
+
+                };
+            })
+                .catch(error => console.log('Something went wrong', error));
 
         }
         // navigation.navigate('/payment-success')
@@ -123,7 +163,7 @@ const BookService = (props) => {
             {console.log("userDetails", props?.route?.params?.userDetails?.id)}
             {console.log("type", props?.route?.params?.userDetails?.role_id)}
 
-            {console.log("this is form fields", props.route.params.formFields)}
+            {console.log("order_id", props?.route?.params?.ID)}
 
             <View>
                 <View style={{ alignSelf: 'flex-start', position: 'relative', right: 20 }}>
