@@ -19,12 +19,14 @@ import Constants from '../../../shared/Constants'
 import globatStyles from '../../../shared/globatStyles'
 import showToastmsg from '../../../shared/showToastmsg'
 import RenderOrders from './RenderOrders'
+import RenderService from './RenderService'
 
 const MyOrders = (props) => {
     const navigation = useNavigation()
     const [tabs, setTabs] = useState('products')
     const [loader, setLoader] = useState(false)
     const [orderData, setOrderData] = useState([])
+    const [serviceData, setserviceData] = useState([])
     const [refresh, setRefresh] = useState(false)
     let img = `${Constants.BASE_IMAGE_URL}image/153/6749701.png`
     const products = [
@@ -45,9 +47,11 @@ const MyOrders = (props) => {
             user_id: props?.route?.params?.userDetails?.id
         })
             .then((response) => {
+                console.log("response=>", response.data.Service)
                 setLoader(false)
                 if (response.data) {
-                    setOrderData(response.data)
+                    setOrderData(response.data.Product)
+                    setserviceData(response.data.Service)
                 }
             })
             .catch((error) => {
@@ -77,7 +81,7 @@ const MyOrders = (props) => {
                 onRefresh={() => getOrderData()}
             />} >
                 {props?.route?.params?.userDetails?.influencer == undefined ?
-                    <Text style={{ marginBottom: 10 ,textAlign:'center' }}>
+                    <Text style={{ marginBottom: 10, textAlign: 'center' }}>
                         Access order details and stay updated on the delivery progress
                     </Text>
                     :
@@ -86,27 +90,49 @@ const MyOrders = (props) => {
                     </Text>
                 }
 
-                {/* <View style={styles.tabContainer}>
-                    <Pressable onPress={()=>setTabs('products')}><Text style={[styles.tabs, tabs==='products'?styles.activeTabs:null]}>Products</Text></Pressable>
-                    <Pressable onPress={()=>setTabs('services')}><Text style={[styles.tabs, tabs==='services'?styles.activeTabs:null]}>Services</Text></Pressable>
-                </View> */}
-                {loader ?
-                    <ActivityIndicator size={'large'} />
-                    :
-                    orderData.length > 0 ?
+                <View style={styles.tabContainer}>
+                    <Pressable onPress={() => setTabs('products')}><Text style={[styles.tabs, tabs === 'products' ? styles.activeTabs : null]}>Products</Text></Pressable>
+                    <Pressable onPress={() => setTabs('services')}><Text style={[styles.tabs, tabs === 'services' ? styles.activeTabs : null]}>Services</Text></Pressable>
+                </View>
+                {tabs === "products" ? (
+                    loader ? (
+                        <ActivityIndicator size={'large'} />
+                    ) : orderData.length > 0 ? (
                         <FlatList
                             data={orderData}
                             renderItem={item => <RenderOrders item={item} />}
-                            style={{ paddingBottom: 130, }}
+                            style={{ paddingBottom: 130 }}
                             keyExtractor={item => item?.id?.toString()}
                         />
-                        :
+                    ) : (
                         <View style={{ width: '100%', paddingTop: 20, paddingBottom: 10 }}>
                             <Text style={[styles.headingText, { fontSize: 20, textAlign: 'center' }]}>
                                 No orders found
                             </Text>
                         </View>
-                }
+                    )
+                ) : (
+                    loader ? (
+                        <ActivityIndicator size={'large'} />
+                    ) : serviceData.length > 0 ? (
+                        <FlatList
+                            data={serviceData}
+                            renderItem={item => <RenderService item={item} />}
+                            style={{ paddingBottom: 130 }}
+                            keyExtractor={item => item?.id?.toString()}
+                        />
+                    ) : (
+                        <View style={{ width: '100%', paddingTop: 20, paddingBottom: 10 }}>
+                            <Text style={[styles.headingText, { fontSize: 20, textAlign: 'center' }]}>
+                                No services found
+                            </Text>
+                        </View>
+                    )
+                )}
+
+
+
+
             </ScrollView>
         </View>
     )
@@ -123,6 +149,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: Constants.margin,
         marginBottom: Constants.marginBottom,
+        justifyContent: 'space-between'
     },
     tabs: {
         fontFamily: Constants.fontFamily,

@@ -1,8 +1,8 @@
 import { Dimensions } from "react-native"
 const Constants = {
     APP_NAME: 'Quarterpillars',
-    BASE_URL:'http://qp.flymingotech.in/quarterpillars_backend/public/api/v1/',
-    BASE_IMAGE_URL:'http://qp.flymingotech.in/quarterpillars_backend/public/',
+    BASE_URL:'https://qpapplication.com/rest/8pXBSVXrzJh56LAa/qp/backend/quarterpillars_backend/public/api/v1/',
+    BASE_IMAGE_URL:'https://qpapplication.com/rest/8pXBSVXrzJh56LAa/qp/backend/quarterpillars_backend/public/',
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     colors: {

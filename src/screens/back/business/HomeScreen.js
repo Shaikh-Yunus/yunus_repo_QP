@@ -403,7 +403,7 @@ const HomeScreen = (props) => {
                                 <Text style={styles.impressionValue}>
                                     {/* <FontAwesome size={18} name='rupee' style={styles.rupeeIcon} />  */}
                                     {dashBoardData?.Impression?.TotalViews ? parseFloat(parseFloat(dashBoardData?.Impression?.TotalViews).toFixed(2)).toLocaleString() : "0.00"}</Text>
-                                <View style={{ flexDirection: 'row', marginTop: 12, }}> 
+                                <View style={{ flexDirection: 'row', marginTop: 12, }}>
                                     <AntDesign name='arrowup' size={18} color={Constants.colors.primaryColor} />
                                     <Text style={styles.impressionInPercentage}>{dashBoardData?.impresion ? "8.6" : "0.00"}%</Text>
                                 </View>

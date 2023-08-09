@@ -71,7 +71,7 @@ const CustomAppBar = (props) => {
 const styles = StyleSheet.create({
     wrapper: {
         padding: Constants.padding,
-        marginTop: height*0.00,
+        marginTop: height*0.03,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
