@@ -143,7 +143,7 @@ const CreateAudience = (props) => {
                     </View>
                     <FontAwesome name='angle-right' style={styles.userIcon} />
                 </Pressable>
-                <Pressable style={globatStyles.button} onPress={gotoBudget}><Text style={globatStyles.btnText}>Budget & Duration</Text></Pressable>
+                <Pressable style={[globatStyles.button , {bottom:23}]} onPress={gotoBudget}><Text style={globatStyles.btnText}>Budget & Duration</Text></Pressable>
             </ScrollView>
         </View>
     )

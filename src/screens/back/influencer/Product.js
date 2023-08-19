@@ -208,6 +208,7 @@ const Product = (props) => {
                     })
                     setswiperData([...swiperData])
                     setpostData(response.data.data.influencerPosts.filter((i) => i.status == 'complete'))
+                    // AsyncStorage.setItem("gesture","true")
                 }
             })
                 .catch((error) => {
@@ -225,6 +226,7 @@ const Product = (props) => {
 
                 if (response.data.data.post_details) {
                     setpostData(response.data.data.post_details.filter((i) => i.post_status == 'complete'))
+                    // AsyncStorage.setItem("gesture","true")
                 }
             })
                 .catch((error) => {
@@ -250,8 +252,6 @@ const Product = (props) => {
         // })
         getReelsApi()
     }
-
-
     useEffect(() => {
         useEffectFunction()
     }, [])

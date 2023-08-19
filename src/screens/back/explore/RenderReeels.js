@@ -49,7 +49,7 @@ import { post } from 'jquery'
 // import { LazyloadView } from 'react-native-lazyload'
 //  mujataba App stack
 
-const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, setbadgeCount, closePopup, currentindex }) => {
+const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, setbadgeCount, closePopup, currentindex, lastindexID }) => {
     const [refresh, setrefresh] = useState(false)
     const [like, setLike] = useState(item.item.IsLiked === "No")
     const [loader, setLoader] = useState(false)
@@ -81,7 +81,6 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
     //  mujataba App stack
     // const [appState, setAppState] = useState(AppState.currentState);
     //  mujataba App stack
-
 
     const playerRef = useRef(null)
     const handlePlay = () => {
@@ -120,6 +119,9 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
         getCartCount()
         setLikeCount(item?.item?.likes)
         setshareCount(item?.item?.share)
+
+
+        // if(lastindex == )
         // const emitSubscribe = EventRegister.addEventListener(
         //     emitConfig.API_CALLING, (msg) => {
         //         getCartCount()
@@ -201,7 +203,7 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
     }
 
     const gotoProductDetails = () => {
-        navigation.navigate('/product-details',{
+        navigation.navigate('/product-details', {
             productDetails: item.item, userDetails: userDetails,
             LikeCount: LikeCount,
             commentCount: commentCount,
@@ -314,8 +316,6 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
         // navigation.navigate('/StoriesPage')
         setModalVisible(!modalVisible);
     };
-
-
     const getCartCount = () => {
         setVideoLoader(true)
         axios.post(`${Constants.BASE_URL}auth/get-cart-item`, {
@@ -406,6 +406,9 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
         setShowFullText(!showFullText);
     };
     // liked post pop up notification
+    // console.log("lastindexID", lastindexID);
+    // console.log("item?.item?.id", item?.item?.id);
+
 
     return (
         <>
@@ -514,6 +517,7 @@ const RenderReeels = ({ item, userDetails, likeData, commentData, getLikeData, s
                                 fetchpostview();
                                 setcurrentpostid(item?.item?.id)
                             }}
+
                             // onLoad={() => closePopup()}
                             onBuffer={handleBuffer}
                             useBuffer={true}

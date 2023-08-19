@@ -34,7 +34,7 @@ const RenderRecentServices = ({ item }) => {
 
     return (
         <View key={item.id} style={styles.cardContainer}>
-            {console.log('serviceData==', serviceData)}
+            {/* {console.log('serviceData==', serviceData)} */}
             <TouchableOpacity onPress={() => getservicedata(item)} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={{ color: 'black', fontSize: 'bold', fontSize: 20 }}>{item?.item?.Title}</Text>
@@ -52,87 +52,93 @@ const RenderRecentServices = ({ item }) => {
                             <AntDesign onPress={() => setModalVisible(false)} name="arrowleft" size={26} />
                             <Text style={{ fontSize: 20, fontFamily: 'Aviner', fontWeight: 'bold', marginLeft: 30 }}> Service Details </Text>
                         </View>
-                        <FlatList
-                            data={serviceData}
-                            keyExtractor={item => item.id}
-                            renderItem={item => {
-                                const serviceform = JSON.parse(item.item.Form_Json);
-                                const serviceImageArray = JSON.parse(item?.item?.ServiceImage);
-                                return (
-                                    <View key={item.id} style={styles.cardContainer2}>
-                                        <View>
-                                            <Text style={{ fontFamily: 'Aviner', fontSize: 18, fontWeight: '600', color: '#333' }}> User Details :  </Text>
-                                        </View>
-                                        <View>
-                                            {console.log("avatarcheck", item?.item?.UserData?.avatar)}
-                                            <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                                                <View>
-                                                    <FastImage resizeMode='cover' source={{ uri: `${Constants.BASE_IMAGE_URL}${item?.item?.UserData?.avatar}` }}
-                                                        style={{ borderRadius: 10, height: 70, width: 70 }} />
-                                                </View>
-                                                <View style={{ marginLeft: 20, marginTop: 15 }}>
-                                                    <Text style={{ color: '#808080' }} >{item?.item?.UserData?.name}</Text>
-                                                    <Text style={{ color: '#808080' }}>{item?.item?.UserData?.mobile_number} </Text>
-                                                    <Text style={{ color: '#808080' }}>{item?.item?.UserData?.email}</Text>
-                                                </View>
+                        {serviceData && serviceData.length > 0 ? (
+                            <FlatList
+                                data={serviceData}
+                                keyExtractor={item => item.id}
+                                renderItem={item => {
+                                    const serviceform = JSON.parse(item.item.Form_Json);
+                                    const serviceImageArray = JSON.parse(item?.item?.ServiceImage);
+                                    return (
+                                        <View key={item.id} style={styles.cardContainer2}>
+                                            <View>
+                                                <Text style={{ fontFamily: 'Aviner', fontSize: 18, fontWeight: '600', color: '#333' }}> User Details :  </Text>
                                             </View>
+                                            <View>
+                                                {console.log("avatarcheck", item?.item?.UserData?.avatar)}
+                                                <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                                                    <View>
+                                                        <FastImage resizeMode='cover' source={{ uri: `${Constants.BASE_IMAGE_URL}${item?.item?.UserData?.avatar}` }}
+                                                            style={{ borderRadius: 10, height: 70, width: 70 }} />
+                                                    </View>
+                                                    <View style={{ marginLeft: 20, marginTop: 15 }}>
+                                                        <Text style={{ color: '#808080' }} >{item?.item?.UserData?.name}</Text>
+                                                        <Text style={{ color: '#808080' }}>{item?.item?.UserData?.mobile_number} </Text>
+                                                        <Text style={{ color: '#808080' }}>{item?.item?.UserData?.email}</Text>
+                                                    </View>
+                                                </View>
 
 
-                                        </View>
-                                        <View style={{
-                                            width: '100%',
-                                            borderBottomWidth: 1,
-                                            borderBottomColor: '#ccc', // Gray color
-                                            marginVertical: 10,
-                                            marginTop: 15
-                                        }}></View>
-                                        <View style={{ marginBottom: 10 }}>
-                                            <Text style={{ fontFamily: 'Aviner', fontSize: 18, fontWeight: '600', color: '#333' }}> Service Details :  </Text>
-                                        </View>
-                                        <View>
-                                            {serviceImageArray.map((imageUrl, index) => (
-                                                <ImageBackground resizeMode='cover' source={{ uri: `${Constants.BASE_IMAGE_URL}${imageUrl}` }}
-                                                    style={{ borderRadius: 50, height: 120, width: 110, position:'absolute' , alignSelf:'flex-end' }} />
+                                            </View>
+                                            <View style={{
+                                                width: '100%',
+                                                borderBottomWidth: 1,
+                                                borderBottomColor: '#ccc', // Gray color
+                                                marginVertical: 10,
+                                                marginTop: 15
+                                            }}></View>
+                                            <View style={{ marginBottom: 10 }}>
+                                                <Text style={{ fontFamily: 'Aviner', fontSize: 18, fontWeight: '600', color: '#333' }}> Service Details :  </Text>
+                                            </View>
+                                            <View>
+                                                {serviceImageArray.map((imageUrl, index) => (
+                                                    <ImageBackground resizeMode='cover' source={{ uri: `${Constants.BASE_IMAGE_URL}${imageUrl}` }}
+                                                        style={{ borderRadius: 50, height: 120, width: 110, position: 'absolute', alignSelf: 'flex-end' }} />
+                                                ))}
+                                            </View>
+                                            {serviceform.map((field, index) => (
+                                                <View key={index} style={styles.cardField}>
+
+                                                    <Text>{field.label}</Text>
+
+                                                    {field.type === '1' && (
+                                                        <View>
+                                                            {/* Render type 1 specific data */}
+                                                        </View>
+                                                    )}
+
+                                                    {field.type === '2' && (
+                                                        <View>
+                                                            <Text style={{ color: '#808080' }}>Selected Option: {field.selectedOption}</Text>
+                                                        </View>
+                                                    )}
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        {field.type === '3' && (
+                                                            <View>
+                                                                <Text style={{ color: '#808080' }}>{field.timeData}</Text>
+                                                            </View>
+                                                        )}
+
+                                                        {field.type === '4' && (
+                                                            <View style={{ flexDirection: 'row' }}>
+                                                                {/* <Text style={{ marginRight: 10 , }}>Time Data:</Text> */}
+                                                                <Text style={{ color: '#808080' }}>{field.timeData}</Text>
+                                                            </View>
+                                                        )}
+                                                    </View>
+                                                </View>
                                             ))}
                                         </View>
-                                        {serviceform.map((field, index) => (
-                                            <View key={index} style={styles.cardField}>
 
-                                                <Text>{field.label}</Text>
+                                    )
+                                }
 
-                                                {field.type === '1' && (
-                                                    <View>
-                                                        {/* Render type 1 specific data */}
-                                                    </View>
-                                                )}
-
-                                                {field.type === '2' && (
-                                                    <View>
-                                                        <Text style={{ color: '#808080' }}>Selected Option: {field.selectedOption}</Text>
-                                                    </View>
-                                                )}
-                                                <View style={{ flexDirection: 'row' }}>
-                                                    {field.type === '3' && (
-                                                        <View>
-                                                            <Text style={{ color: '#808080' }}>{field.timeData}</Text>
-                                                        </View>
-                                                    )}
-
-                                                    {field.type === '4' && (
-                                                        <View style={{ flexDirection: 'row' }}>
-                                                            {/* <Text style={{ marginRight: 10 , }}>Time Data:</Text> */}
-                                                            <Text style={{ color: '#808080' }}>{field.timeData}</Text>
-                                                        </View>
-                                                    )}
-                                                </View>
-                                            </View>
-                                        ))}
-                                    </View>
-
-                                )
-                            }
-
-                            } />
+                                } />
+                        ) : (
+                            <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 20 }}>
+                                No service data found.
+                            </Text>
+                        )}
 
 
                     </View>

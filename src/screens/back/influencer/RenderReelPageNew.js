@@ -16,7 +16,6 @@ import RenderReeelsAdv from '../explore/RenderReeelsAdv'
 const RenderReelPageNew = ({ postLoader, postData, styles, showDrawer, likeData,
     setbadgeCount, getLikeData, commentData, currentInd, pageTitle, userDetails, closePopup }) => {
 
-
     return (
         <Swiper
             style={{ backgroundColor: 'black', height: '100%', borderRadius: showDrawer ? Constants.borderRadius + 50 : 0 }} horizontal={true} showsButtons={false} loop={false} dot={<View></View>} activeDot={<View></View>}>
@@ -45,6 +44,7 @@ const RenderReelPageNew = ({ postLoader, postData, styles, showDrawer, likeData,
                                             getLikeData={getLikeData}
                                             commentData={commentData}
                                             closePopup={closePopup}
+                                            lastindexID={postData[i].id}
                                         />)}
                                     // renderItem={(item) =>
                                     //     <RenderReeels item={item} userDetails={userDetails}

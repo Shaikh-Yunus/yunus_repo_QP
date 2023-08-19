@@ -31,7 +31,9 @@ const RenderBusinessRequest = ({ item, userDetails }) => {
             "influencer_id": item?.item?.influencer_id
         }).then((response) => {
             setLoader(false)
-            if (response.data.response == 200) {
+            console.log('ccc', response)
+
+            if (response.status == 200) {
                 showToastmsg('Request for collaboration sended to influencer')
                 navigation.navigate('/my-pillars', { userDetails: userDetails, page: 'pending' })
             }
@@ -46,6 +48,8 @@ const RenderBusinessRequest = ({ item, userDetails }) => {
     }
     return (
         <View style={styles.container}>
+            {console.log('businessid', userDetails?.business?.business_id)}
+            {console.log('influencerid', item?.item?.influencer_id)}
 
             <View style={styles.headingLine}>
                 <View style={{ flexDirection: 'row', }}>
@@ -84,27 +88,29 @@ const RenderBusinessRequest = ({ item, userDetails }) => {
 
                 {
                     item?.item?.Ok === true ? (
-                        <View  style={ {padding: 5, width: '100%',
-                             marginTop: 32, borderColor:'red', width: '40%', alignSelf: 'center',  }}>
-                        <Text style={[globatStyles.btnOutlineText ,{color:'red', fontSize:12,textTransform: 'none',  }]}>Already Requested</Text>
+                        <View style={{
+                            padding: 5, width: '100%',
+                            marginTop: 32, borderColor: 'red', width: '40%', alignSelf: 'center',
+                        }}>
+                            <Text style={[globatStyles.btnOutlineText, { color: 'red', fontSize: 12, textTransform: 'none', }]}>Already Requested</Text>
                         </View>
                     ) : (
                         <>
-                          {loader ?  <ActivityIndicator size={30} color={'#80FFB9'} />
-                            :<Pressable
-                                onPress={sendRequest}
-                                style={[
-                                    globatStyles.btnOutline,
-                                    { width: '40%', alignSelf: 'center', padding: 5 },
-                                ]}
-                            >
-                                <Text style={globatStyles.btnOutlineText}>Send Request</Text>
-                            </Pressable>}
+                            {loader ? <ActivityIndicator size={30} color={'#80FFB9'} />
+                                : <Pressable
+                                    onPress={sendRequest}
+                                    style={[
+                                        globatStyles.btnOutline,
+                                        { width: '40%', alignSelf: 'center', padding: 5 },
+                                    ]}
+                                >
+                                    <Text style={globatStyles.btnOutlineText}>Send Request</Text>
+                                </Pressable>}
                         </>
                     )
                 }
             </View>
-            {console.log('item?.item?.ok',item?.item?.Ok)}
+            {console.log('item?.item?.ok', item?.item?.Ok)}
         </View>
     )
 }

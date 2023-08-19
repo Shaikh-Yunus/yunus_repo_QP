@@ -35,6 +35,7 @@ import { MultiSelect } from 'react-native-element-dropdown'
 import Dialog, { SlideAnimation, DialogContent, DialogTitle } from 'react-native-popup-dialog';
 import FastImage from 'react-native-fast-image'
 import CheckBox from '@react-native-community/checkbox';
+import { log } from 'react-native-reanimated'
 
 
 const AddProduct = (props) => {
@@ -181,7 +182,7 @@ const AddProduct = (props) => {
             setCameraImg([...cameraImg])
         }
         catch (err) {
-            console.log("err")
+            console.log("err",err)
         }
     }
 
@@ -331,6 +332,8 @@ const AddProduct = (props) => {
             await fetch(`${Constants.BASE_URL}business/AddProduct/WithVariations`, requestOptions)
                 .then(response => response.json())
                 .then((response) => {
+                    console.log('checkresponse',response)
+
                     if (response.status == 201) {
                         // Alert.alert("Product Added")
                         navigation.navigate('/productScreen', { userDetails: props?.route?.params?.userDetails })

@@ -395,35 +395,37 @@ const Product = (props) => {
                         <ActivityIndicator size={40} color={Constants.colors.primaryColor} />
                     </View>
                     :
-                    postData.length > 0 ? <Swiper style={{ backgroundColor: 'black', borderRadius: showDrawer ? Constants.borderRadius + 50 : 0 }} horizontal={false} showsButtons={false} loop={false} dot={<View></View>} activeDot={<View></View>}>
-                        {postLoader ?
-                            <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%' }}>
-                                <ActivityIndicator size={40} color={Constants.colors.primaryColor} />
-                            </View>
-                            :
-                            postData.map((data, i) => (<View style={styles.reel} key={i + 1}>
-                                <CustomAppBar navigation={navigation} isMainscreen={true}
-                                    explore={userType == 'explore'}
-                                    userDetails={props?.route?.params?.userDetails}
-                                    isReel={true}
-                                    title={userType == 'advertiser' ? data.advertise_type :
-                                        data.post_type}
-                                    // cartLoader={cartLoader}
-                                    // cartNumber={cartNumber}
-                                    headerRight={true} openPopup={openPopup} newPost={newPost} openDrawer={openDrawer} showDrawer={showDrawer} />
-                                <SwiperFlatList
-                                    data={[data]}
-                                    style={[styles.category, { borderRadius: showDrawer ? Constants.borderRadius + 50 : 0 }]}
-                                    renderItem={item => (props?.route?.params?.userDetails?.role_id == 3 ?
-                                        <RenderReeelsAdv item={item} userDetails={props?.route?.params?.userDetails} /> :
-                                        <RenderReeels item={item} userDetails={props?.route?.params?.userDetails}
-                                            likeData={likeData}
-                                            getLikeData={getLikeData}
-                                            commentData={commentData}
-                                        />)}
-                                    keyExtractor={item => item?.id?.toString()} />
-                            </View>))}
-                        {/* <View style={styles.reel}>
+                    postData.length > 0 ?
+                        <Swiper style={{ backgroundColor: 'black', borderRadius: showDrawer ? Constants.borderRadius + 50 : 0 }} horizontal={false} showsButtons={false} loop={false} dot={<View></View>} activeDot={<View></View>}>
+                            {postLoader ?
+                                <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%' }}>
+                                    <ActivityIndicator size={40} color={Constants.colors.primaryColor} />
+                                </View>
+                                :
+                                postData.map((data, i) => (
+                                    <View style={styles.reel} key={i + 1}>
+                                        <CustomAppBar navigation={navigation} isMainscreen={true}
+                                            explore={userType == 'explore'}
+                                            userDetails={props?.route?.params?.userDetails}
+                                            isReel={true}
+                                            title={userType == 'advertiser' ? data.advertise_type :
+                                                data.post_type}
+                                            // cartLoader={cartLoader}
+                                            // cartNumber={cartNumber}
+                                            headerRight={true} openPopup={openPopup} newPost={newPost} openDrawer={openDrawer} showDrawer={showDrawer} />
+                                        <SwiperFlatList
+                                            data={[data]}
+                                            style={[styles.category, { borderRadius: showDrawer ? Constants.borderRadius + 50 : 0 }]}
+                                            renderItem={item => (props?.route?.params?.userDetails?.role_id == 3 ?
+                                                <RenderReeelsAdv item={item} userDetails={props?.route?.params?.userDetails} /> :
+                                                <RenderReeels item={item} userDetails={props?.route?.params?.userDetails}
+                                                    likeData={likeData}
+                                                    getLikeData={getLikeData}
+                                                    commentData={commentData}
+                                                />)}
+                                            keyExtractor={item => item?.id?.toString()} />
+                                    </View>))}
+                            {/* <View style={styles.reel}>
                 <CustomAppBar navigation={navigation} isMainscreen={true} isReel={true} title='Fashion' headerRight={true} />
                 <SwiperFlatList
                     data={fashionPosts}
@@ -447,7 +449,7 @@ const Product = (props) => {
                     renderItem={item=><RenderReeels item={item} />}
                     keyExtractor={item=>item?.id?.toString()} />
             </View> */}
-                    </Swiper> :
+                        </Swiper> :
 
                         <View style={[styles.productDetailsBg, { backgroundColor: '#e5e5e5', borderRadius: showDrawer ? Constants.borderRadius + 50 : 0, }]}>
                             <CustomAppBar navigation={navigation} isMainscreen={true}
